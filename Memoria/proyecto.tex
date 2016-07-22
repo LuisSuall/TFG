@@ -1,16 +1,22 @@
 \documentclass[a4paper,11pt]{book}
 
 \usepackage{mystyle}
+\usepackage{cite}
+\usepackage{chapterbib}
 
 \begin{document}
-\include{./tex/portada}
+\include{tex/portada}
 
 \frontmatter
-\include{./tex/prefacio}
+\include{tex/prefacio}
 
 \tableofcontents
 
 \mainmatter
-\include{./tex/aprendizaje_automatico}
+\input{tex/aprendizaje_automatico}
+
+\bibliographystyle{unsrt}
+\bibliography{tex/bibliografia}
+\addcontentsline{toc}{chapter}{Bibliografía}
 
 \end{document}
