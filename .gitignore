@@ -181,3 +181,7 @@ TSWLatexianTemp*
 
 # ~ files
 *~
+
+# Java
+/Software/SRI/nbproject/private/
+/Software/SRI/build/
