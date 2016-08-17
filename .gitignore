@@ -185,3 +185,6 @@ TSWLatexianTemp*
 # Java
 /Software/SRI/nbproject/private/
 /Software/SRI/build/
+
+# PDF
+*.pdf
