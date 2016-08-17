@@ -7,7 +7,7 @@ package sri;
 
 import java.util.ArrayList;
 
-class ImageClassification extends ArrayList<Double> {
+public class ImageClassification extends ArrayList<Double> {
     
     private String imagePath;
     private int bestClass;

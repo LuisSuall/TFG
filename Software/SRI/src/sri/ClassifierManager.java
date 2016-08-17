@@ -12,20 +12,24 @@ import java.util.ArrayList;
 
 public class ClassifierManager {
     
-    public static String defaultModelDefPath = "../Clasificador/caffenet_deploy.prototxt";
-    public static String defaultModelWeightsPath = "../Clasificador/caffenet_weights.caffemodel";
+    private String modelDefPath = "../Clasificador/caffenet_deploy.prototxt";
+    private String modelWeightsPath = "../Clasificador/caffenet_weights.caffemodel";
     
     public ClassifierManager(){
         
     }
-    
-    public ClassifierManager(String modelWeightsPath){
-        defaultModelWeightsPath = modelWeightsPath;
-    }
 
     public ClassifierManager(String modelWeightsPath, String modelDefPath) {
-        defaultModelDefPath = modelDefPath;
-        defaultModelWeightsPath = modelWeightsPath;
+        this.modelDefPath = modelDefPath;
+        this.modelWeightsPath = modelWeightsPath;
+    }
+
+    public void setModelDefPath(String modelDefPath) {
+        this.modelDefPath = modelDefPath;
+    }
+
+    public void setModelWeightsPath(String modelWeightsPath) {
+        this.modelWeightsPath = modelWeightsPath;
     }
     
     public ImageClassification classifyImage(String imgPath){
@@ -33,7 +37,7 @@ public class ClassifierManager {
         String[] cmd = {
             "/bin/bash",
             "-c",
-            "../scripts/classifyImage.sh "+ imgPath + " " + defaultModelDefPath + " " +  defaultModelWeightsPath
+            "../scripts/classifyImage.sh "+ imgPath + " " + modelDefPath + " " +  modelWeightsPath
         };
         
         Process p = null;
@@ -65,12 +69,20 @@ public class ClassifierManager {
         return imageClassification;
     } 
 
-    private void classifyFolder(String folderPath) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ClassificationDB classifyImages(ArrayList<String> paths){
+        ClassificationDB newDB = new ClassificationDB();
+        ImageClassification imageClassification = null;
+        
+        for(String path : paths){
+            imageClassification = classifyImage(path);
+            newDB.add(imageClassification);
+        }
+        
+        return newDB;
     }
     
-    
-
-  
+    public ClassificationDB classifyFolder(String folderPath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
