@@ -70,7 +70,7 @@ public class ClassifierManager {
         String[] cmd = {
             "/bin/bash",
             "-c",
-            "../scripts/classifyImage.sh "+ imgPath + " " + modelDefPath + " " +  modelWeightsPath
+            "../scripts/classify_image.sh "+ imgPath + " " + modelDefPath + " " +  modelWeightsPath
         };
         
         Process p = null;
