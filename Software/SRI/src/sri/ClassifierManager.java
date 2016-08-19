@@ -15,8 +15,7 @@ public class ClassifierManager {
     private String modelDefPath = "../Clasificador/caffenet_deploy.prototxt";
     private String modelWeightsPath = "../Clasificador/caffenet_weights.caffemodel";
     
-    public ClassifierManager(){
-        
+    public ClassifierManager(){  
     }
 
     public ClassifierManager(String modelWeightsPath, String modelDefPath) {

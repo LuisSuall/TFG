@@ -10,8 +10,12 @@ import java.util.ArrayList;
 
 public class ClassificationDB extends ArrayList<ImageClassification> {
     
-    public ClassificationDB(){
+    /**
+     *  Default number of search results
+     */
+    public static final int DEFAULT_SEARCH_RESULT_N = 5;
     
+    public ClassificationDB(){   
     }
     
     public ClassificationDB(ArrayList<ImageClassification> imageClassifications){
@@ -19,15 +23,46 @@ public class ClassificationDB extends ArrayList<ImageClassification> {
     }
     
     public ClassificationDB search(String name){        
-        throw new UnsupportedOperationException("Not supported yet.");
+        return search(name,DEFAULT_SEARCH_RESULT_N);
+    }
+    
+    public ClassificationDB search(String name, int n){        
+        SynsetDictionary synsetDictionary = new SynsetDictionary();
+        
+        SynsetInfo synsetInfo = synsetDictionary.searchByName(name);
+        
+        return searchByIdx(synsetInfo.getIdx(),n);
     }
     
     public ClassificationDB searchBySynset(String synset){        
-        throw new UnsupportedOperationException("Not supported yet.");
+        return searchBySynset(synset, DEFAULT_SEARCH_RESULT_N);
+    }
+    
+    public ClassificationDB searchBySynset(String synset, int n){        
+        SynsetDictionary synsetDictionary = new SynsetDictionary();
+        
+        SynsetInfo synsetInfo = synsetDictionary.searchBySynset(synset);
+        
+        return searchByIdx(synsetInfo.getIdx(),n);
     }
     
     public ClassificationDB searchByIdx(int idx){        
-        throw new UnsupportedOperationException("Not supported yet.");
+        return searchByIdx(idx, DEFAULT_SEARCH_RESULT_N);
+    }
+    
+    public ClassificationDB searchByIdx(int idx, int n){        
+        
+        ArrayList<Integer> bestResultsIdx = new ArrayList<>();
+        
+        //TODO: ordered search
+        
+        ClassificationDB searchResult = new ClassificationDB();
+        
+        for (int i: bestResultsIdx){
+            searchResult.add(this.get(i));
+        }
+        
+        return searchResult;
     }
     
     public void save(String path){
