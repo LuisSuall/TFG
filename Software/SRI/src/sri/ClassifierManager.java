@@ -12,25 +12,59 @@ import java.util.ArrayList;
 
 public class ClassifierManager {
     
-    private String modelDefPath = "../Clasificador/caffenet_deploy.prototxt";
-    private String modelWeightsPath = "../Clasificador/caffenet_weights.caffemodel";
+    /**
+     * Path to model's definition.
+     */
+    private String modelDefPath;
+    /**
+     * Path to model's weights.
+     */
+    private String modelWeightsPath;
     
+    /**
+     * Creates a ClassifierManager for the default model.
+     */
     public ClassifierManager(){  
+        modelDefPath = "../Clasificador/caffenet_deploy.prototxt";
+        modelWeightsPath = "../Clasificador/caffenet_weights.caffemodel";
     }
 
+    /**
+     * Creates a ClassifierManager for a model.
+     * 
+     * @param modelWeightsPath path to the model weights
+     * @param modelDefPath path to the model definition
+     */
     public ClassifierManager(String modelWeightsPath, String modelDefPath) {
         this.modelDefPath = modelDefPath;
         this.modelWeightsPath = modelWeightsPath;
     }
 
+    /**
+     * Sets the model definition path.
+     * 
+     * @param modelDefPath path to the model definition
+     */
     public void setModelDefPath(String modelDefPath) {
         this.modelDefPath = modelDefPath;
     }
 
+    /**
+     * Sets the model weights path.
+     * 
+     * @param modelWeightsPath path to the model weights
+     */
     public void setModelWeightsPath(String modelWeightsPath) {
         this.modelWeightsPath = modelWeightsPath;
     }
     
+    /**
+     * Classifies an image.
+     * 
+     * @param imgPath path of the image to classify
+     * 
+     * @return Classification of the image
+     */
     public ImageClassification classifyImage(String imgPath){
         
         String[] cmd = {
@@ -68,9 +102,16 @@ public class ClassifierManager {
         return imageClassification;
     } 
 
+    /**
+     * Classifies a list of images.
+     * 
+     * @param paths list of paths of the images to classify
+     * 
+     * @return ClassificationDB of the images
+     */
     public ClassificationDB classifyImages(ArrayList<String> paths){
         ClassificationDB newDB = new ClassificationDB();
-        ImageClassification imageClassification = null;
+        ImageClassification imageClassification;
         
         for(String path : paths){
             imageClassification = classifyImage(path);
@@ -80,6 +121,13 @@ public class ClassifierManager {
         return newDB;
     }
     
+    /**
+     * Classifies a folder of images.
+     * 
+     * @param folderPath path of the folder to classify
+     * 
+     * @return ClassificationDB of the folder
+     */
     public ClassificationDB classifyFolder(String folderPath) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
