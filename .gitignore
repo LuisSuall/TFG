@@ -182,9 +182,11 @@ TSWLatexianTemp*
 # ~ files
 *~
 
-# Java
+# Netbeans Java Proyect
 /Software/SRI/nbproject/private/
 /Software/SRI/build/
+/Software/ClassificationGUI/nbproject/private/
+/Software/ClassificationGUI/build/
 
 # PDF
 *.pdf
