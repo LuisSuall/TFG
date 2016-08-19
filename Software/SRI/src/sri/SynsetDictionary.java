@@ -6,7 +6,6 @@
 package sri;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class SynsetDictionary extends ArrayList<SynsetInfo>{
 
@@ -32,7 +31,11 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
      * @return information of the synset
      */
     public SynsetInfo searchByConcept(String concept){
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(SynsetInfo synsetInfo: this){
+            if (synsetInfo.getConcept().equals(concept))
+                return synsetInfo;
+        }
+        return null;
     }
     
     /**
@@ -42,7 +45,11 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
      * @return information of the synset
      */
     public SynsetInfo searchBySynset(String synset){
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(SynsetInfo synsetInfo: this){
+            if (synsetInfo.getSynset().equals(synset))
+                return synsetInfo;
+        }
+        return null;
     }
     
     /**
@@ -52,6 +59,10 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
      * @return information of the synset
      */
     public SynsetInfo searchByIdx(int idx){
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(SynsetInfo synsetInfo: this){
+            if (synsetInfo.getIdx() == idx)
+                return synsetInfo;
+        }
+        return null;
     }
 }
