@@ -6,9 +6,16 @@
 
 package sri;
 
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ClassificationDB extends ArrayList<ImageClassification> {
+public class ClassificationDB extends ArrayList<ImageClassification> implements java.io.Serializable{
     
     /**
      *  Default number of search results
@@ -101,7 +108,19 @@ public class ClassificationDB extends ArrayList<ImageClassification> {
         
         ArrayList<Integer> bestResultsIdx = new ArrayList<>();
         
-        //TODO: ordered search
+        for(int i=0; i<n; i++){
+            int bestIdx = -1;
+            double bestValue = -1.0;
+            
+            for(int j=0; j<this.size(); j++){
+                if(this.get(j).get(idx) > bestValue && !bestResultsIdx.contains(j)){
+                    bestIdx = j;
+                    bestValue = this.get(j).get(idx);
+                }
+            }
+            
+            bestResultsIdx.add(bestIdx);
+        }
         
         ClassificationDB searchResult = new ClassificationDB();
         
@@ -118,7 +137,13 @@ public class ClassificationDB extends ArrayList<ImageClassification> {
      * @param path path to the DB.
      */
     public void save(String path){
-        throw new UnsupportedOperationException("Not supported yet.");
+        try(FileOutputStream file = new FileOutputStream(path); ObjectOutputStream objectOut = new ObjectOutputStream(file)) {
+            objectOut.writeObject(this);
+        }
+        catch(IOException e){
+            System.err.println("Exception saving DB: " + e.getMessage());
+        }
+        
     }
     
     /**
@@ -127,6 +152,21 @@ public class ClassificationDB extends ArrayList<ImageClassification> {
      * @param path path to the DB.
      */
     public void load(String path){
-        throw new UnsupportedOperationException("Not supported yet.");
+        try(FileInputStream file = new FileInputStream(path); ObjectInputStream objectIn = new ObjectInputStream(file)) {
+            ClassificationDB loadedData = (ClassificationDB)objectIn.readObject();
+            
+            this.clear();
+            
+            for(ImageClassification img: loadedData){
+                this.add(img);
+            }
+            
+        }
+        catch(IOException e){
+            System.err.println("Exception saving DB: " + e.getMessage());            
+        } catch (ClassNotFoundException e) {
+            Logger.getLogger(ClassificationDB.class.getName()).log(Level.SEVERE, null, e);
+        }
+            
     }
 }
