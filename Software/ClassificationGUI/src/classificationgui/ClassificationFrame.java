@@ -51,10 +51,16 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         imagePanel = new classificationgui.ImagePanel();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setPreferredSize(new java.awt.Dimension(416, 500));
 
-        resultsPanel.setPreferredSize(new java.awt.Dimension(400, 100));
+        resultsPanel.setMaximumSize(new java.awt.Dimension(400, 125));
+        resultsPanel.setMinimumSize(new java.awt.Dimension(400, 125));
+        resultsPanel.setPreferredSize(new java.awt.Dimension(400, 125));
 
         label1.setText("label1");
 
@@ -96,7 +102,7 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(resultsPanel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(resultsPanel, java.awt.BorderLayout.PAGE_END);
 
         mainPanel.setPreferredSize(new java.awt.Dimension(400, 350));
 
@@ -104,7 +110,7 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         imagePanel.setLayout(imagePanelLayout);
         imagePanelLayout.setHorizontalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
+            .addGap(0, 436, Short.MAX_VALUE)
         );
         imagePanelLayout.setVerticalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,14 +123,14 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
         );
 
-        getContentPane().add(mainPanel, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
