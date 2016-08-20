@@ -68,6 +68,9 @@ public class MainWindow extends javax.swing.JFrame {
         classifyOneImageButton = new javax.swing.JButton();
         multipleImageToolBar = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         desktopPanel = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         classifierMenu = new javax.swing.JMenu();
@@ -104,6 +107,21 @@ public class MainWindow extends javax.swing.JFrame {
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         multipleImageToolBar.add(jButton2);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        multipleImageToolBar.add(jButton1);
+
+        jTextField1.setText("jTextField1");
+        multipleImageToolBar.add(jTextField1);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        multipleImageToolBar.add(jButton3);
+
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
@@ -111,8 +129,8 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(buttonPanelLayout.createSequentialGroup()
                 .addComponent(oneImageToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(multipleImageToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 473, Short.MAX_VALUE))
+                .addComponent(multipleImageToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 223, Short.MAX_VALUE))
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,9 +238,12 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu classifierMenu;
     private javax.swing.JButton classifyOneImageButton;
     private javax.swing.JDesktopPane desktopPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JToolBar multipleImageToolBar;
     private javax.swing.JToolBar oneImageToolBar;
