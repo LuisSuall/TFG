@@ -5,13 +5,12 @@
  */
 package classificationgui;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
+import sri.ClassificationDB;
 import sri.ClassifierManager;
+import sri.ImageClassification;
 
 /**
  *
@@ -20,6 +19,7 @@ import sri.ClassifierManager;
 public class MainWindow extends javax.swing.JFrame {
     
     private ClassifierManager classifier;
+    private ClassificationDB db;
     
     /**
      * Creates new form MainWindow
@@ -67,10 +67,10 @@ public class MainWindow extends javax.swing.JFrame {
         oneImageToolBar = new javax.swing.JToolBar();
         classifyOneImageButton = new javax.swing.JButton();
         multipleImageToolBar = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        createDBBurron = new javax.swing.JButton();
+        loadDBButton = new javax.swing.JButton();
+        querryText = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
         desktopPanel = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         classifierMenu = new javax.swing.JMenu();
@@ -101,26 +101,45 @@ public class MainWindow extends javax.swing.JFrame {
 
         multipleImageToolBar.setRollover(true);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        multipleImageToolBar.add(jButton2);
+        createDBBurron.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        createDBBurron.setFocusable(false);
+        createDBBurron.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        createDBBurron.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        createDBBurron.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createDBBurronActionPerformed(evt);
+            }
+        });
+        multipleImageToolBar.add(createDBBurron);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        multipleImageToolBar.add(jButton1);
+        loadDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        loadDBButton.setFocusable(false);
+        loadDBButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        loadDBButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        loadDBButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadDBButtonActionPerformed(evt);
+            }
+        });
+        multipleImageToolBar.add(loadDBButton);
 
-        jTextField1.setText("jTextField1");
-        multipleImageToolBar.add(jTextField1);
+        querryText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                querryTextActionPerformed(evt);
+            }
+        });
+        multipleImageToolBar.add(querryText);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        multipleImageToolBar.add(jButton3);
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        searchButton.setFocusable(false);
+        searchButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        searchButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
+        multipleImageToolBar.add(searchButton);
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
@@ -197,6 +216,65 @@ public class MainWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_classifyOneImageButtonActionPerformed
 
+    private void querryTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_querryTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_querryTextActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        String querry = this.querryText.getText();
+        
+        ClassificationDB results = db.search(querry);
+        
+        for(ImageClassification imageClass: results){
+            String path = imageClass.getImagePath();
+            
+            ClassificationFrame vi = new ClassificationFrame(this, path, this.classifier);
+            vi.setTitle(path);
+            this.showInternalFrame(vi);           
+        }
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void loadDBButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDBButtonActionPerformed
+        JFileChooser dlg = new JFileChooser();
+
+        int resp = dlg.showOpenDialog(this);
+        if (resp == JFileChooser.APPROVE_OPTION) {
+            try {
+                File f = dlg.getSelectedFile();
+                
+                String fileName = f.getName();
+                if(fileName.endsWith(".sridb")){
+                    db.load(f.getAbsolutePath());
+                }
+                else{
+                    //TODO: mensaje de error.
+                }
+            } catch (Exception ex) {
+                //TODO: Salida expection
+            }
+        }
+    }//GEN-LAST:event_loadDBButtonActionPerformed
+
+    private void createDBBurronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDBBurronActionPerformed
+        JFileChooser dlg = new JFileChooser();
+        dlg.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        
+        int resp = dlg.showOpenDialog(this);
+        if (resp == JFileChooser.APPROVE_OPTION) {
+            try {
+                File f = dlg.getSelectedFile();
+                String path = f.getAbsolutePath();
+                
+                ClassificationDB generatedDB = classifier.classifyFolder(path);
+                db = generatedDB;
+                generatedDB.save(path+"db.sridb");
+
+            } catch (Exception ex) {
+                //TODO: Salida expection
+            }
+        }
+    }//GEN-LAST:event_createDBBurronActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,15 +315,15 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem clasificador1MenuItem;
     private javax.swing.JMenu classifierMenu;
     private javax.swing.JButton classifyOneImageButton;
+    private javax.swing.JButton createDBBurron;
     private javax.swing.JDesktopPane desktopPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton loadDBButton;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JToolBar multipleImageToolBar;
     private javax.swing.JToolBar oneImageToolBar;
+    private javax.swing.JTextField querryText;
+    private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
 }

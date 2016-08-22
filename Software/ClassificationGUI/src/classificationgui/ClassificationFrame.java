@@ -5,8 +5,11 @@
  */
 package classificationgui;
 
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import sri.ClassifierManager;
+import sri.ImageClassification;
+import sri.SynsetDictionary;
 
 /**
  *
@@ -27,9 +30,22 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         this.parent = parent;
         this.imagePanel.setImage(imgPath);
         
-        this.label1.setText("Gato - 0.5");
-        this.label2.setText("Perro - 0.3");
+        ImageClassification classification = classifier.classifyImage(imgPath);
+        ArrayList<Integer> topClasses = classification.top(5);
         
+        SynsetDictionary dictionary = new SynsetDictionary();
+        dictionary.load();
+        
+        this.label1.setText(dictionary.searchByIdx(topClasses.get(0)).getConcept()
+                            +" - "+classification.get(0));
+        this.label2.setText(dictionary.searchByIdx(topClasses.get(1)).getConcept()
+                            +" - "+classification.get(1));
+        this.label3.setText(dictionary.searchByIdx(topClasses.get(2)).getConcept()
+                            +" - "+classification.get(2));
+        this.label4.setText(dictionary.searchByIdx(topClasses.get(3)).getConcept()
+                            +" - "+classification.get(3));
+        this.label5.setText(dictionary.searchByIdx(topClasses.get(4)).getConcept()
+                            +" - "+classification.get(4));        
     }
 
     /**
