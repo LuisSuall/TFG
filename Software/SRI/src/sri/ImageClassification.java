@@ -74,5 +74,49 @@ public class ImageClassification extends ArrayList<Double> {
             }
         }
     }
+
+    public ArrayList<Integer> top(int n){
+        ArrayList<Integer> bestResultsIdx = new ArrayList<>();
+        
+        for(int i=0; i<n; i++){
+            int bestIdx = -1;
+            double bestValue = -1.0;
+            
+            for(int j=0; j<this.size(); j++){
+                if(this.get(j) > bestValue && !bestResultsIdx.contains(j)){
+                    bestIdx = j;
+                    bestValue = this.get(j);
+                }
+            }
+            
+            bestResultsIdx.add(bestIdx);
+        }
+        
+        return bestResultsIdx;
+    }
+    
+    /**
+     * Returns the path to the image
+     * @return path
+     */
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    /**
+     * Returns the best classification class
+     * @return Index of the best class
+     */
+    public int getBestClass() {
+        return bestClass;
+    }
+
+    /**
+     * Returns the probability of the best class
+     * @return probability of the best class
+     */
+    public double getProbabilityBestClass() {
+        return probabilityBestClass;
+    }
     
 }
