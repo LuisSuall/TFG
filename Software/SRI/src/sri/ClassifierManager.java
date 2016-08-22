@@ -7,6 +7,8 @@
 package sri;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -111,10 +113,9 @@ public class ClassifierManager {
      */
     public ClassificationDB classifyImages(ArrayList<String> paths){
         ClassificationDB newDB = new ClassificationDB();
-        ImageClassification imageClassification;
         
         for(String path : paths){
-            imageClassification = classifyImage(path);
+            ImageClassification imageClassification = classifyImage(path);
             newDB.add(imageClassification);
         }
         
@@ -129,7 +130,28 @@ public class ClassifierManager {
      * @return ClassificationDB of the folder
      */
     public ClassificationDB classifyFolder(String folderPath) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        File folder = new File(folderPath);
+        ArrayList<String> paths = new ArrayList<>();
+        
+        if(folder.isDirectory()){
+            // create new filename filter
+            FilenameFilter filter= new FilenameFilter() {
+
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.endsWith(".jpg");
+                }
+            };
+            
+            String[] filesnames = folder.list(filter);
+            
+            for(String name: filesnames){
+                paths.add(folder.getAbsolutePath()+name);
+            }
+            return classifyImages(paths);
+        }
+        
+        return null;
     }
     
 }
