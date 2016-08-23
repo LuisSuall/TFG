@@ -150,7 +150,7 @@ public class ClassifierManager {
             String[] filesnames = folder.list(filter);
             
             for(String name: filesnames){
-                paths.add(folder.getAbsolutePath()+name);
+                paths.add(folder.getAbsolutePath()+"/"+name);
             }
             return classifyImages(paths);
         }

@@ -15,12 +15,17 @@ public class SRI {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        SynsetDictionary dict = new SynsetDictionary();
+        dict.load();
+
         ClassifierManager cl = new ClassifierManager();
-        ImageClassification img = cl.classifyImage("/home/luis/Caffe/caffe/examples/images/cat.jpg");
+        ClassificationDB db = cl.classifyFolder("/home/luis/TFG/Software/Ejemplos/");
         double sum = 0;
-        for(double value:img){
-            System.out.println(value);
-            sum +=value;
+        for(ImageClassification img:db){
+            System.out.println(img.getImagePath());
+            System.out.println(img.getBestClass());
+            System.out.println(img.getProbabilityBestClass());
+            System.out.println(dict.searchByIdx(img.getBestClass()).getConcept());
         }
         System.out.println("La suma es: "+Double.toString(sum));
     }

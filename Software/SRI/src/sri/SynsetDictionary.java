@@ -7,7 +7,6 @@ package sri;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.util.logging.Logger;
 
 public class SynsetDictionary extends ArrayList<SynsetInfo>{
 
-    private static final String DEFAULT_DICTIONARY_PATH = "/path/to/dictionary";
+    private static final String DEFAULT_DICTIONARY_PATH = "../synset_words.txt";
 
     /**
      * Default constructor.
@@ -86,7 +85,7 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
         File f = new File(path);
         
         try (FileReader fis = new FileReader(f);BufferedReader reader = new BufferedReader(fis)) {
-            String line = null;
+            String line;
             int idx = 0;
             while ((line = reader.readLine()) != null) {
                 ArrayList<String> splitedLine = splitInfo(line);

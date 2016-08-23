@@ -34,10 +34,8 @@ def main(argv):
 
     output = net.forward()
     output_prob = output['prob'][0]
-    f = open('tmp_file_prob', 'w')
 	
     for prob in output_prob:
-        f.write(str(prob)+'\n')
         print prob
 
 if __name__ == '__main__':

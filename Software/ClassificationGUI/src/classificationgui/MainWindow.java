@@ -123,6 +123,8 @@ public class MainWindow extends javax.swing.JFrame {
         });
         multipleImageToolBar.add(loadDBButton);
 
+        querryText.setMinimumSize(new java.awt.Dimension(100, 27));
+        querryText.setPreferredSize(new java.awt.Dimension(300, 27));
         querryText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 querryTextActionPerformed(evt);

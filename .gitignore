@@ -194,3 +194,7 @@ TSWLatexianTemp*
 
 # Weights of the classifiers
 *.caffemodel
+
+# Examples
+/Software/Ejemplos/
+

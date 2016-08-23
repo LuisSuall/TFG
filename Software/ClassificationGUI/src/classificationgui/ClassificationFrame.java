@@ -37,15 +37,15 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         dictionary.load();
         
         this.label1.setText(dictionary.searchByIdx(topClasses.get(0)).getConcept()
-                            +" - "+classification.get(0));
+                            +" - "+classification.get(topClasses.get(0)));
         this.label2.setText(dictionary.searchByIdx(topClasses.get(1)).getConcept()
-                            +" - "+classification.get(1));
+                            +" - "+classification.get(topClasses.get(1)));
         this.label3.setText(dictionary.searchByIdx(topClasses.get(2)).getConcept()
-                            +" - "+classification.get(2));
+                            +" - "+classification.get(topClasses.get(2)));
         this.label4.setText(dictionary.searchByIdx(topClasses.get(3)).getConcept()
-                            +" - "+classification.get(3));
+                            +" - "+classification.get(topClasses.get(3)));
         this.label5.setText(dictionary.searchByIdx(topClasses.get(4)).getConcept()
-                            +" - "+classification.get(4));        
+                            +" - "+classification.get(topClasses.get(4)));        
     }
 
     /**
