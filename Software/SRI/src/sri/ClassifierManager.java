@@ -8,9 +8,14 @@ package sri;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClassifierManager {
     
@@ -27,8 +32,8 @@ public class ClassifierManager {
      * Creates a ClassifierManager for the default model.
      */
     public ClassifierManager(){  
-        modelDefPath = "../Clasificador/caffenet_deploy.prototxt";
-        modelWeightsPath = "../Clasificador/caffenet_weights.caffemodel";
+        modelDefPath = "../Clasificadores/caffenet/deploy.prototxt";
+        modelWeightsPath = "../Clasificadores/caffenet/weights.caffemodel";
     }
 
     /**
@@ -87,18 +92,17 @@ public class ClassifierManager {
         BufferedReader stdInput = new BufferedReader(new 
             InputStreamReader(p.getInputStream()));
         
-        String s = null;
         ArrayList<Double> values = new ArrayList<>();
-        
+        String s;
         try{
             while ((s = stdInput.readLine()) != null) {
                 values.add(Double.parseDouble(s));
             }
         }
         catch(Exception e){
-            System.err.println("Exception calling bash scipt: " + e.getMessage());
+            System.err.println("Exception reading bash scipt: " + e.getMessage());
         }
-        
+
         ImageClassification imageClassification = new ImageClassification(imgPath,values);
 
         return imageClassification;

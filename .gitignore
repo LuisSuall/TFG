@@ -187,6 +187,10 @@ TSWLatexianTemp*
 /Software/SRI/build/
 /Software/ClassificationGUI/nbproject/private/
 /Software/ClassificationGUI/build/
+/Software/SRI/dist/
 
 # PDF
 *.pdf
+
+# Weights of the classifiers
+*.caffemodel

@@ -15,7 +15,14 @@ public class SRI {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ClassifierManager cl = new ClassifierManager();
+        ImageClassification img = cl.classifyImage("/home/luis/Caffe/caffe/examples/images/cat.jpg");
+        double sum = 0;
+        for(double value:img){
+            System.out.println(value);
+            sum +=value;
+        }
+        System.out.println("La suma es: "+Double.toString(sum));
     }
     
 }

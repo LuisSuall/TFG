@@ -38,6 +38,7 @@ def main(argv):
 	
     for prob in output_prob:
         f.write(str(prob)+'\n')
+        print prob
 
 if __name__ == '__main__':
     main(sys.argv)
