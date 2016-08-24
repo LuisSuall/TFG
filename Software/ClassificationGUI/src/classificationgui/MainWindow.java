@@ -225,6 +225,8 @@ public class MainWindow extends javax.swing.JFrame {
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String querry = this.querryText.getText();
         
+        System.out.println("Consulta: "+querry);
+        
         ClassificationDB results = db.search(querry);
         
         for(ImageClassification imageClass: results){
@@ -244,12 +246,14 @@ public class MainWindow extends javax.swing.JFrame {
             try {
                 File f = dlg.getSelectedFile();
                 
-                String fileName = f.getName();
+                String fileName = f.getAbsolutePath();
+
                 if(fileName.endsWith(".sridb")){
-                    db.load(f.getAbsolutePath());
+                    db = new ClassificationDB();
+                    db.load(fileName);
                 }
                 else{
-                    //TODO: mensaje de error.
+                    //TODO
                 }
             } catch (Exception ex) {
                 //TODO: Salida expection
@@ -269,7 +273,8 @@ public class MainWindow extends javax.swing.JFrame {
                 
                 ClassificationDB generatedDB = classifier.classifyFolder(path);
                 db = generatedDB;
-                generatedDB.save(path+"db.sridb");
+
+                generatedDB.save(path+"/db.sridb");
 
             } catch (Exception ex) {
                 //TODO: Salida expection

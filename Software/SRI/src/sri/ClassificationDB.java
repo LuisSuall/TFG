@@ -56,6 +56,7 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
      */
     public ClassificationDB search(String concept, int n){        
         SynsetDictionary synsetDictionary = new SynsetDictionary();
+        synsetDictionary.load();
         
         SynsetInfo synsetInfo = synsetDictionary.searchByConcept(concept);
         
@@ -159,11 +160,10 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
             
             for(ImageClassification img: loadedData){
                 this.add(img);
-            }
-            
+            }   
         }
         catch(IOException e){
-            System.err.println("Exception saving DB: " + e.getMessage());            
+            System.err.println("Exception loading DB: " + e.getMessage());            
         } catch (ClassNotFoundException e) {
             Logger.getLogger(ClassificationDB.class.getName()).log(Level.SEVERE, null, e);
         }
