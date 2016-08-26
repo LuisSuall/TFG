@@ -232,7 +232,7 @@ public class MainWindow extends javax.swing.JFrame {
         for(ImageClassification imageClass: results){
             String path = imageClass.getImagePath();
             
-            ClassificationFrame vi = new ClassificationFrame(this, path, this.classifier);
+            ImageFrame vi = new ImageFrame(this, path);
             vi.setTitle(path);
             this.showInternalFrame(vi);           
         }
