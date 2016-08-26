@@ -87,7 +87,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         oneImageToolBar.setRollover(true);
 
-        classifyOneImageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        classifyOneImageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
         classifyOneImageButton.setFocusable(false);
         classifyOneImageButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         classifyOneImageButton.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -101,7 +101,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         multipleImageToolBar.setRollover(true);
 
-        createDBBurron.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        createDBBurron.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/db_create.png"))); // NOI18N
         createDBBurron.setFocusable(false);
         createDBBurron.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         createDBBurron.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -112,7 +112,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         multipleImageToolBar.add(createDBBurron);
 
-        loadDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        loadDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/db_load.png"))); // NOI18N
         loadDBButton.setFocusable(false);
         loadDBButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         loadDBButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -132,7 +132,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         multipleImageToolBar.add(querryText);
 
-        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/test-icon-30.png"))); // NOI18N
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search_db.png"))); // NOI18N
         searchButton.setFocusable(false);
         searchButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         searchButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

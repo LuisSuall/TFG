@@ -1,5 +1,5 @@
-CAFFE_PATH=/home/luis/Caffe/caffe/
-MEAN_PATH=/home/luis/Caffe/caffe/python/caffe/imagenet/ilsvrc_2012_mean.npy
+CAFFE_PATH=/home/luis/caffe/
+MEAN_PATH=/home/luis/TFG/Software/ilsvrc_2012_mean.npy
 
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 export PATH=/usr/local/cuda/bin:$PATH

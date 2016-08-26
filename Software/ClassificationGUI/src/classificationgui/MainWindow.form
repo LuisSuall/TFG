@@ -36,7 +36,7 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Aplicaci&#xf3;n de Clasificaci&#xf3;n Autom&#xe1;tica"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Cursor Por defecto"/>
+      <Color id="Default Cursor"/>
     </Property>
     <Property name="name" type="java.lang.String" value="mainWindow" noResource="true"/>
   </Properties>
@@ -101,7 +101,7 @@
             <Component class="javax.swing.JButton" name="classifyOneImageButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/icons/test-icon-30.png"/>
+                  <Image iconType="3" name="/icons/analyse_img.png"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -126,7 +126,7 @@
             <Component class="javax.swing.JButton" name="createDBBurron">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/icons/test-icon-30.png"/>
+                  <Image iconType="3" name="/icons/db_create.png"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -139,7 +139,7 @@
             <Component class="javax.swing.JButton" name="loadDBButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/icons/test-icon-30.png"/>
+                  <Image iconType="3" name="/icons/db_load.png"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -165,7 +165,7 @@
             <Component class="javax.swing.JButton" name="searchButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/icons/test-icon-30.png"/>
+                  <Image iconType="3" name="/icons/search_db.png"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
