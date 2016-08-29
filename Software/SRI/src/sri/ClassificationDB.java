@@ -58,9 +58,49 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
         SynsetDictionary synsetDictionary = new SynsetDictionary();
         synsetDictionary.load();
         
-        SynsetInfo synsetInfo = synsetDictionary.searchByConcept(concept);
+        ArrayList<SynsetInfo> synsetInfoList = synsetDictionary.search(concept);
+        ArrayList<Integer> idxList = new ArrayList<>();
         
-        return searchByIdx(synsetInfo.getIdx(),n);
+        for(SynsetInfo synset: synsetInfoList){
+            idxList.add(synset.getIdx());
+        }
+        
+        return search(idxList,n);
+    }
+    
+    /**
+     * Searches for the best classified images in the DB by a list of index.
+     * 
+     * @param idxList list of index
+     * @param n number of images to search
+     * @return new ClassificationDB with the best images 
+     */
+    public ClassificationDB search(ArrayList<Integer> idxList, int n){
+        ArrayList<Integer> bestResultsIdx = new ArrayList<>();
+        
+        for(int i=0; i<n; i++){
+            int bestIdx = -1;
+            double bestValue = -1.0;
+            
+            for(int j=0; j<this.size(); j++){
+                ImageClassification imgClass = this.get(j);
+                int bestClass = imgClass.getBestClass(idxList);
+                if(imgClass.get(bestClass) > bestValue && !bestResultsIdx.contains(j)){
+                    bestIdx = j;
+                    bestValue = imgClass.get(bestClass);
+                }
+            }
+            
+            bestResultsIdx.add(bestIdx);
+        }
+        
+        ClassificationDB searchResult = new ClassificationDB();
+        
+        for(int i: bestResultsIdx){
+            searchResult.add(this.get(i));
+        }
+        
+        return searchResult;
     }
     
     /**

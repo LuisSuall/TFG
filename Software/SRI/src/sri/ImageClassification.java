@@ -110,6 +110,25 @@ public class ImageClassification extends ArrayList<Double> {
     public int getBestClass() {
         return bestClass;
     }
+    
+    /**
+     * Returns the best classification class of a set list of classes
+     * @param idxList list of classes
+     * @return Index of the best class
+     */
+    public int getBestClass(ArrayList<Integer> idxList){
+        int bestIdx = -1;
+        double max = -1;
+        
+        for(int idx : idxList){
+            if(this.get(idx)>max){
+                bestIdx = idx;
+                max = this.get(idx);
+            }
+        }
+        
+        return bestIdx;
+    }
 
     /**
      * Returns the probability of the best class

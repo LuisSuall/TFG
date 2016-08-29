@@ -34,6 +34,23 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
     }
     
     /**
+     * Returns a list of synset information that contains a concept.
+     * 
+     * @param concept concept to search
+     * @return list of synset that contains the concept
+     */
+    public ArrayList<SynsetInfo> search(String concept){
+        ArrayList<SynsetInfo> result = new ArrayList<>();
+        
+        for(SynsetInfo synset : this){
+            if(synset.getConcept().contains(concept))
+                result.add(synset);
+        }
+        
+        return result;
+    }
+    
+    /**
      * Returns the synset information of a concept.
      * 
      * @param concept concept to search
