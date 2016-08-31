@@ -1,7 +1,135 @@
 \section{Fundamentos de la lógica difusa}
 
+Es común pensar que una persona que mide un metro con ochenta y cinco centímetros es una persona alta. Pero, ¿cuándo una persona deja de ser alta? ¿Ese cambio es brusco? ¿Todas las personas tienen la misma clasificación de persona alta? En el razonamiento humano usual, no todos los hechos son ciertos o falsos, si no que hay matices e incluso diferentes puntos de vista. Aún así, utilizamos estos conceptos imprecisos para razonar, proporcionando al ser humano una gran capacidad de razonamiento, y de adaptar ese razonamiento a la situación.\\
+
+Han habido varios intentos de modelizar este fenómeno. Entre ellos, encontramos a la lógica difusa, formulada por Lofti A. Zadeh en 1965\todo[color=red!50]{añadir cita}. Este matemático e ingeniero azerbaiyano, basó la lógica difusa en la teoría de conjuntos ordinaria, añadiendo a esta un grado de pertenencia de los elementos al conjunto, en vez de la información binaria de los conjuntos ordinarios, es decir, si un elemento pertenece o no al conjunto sin niveles intermedios.\\
+
+Esta breve introducción a la lógica difusa de Zadeh describirá los conceptos necesarios para poder definir en la siguiente sección propiedades difusas sobre las formas. En concreto se tratará la definición de conjunto difuso y las operaciones básicas con conjuntos difusos.\\
+
 \subsection{Conjuntos difusos}
 
 \subsection{Operaciones básicas con conjuntos difusos}
+
+La extensión de los conjuntos usuales a conjuntos difusos no tendría sentido sin la existencia de operadores básicos para los conjuntos difusos. Por tanto, se pretende extender también de las operaciones principales sobre conjuntos. Las extensiones pueden realizarse de diversas formas, con la condición de que deben comportarse como los operadores ordinarios cuando los conjuntos implicados son ordinarios. Las familias de operadores difusos más importantes son las \textit{t}-normas que extienden a las uniones, las \textit{t}-conormas, que extienden a la unión y las negaciones, que extienden al complemento.\\
+
+\subsubsection{Operadores de intersección: \textit{t}-normas}
+
+Una \textit{t}-norma es una función
+
+\[
+\ i: [0,1] \times [0,1] \longrightarrow [0,1]
+\]
+
+que verifica las siguientes propiedades para todo $a,b,c \in [0,1]$:
+
+\begin{itemize}
+\item \textbf{Frontera:} $i(a,1) = a$.
+\item \textbf{Monotonía:} $b \leq c \Rightarrow i(a,b) \leq i(a,c)$.
+\item \textbf{Conmutatividad:} $i(a,b) = i(b,a)$.
+\item \textbf{Asociatividad:} $i(a,i(b,c)) = i(i(a,b),c)$.
+\end{itemize}
+
+Dentro de esta familia de funciones, las más utilizadas usualmente son:
+
+\begin{itemize}
+\item \textbf{Mínimo:} $i(a,b)= min(a,b)$.
+\item \textbf{Producto algebraico:} $i(a,b)= ab$.
+\item \textbf{Recta acortada (Lukasiewicz):} $i(a,b)= max(0,a+b-1)$.
+\item \textbf{Intersección drástica:} $i(a,b)= \left\lbrace
+  \begin{array}{l}
+     b \qquad a = 1 \\
+     a \qquad b = 1 \\
+     0 \qquad \textrm{ en otro caso }
+  \end{array}
+  \right.$.
+\end{itemize}
+
+Gracias a cualquiera de las \textit{t}-normas, podemos definir la intersección de dos conjuntos difusos $A$ y $B$ de la siguiente forma:
+
+\[
+\ (A\cap B)(x)= i(A(x),B(x)).
+\]
+
+Destacar que la \textit{t}-norma más usada con diferencia, la del mínimo, cumple otra serie de propiedades que cumple la intersección de conjuntos ordinarios.
+
+\todo[inline, color=red!50]{Añadir propiedades del Ross}
+
+\subsubsection{Operadores de unión: \textit{t}-conormas}
+
+Una \textit{t}-conorma es una función
+
+\[
+\ u: [0,1] \times [0,1] \longrightarrow [0,1]
+\]
+
+que verifica las siguientes propiedades para todo $a,b,c \in [0,1]$:
+
+\begin{itemize}
+\item \textbf{Frontera:} $u(a,0) = a$.
+\item \textbf{Monotonía:} $b \leq c \Rightarrow u(a,b) \leq u(a,c)$.
+\item \textbf{Conmutatividad:} $u(a,b) = u(b,a)$.
+\item \textbf{Asociatividad:} $u(a,u(b,c)) = u(u(a,b),c)$.
+\end{itemize}
+
+Dentro de la familia de funciones de las \textit{t}-conormas, las más utilizadas usualmente son:
+
+\begin{itemize}
+\item \textbf{Máximo:} $i(a,b)= max(a,b)$.
+\item \textbf{Suma algebraica:} $u(a,b)= a+b-ab$.\todo[color=blue!40]{Sure?}
+\item \textbf{Suma acortada (Lukasiewicz):} $u(a,b)= min(1,a+b)$.
+\item \textbf{Intersección drástica:} $u(a,b)= \left\lbrace
+  \begin{array}{l}
+     b \qquad a = 0 \\
+     a \qquad b = 0 \\
+     1 \qquad \textrm{ en otro caso }
+  \end{array}
+  \right.$.
+\end{itemize}
+
+Gracias a cualquiera de las \textit{t}-conormas, podemos definir la unión de dos conjuntos difusos $A$ y $B$ de la siguiente forma:
+
+\[
+\ (A \cup B)(x)= u(A(x),B(x)).
+\]
+
+Al igual que con las \textit{t}-normas, destacar que la \textit{t}-conorma más usada, la del máximo, cumple otra serie de propiedades que cumple la unión de conjuntos ordinarios.
+
+\todo[inline, color=red!50]{Añadir propiedades del Ross}
+
+\subsubsection{Operadores de complemento: negaciones}
+
+Una negación es una función
+
+\[
+\ c: [0,1] \longrightarrow [0,1]
+\]
+
+que verifica las siguientes propiedades para todo $a,b \in [0,1]$:
+\begin{itemize}
+\item \textbf{Frontera:} $c(0) = 1$ y $c(1) = 0$.
+\item \textbf{Monotonía:} $a \leq b \Rightarrow c(b) \leq c(a)$.
+\end{itemize}
+
+Dentro de la familia de funciones de las \textit{t}-conormas, las más utilizadas usualmente son:
+
+\begin{itemize}
+\item \textbf{Negación estandar:} $c(a)= 1-a$.
+\item \textbf{Negación umbral:} $c(a)= \left\lbrace
+  \begin{array}{l}
+     1 \qquad a \geq t \\
+     0 \qquad a < t \\
+  \end{array}
+  \right. , \textrm{con } t\in [0,1]$.
+\end{itemize}
+
+Gracias a cualquiera de las negaciones, podemos definir el complemento de un conjunto difusos $A$ de la siguiente forma:
+
+\[
+\ \bar{A}(x)= c(A(x)).
+\]
+
+Normalmente, dentro de las negaciones, se elige la negación estándar por sus buenas propiedades, como por ejemplo ser continua e involutiva, es decir, $c\left(c\left(a\right)\right)=a$, para todo $a \in [0,1]$ .
+
+\todo[inline, color=red!50]{Añadir propiedades del Ross}
 
 %\subsection{Lógica difusa}
