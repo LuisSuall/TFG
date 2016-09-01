@@ -1,12 +1,50 @@
 \section{Fundamentos de la lógica difusa}
+\todo[inline,color=red!50]{Citar a Belén}
+Es común pensar que una persona que mide un metro con ochenta y cinco centímetros es una persona alta. Pero, ¿cuándo una persona deja de ser alta? ¿Ese cambio es brusco? ¿Todas las personas tienen la misma clasificación de persona alta? En el razonamiento humano usual, no todos los hechos son ciertos o falsos, si no que hay matices e incluso diferentes puntos de vista. Se puede considerar que la información puede ser:
 
-Es común pensar que una persona que mide un metro con ochenta y cinco centímetros es una persona alta. Pero, ¿cuándo una persona deja de ser alta? ¿Ese cambio es brusco? ¿Todas las personas tienen la misma clasificación de persona alta? En el razonamiento humano usual, no todos los hechos son ciertos o falsos, si no que hay matices e incluso diferentes puntos de vista. Aún así, utilizamos estos conceptos imprecisos para razonar, proporcionando al ser humano una gran capacidad de razonamiento, y de adaptar ese razonamiento a la situación.\\
+\begin{itemize}
+\item \textbf{Incompleta:} Describe parcialmente la realidad.
+\item \textbf{Imprecisa:} El valor de una variable se encuentra en un conjunto de valores pero no podemos precisar cual es.
+\item \textbf{Incierta:} No tenemos total certeza de que la información sea verdadera.
+\end{itemize}
 
-Han habido varios intentos de modelizar este fenómeno. Entre ellos, encontramos a la lógica difusa, formulada por Lofti A. Zadeh en 1965\todo[color=red!50]{añadir cita}. Este matemático e ingeniero azerbaiyano, basó la lógica difusa en la teoría de conjuntos ordinaria, añadiendo a esta un grado de pertenencia de los elementos al conjunto, en vez de la información binaria de los conjuntos ordinarios, es decir, si un elemento pertenece o no al conjunto sin niveles intermedios.\\
+Aún así, el ser humano utiliza estos conceptos imprecisos para razonar, proporcionando al una gran capacidad de razonamiento, y de adaptar ese razonamiento a la situación.\\
+
+Han habido varios intentos de modelizar este fenómeno. Entre ellos, encontramos la Teoría de Conjuntos Difusos, formulada por Lofti A. Zadeh en 1965\cite{Zadeh-Fuzzy-1965}. Este matemático e ingeniero azerbaiyano, basó la lógica difusa en la teoría de conjuntos ordinaria, añadiendo a esta un grado de pertenencia de los elementos al conjunto, en vez de la información binaria de los conjuntos ordinarios, es decir, si un elemento pertenece o no al conjunto sin niveles intermedios.\\
 
 Esta breve introducción a la lógica difusa de Zadeh describirá los conceptos necesarios para poder definir en la siguiente sección propiedades difusas sobre las formas. En concreto se tratará la definición de conjunto difuso y las operaciones básicas con conjuntos difusos.\\
 
 \subsection{Conjuntos difusos}
+
+Un conjunto difuso sobre un universo X es una generalización del concepto clásico de conjunto en el que la función que indica si un elemento pertenece o no al conjunto, la función indicadora, tiene como rango el intervalo real [0,1], en vez del conjunto {0,1}. Por tanto, el conjunto difuso $A$ viene descrito por la función indicadora $\mu_A$:
+
+\[
+\ \mu_A : X \longrightarrow [0,1].
+\]
+
+En el contexto de la teoría de subconjuntos difusos, se denomina función de pertenencia a la función indicadora. Por lo general, se suele identificar al conjunto difuso con su función de pertenencia. Seguiremos la siguiente notación:
+
+\[
+\ A : X \longrightarrow [0,1]
+\]
+
+donde, siendo $x \in X$, $A(x)$ representa el grado de pertenencia del elemento $x$ al conjunto difuso $A$.\\
+
+Algunos conceptos básicos sobre conjuntos difusos son:
+
+\begin{itemize}
+\item Un conjunto difuso $A$ se dice \textit{normal} si existe al menos un $x \in X$ tal que $A(x)=1$.
+\item Se llama \textit{soporte} del conjunto difuso $A$ al conjunto
+
+\[
+\ Sop(A) = \lbrace x \in X | A(x) > 0 \rbrace.
+\] 
+\item Se llama \textit{núcleo} del conjunto difuso $A$ al conjunto
+
+\[
+\ Ker(A) = \lbrace x \in X | A(x) = 1 \rbrace.
+\] 
+\end{itemize}
 
 \subsection{Operaciones básicas con conjuntos difusos}
 
@@ -50,10 +88,6 @@ Gracias a cualquiera de las \textit{t}-normas, podemos definir la intersección 
 \ (A\cap B)(x)= i(A(x),B(x)).
 \]
 
-Destacar que la \textit{t}-norma más usada con diferencia, la del mínimo, cumple otra serie de propiedades que cumple la intersección de conjuntos ordinarios.
-
-\todo[inline, color=red!50]{Añadir propiedades del Ross}
-
 \subsubsection{Operadores de unión: \textit{t}-conormas}
 
 Una \textit{t}-conorma es una función
@@ -92,10 +126,6 @@ Gracias a cualquiera de las \textit{t}-conormas, podemos definir la unión de do
 \ (A \cup B)(x)= u(A(x),B(x)).
 \]
 
-Al igual que con las \textit{t}-normas, destacar que la \textit{t}-conorma más usada, la del máximo, cumple otra serie de propiedades que cumple la unión de conjuntos ordinarios.
-
-\todo[inline, color=red!50]{Añadir propiedades del Ross}
-
 \subsubsection{Operadores de complemento: negaciones}
 
 Una negación es una función
@@ -113,7 +143,7 @@ que verifica las siguientes propiedades para todo $a,b \in [0,1]$:
 Dentro de la familia de funciones de las \textit{t}-conormas, las más utilizadas usualmente son:
 
 \begin{itemize}
-\item \textbf{Negación estandar:} $c(a)= 1-a$.
+\item \textbf{Negación estándar:} $c(a)= 1-a$.
 \item \textbf{Negación umbral:} $c(a)= \left\lbrace
   \begin{array}{l}
      1 \qquad a \geq t \\
@@ -130,6 +160,38 @@ Gracias a cualquiera de las negaciones, podemos definir el complemento de un con
 
 Normalmente, dentro de las negaciones, se elige la negación estándar por sus buenas propiedades, como por ejemplo ser continua e involutiva, es decir, $c\left(c\left(a\right)\right)=a$, para todo $a \in [0,1]$ .
 
-\todo[inline, color=red!50]{Añadir propiedades del Ross}
+\subsubsection{Propiedades de los operadores estándar}
+
+El operador estándar de intersección, el mínimo, tiene la interesante propiedad de producir la mayor la función de pertenencia de todas las \textit{t}-normas \todo[color=red!50]{Cita a Ross}. De modo similar, el operadodr estándar de unión, el máximo, tiene la propiedad de producir la menor función de pertenencia de todas las \textit{t}-conormas. Estas propiedades tienen su importancia ya que previenen del empeoramiento de los errores en los operandos. La mayoría de otras \textit{t}-normas y \textit{t}-conormas no tienen esta ventaja.\\
+
+Utilizando los operadores estándar podemos encontrar propiedades adicionales, similares a las que cumplen los conjuntos ordinarios. Destacar la propiedad distriburiva y las leyes de De Morgan. Siendo $A$, $B$ y $C$ conjuntos difusos:
+
+\begin{itemize}
+\item \textbf{Leyes de De Morgan:}
+\[
+\ \overline{A \cup B} = \overline{A} \cap \overline{B}
+\]
+\[
+\ \overline{A \cap B} = \overline{A} \cup \overline{B}
+\]
+\item \textbf{Propiedad distributiva:}
+\[
+\ C \cap \left( A \cup B \right) = \left(C \cap A \right) \cup \left(C \cap B \right)
+\]
+\[
+\ C \cup \left( A \cap B \right) = \left(C \cup A \right) \cap \left(C \cup B \right)
+\]
+\end{itemize}
+
+Pero no podemos obtener todas las propiedades usuales de los conjuntos ordinarios. Por ejemplo, siendo $A$ un conjunto difuso, las propiedades
+
+\[
+\ A \cup \overline{A} = X
+\]
+\[
+\ A \cap \overline{A} = \emptyset
+\]
+
+no se cumplen. Dado $x \in X$ y supongamos que $A(x)=\frac{1}{2}$, se cumple $\left( A \cup \overline{A} \right) (x) = \left( A \cap \overline{A} \right) (x) = A(x)$. Por tanto, tenemos un contrajemplo, que nos hace descartar las propiedades anteriores.\\
 
 %\subsection{Lógica difusa}
