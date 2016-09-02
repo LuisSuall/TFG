@@ -2,18 +2,19 @@
 
 En las secciones anteriores se ha explicado las bases del aprendizaje automático y del modelo que se va a utilizar para el objetivo final de la clasificación automática de imágenes. En esta sección se detallarán los componentes principales del sistema final de clasificación adoptado.\\
 
-Por tanto, tenemos que definir los conceptos a aprender y el conjunto de entrenamiento. Así, se describirá la base de datos ``ImageNet''\todo[color=red!50]{Citar a Imagenet}, la competición ILSVRC\todo[color=red!50]{Citar a ILSVRC} y el modelo adoptado, una adaptación del modelo Alexnet\todo[color=red!50]{Citar a alexnet}.\\
+Por tanto, tenemos que definir los conceptos a aprender y el conjunto de entrenamiento. Así, se describirá la base de datos ``ImageNet''\todo[color=red!50]{Citar a Imagenet} y la competición ILSVRC\todo[color=red!50]{Citar a ILSVRC}. Además, se hablará de la librería usada para el entrenamiento, Caffe \todo[color=red!50]{citar Caffe} y el modelo adoptado, una adaptación del modelo Alexnet\todo[color=red!50]{Citar a alexnet}.\\
 
 \subsection{ImageNet e ILSVRC}
 
-\todo[inline,color=red!50]{Revisar parrafo que está escrito así así xD}
-ImageNet es una base de datos de imágenes organizada según la jerarquía definida en WordNet, mantenida por las universidades de Standford y Princeton. Cada concepto en WordNet se clasifica en un ``conjunto de sinónimos'', llamado en la base de datos como ``synset''.  ImageNet cuenta con una media de 500 imágenes por nodo o synset no vacío. Las imágenes pasan un control de calidad y son anotadas por humanos. El objetivo es disponer de una base de datos de alta calidad, que contenga en torno a mil imágenes por concepto dentro de la jerarquía de Wordnet, que tiene en la actualidad más de 100.000 synsets.\\
+ImageNet es una base de datos de imágenes  mantenida por las universidades de Standford y Princeton. Las imágenes se organizan según la jerarquía definida en WordNet. En WordNet, cada concepto se clasifica dentro de un ``conjunto de sinónimos'' determinado, también conocido como ``synset''. ImageNet, por tanto, divide sus imágenes por synsets, teniendo según su página web 14.197.122 imágenes de 21.841 synsets diferentes. Las imágenes pasan un control de calidad y son anotadas por humanos. El objetivo es disponer de una base de datos de alta calidad, que contenga en torno a mil imágenes por concepto dentro de la jerarquía de Wordnet, que tiene en la actualidad más de 100.000 synsets.\\
 
 El fin de esta base de datos es facilitar la tarea de la investigación en el campo de las imágenes y la visión por computador. Es claro que para poder realizar una buena investigación, se necesita una buena fuente de información. Por tanto, para poder afrontar el problema de la clasificación de imágenes a gran escala, se hace necesaria una base de datos a gran escala. Con la motivación de crear una gran base de datos para este tipo de problemas, nació ImageNet.\\
 
-ImageNet no posee los derechos de las imágenes contenidas en la base de datos. Por ello, lo único que pueden dar es el enlace a la imagen, de manera similar a los buscadores de imágenes. Sin embargo, las base de datos está completamente disponible para investigadores y docentes que usen las imágenes con fines no comerciales.\\
+ImageNet no posee los derechos de las imágenes contenidas en la base de datos. Por ello, lo único que pueden dar de manera abierta es el enlace a la imagen, de manera similar a los buscadores de imágenes. Sin embargo, las base de datos está completamente disponible para investigadores y docentes que usen las imágenes con fines no comerciales.\\
 
-Dentro de ImageNet...\\
+Dentro de ImageNet, existe una competición llamada ImageNet Large Scale Visual Recognition Competition (ILSVRC). Aunque ahora la competición tiene varias modalidades distintas para competir, desde sus inicios el problema principal ha sido el de clasificar imágenes dentro de 1.000 categorías distintas. Estas categorías representan un marco muy amplio, podemos encontrar desde material de oficina como impresoras a una gran variedad de animales.\\
+
+Dada esta variedad tan amplia, y a ser un problema conocido, se ha tomado los datos de esta competición, en concreto la edición de 2012, para realizar el aprendizaje de nuestro modelo.\\
 
 \subsection{Modelo utilizado}
 

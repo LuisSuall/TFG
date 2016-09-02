@@ -1,7 +1,29 @@
 \section{Fundamentos de las redes neuronales convolucionales}
-%Breve introducción
+Desde el punto de vista del aprendizaje automático, se ha abordado con múltiples herramientas y modelos el problema de la clasificación automática de imágenes. Los avances sucedidos en el campo, también han tenido un efecto en dentro de la clasificación automática de imágenes. Dentro de esos avances, hay que destacar la aparición de la técnica ``Back Propagation'' que hizo posible el entrenamiento de redes neuronales de gran profundidad. Este tipo de modelos, que tratan de imitar el comportamiento de un cerebro, han producido un gran avance en este campo.\\
+
+Las redes neuronales convolucionales, dan un paso más allá, obteniendo grandes resultados en los tipos de datos en el que la información de un punto está especialmente vinculada a la de sus vecinos, como pasa en las imágenes.\\
+ 
+Dada la gran utilidad e importancia de este modelo concreto para la tarea, se definirán sus componentes, y se realizará una pequeña comparación con las redes neuronales usuales para tratar de mostrar sus ventajas.\\
 
 \subsection{Definición de neurona artificial}
+
+Por ser un modelo bioinspirado, primero es necesario conocer el funcionamiento básico de una neurona natural. Las neuronas son la unidad básica de nuestro cerebro. En él, podemos encontrar aproximadamente 86 mil millones de neuronas, conectadas en entre ellas mediante $10^{14}$ y $10^{15}$ sinapsis. En la figura \todo[color=red!50]{Figura de una neurona al canto} podemos ver las diferentes partes de una neurona. Las dendritas funcionan como la entrada de información por medio de la sinapsis con otras neuronas. El impulso es transmitido al núcleo de la neurona y tras esto, la señal de salida es emitida por el axión hacia otras neuronas. Estudiaremos el proceso paso a paso definiendo en cada momento el equivalente de la neurona artificial, para llegar a la fórmula final que la representa.\\
+
+La entrada de una neurona artificial será por tanto un conjunto de valores $\left\lbrace x_1,x_2,\ldots,x_N\right\rbrace$ con $x_n \in \mathbb{R}$, para $n = 1,\ldots,N$. Las dendritas de la neurona, pueden ser excitadas, facilitando la activación de la neurona o inhibidas, dificultándolo. Para simular esto, se añaden una serie de pesos $\left\lbrace w_1,w_2,\ldots,w_N\right\rbrace$ con $w_n \in \mathbb{R}$, para $n = 1,\ldots,N$, que multiplicarán a las entradas y un valor adicional $b \in \mathbb{R}$, llamado bías, que representa la facilidad de la neurona para activarse. Los pesos y el bías son de una gran importancia para el aprendizaje de la red, pues una vez definida la red, son los únicos elementos que se puede aprender. Esto simula también el aprendizaje humano, que se realiza mediante el cambio de comportamiento de las neuronas y de como se afectan unas a otras, haciendo que puedan pasar a inhibir, excitar o incluso a desaparecer el enlace por carecer de importancia, simulado en las redes neuronales como un peso 0.\\
+
+Tras esto núcleo de la neurona combina las entradas que recibe. En el modelo de la neurona artificial, esta combinación se realiza mediante la suma de las entradas, es decir: $$\sum^N_{n=1} x_n w_n + b. $$
+
+La activación de la neurona es un proceso brusco. Si pasa de un umbral, se activa. Podríamos modelar esto con una función escalón, que devuelva el valor 0 si la combinación es menor que un umbral $\mu$ y devuelva al valor 1 se es superior. Sin embargo, esta función tiene un gran problema que hace que no se use, y es no ser continua. El método de entrenamiento de este tipo de redes es un descenso del gradiente. Por tanto es necesario poder calcular el gradiente de la función de activación, forzándola a ser por lo menos derivable.\\
+
+Aún así, seguimos buscamos funciones que rápidamente pasen de un estado a otro. Se pueden utilizar varias funciones para esto, como por ejemplo la tangente hiperbólica, pero la función más utilizada tiende a ser la sigmoide, $\sigma(x)$ definida de la siguiente manera:
+
+$$\sigma: \mathbb{R}\longrightarrow (0,1)$$
+$$\sigma(x)= \frac{1}{1+e^{-t}}$$
+
+Juntando todos los elementos, representamos una neurona artificial mediante la siguiente ecuación:
+
+$$\sigma \left( \sum^N_{n=1} x_n w_n + b. \right).$$
+
 \subsection{Redes Neuronales}
 \subsection{Back Propagation y Deep Learning}
 \subsection{Redes neuronales convolucionales}
