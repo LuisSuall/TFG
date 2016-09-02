@@ -37,7 +37,20 @@ El caso del aprendizaje no supervisado es en el que los datos no contienen ningu
 Además de su utilidad propia para detectar patrones y estructuras ocultas dentro de los datos, se puede utilizar como fase previa para un proceso de aprendizaje supervisado \todo[color=red!50]{Cita Lecun de la Nature} para mejorar el comportamiento final del sistema.\\
 
 \subsection{Componentes del Aprendizaje Automático}
+
+Empecemos con un ejemplo de un caso de aprendizaje automático, para poder dividirlo en sus diferentes componentes. Supongamos un banco que quiere procesar de manera automática la concesión de créditos a sus usuarios. El banco no conoce la fórmula para aceptar o no los créditos, pero sí tiene una gran base de datos de operaciones ya realizadas.\\
+
+Por tanto, siendo x la información de una nueva petición de crédito, el objetivo es encontrar la función desconocida $f: \mathcal{X} \rightarrow \mathcal{Y}$ donde $\mathcal{X}$ es el espacio de entrada, todas las posibles peticiones de crédito e $\mathcal{Y}$ todas las posibles salidas, en este caso sí o no, según se acepte o no el crédito. Disponemos de un conjunto de datos $\mathcal{D}$ formado por parejas de ejemplos de entrada y salida $(x_1,y_1),\ldots,(x_N,y_N)$, donde $f(x_n)=y_n, $ para $ n = 1,\ldots,N$. Existe también un conjunto de funciones $\mathcal{H}$, conocido como el conjunto de hipótesis, que es el conjunto de funciones que consideramos para aproximar a la función desconocida $f$. Por último, tenemos un algoritmo de aprendizaje que trata de obtener la función $g$ dentro de $\mathcal{H}$, con el objetivo de aproximar $f$.\\
+
+Las nuevas peticiones de crédito serán evaluadas mediante la función $g$, no con la función $f$ que es desconocida. Por tanto, el buen resultado del sistema depende de la capacidad de $g$ en aproximar a $f$, luego el algoritmo de aprendizaje tratará de buscar la función $g$ que mejor aproxima a $f$ dentro de los datos de entrenamiento, $\mathcal{D}$. Tras esto, solo queda esperar que pueda aproximar bien los datos fuera de la muestra de entrenamiento, de lo que no tenemos ninguna información.\\
+
 \subsection{¿Es posible aprender?}
+
+La función $f$ es el objetivo del aprendizaje. La restricción más importante sin duda es la de ser completamente desconocida. Esto genera preguntas rápidamente, siendo quizás la primera que puede venir a la mente la que da título a este apartado. ¿Es posible aprender mediante un conjunto de ejemplos?\\
+
+Todos recordamos los pequeños puzzles consistentes en encontrar los siguientes números de una sucesión dada, encontrando la función que los genera. Pero estos puzzles requieren claramente una cantidad suficiente de información para obtener la respuesta. Un ejemplo de esta necesidad sería la sucesión ${2,4,\ldots}$. Con tan poca información, se nos pueden ocurrir muchas explicaciones distintas, y por tanto continuaciones distintas a la sucesión, siendo quizás las dos más evidentes la de ser todos los números pares o la de ser potencias de 2.\\
+
+Esto se debe claramente a que hay más de una función que puede generar ese fragmento de la sucesión. Este simple ejemplo pone en entredicho la posibilidad de aprender. Y para complicar más las cosas, este ejemplo no es una excepción.
 \subsection{Error y ruido}
 \subsection{Medidas de bondad del aprendizaje}
 \subsection{Sobreaprendizaje}
