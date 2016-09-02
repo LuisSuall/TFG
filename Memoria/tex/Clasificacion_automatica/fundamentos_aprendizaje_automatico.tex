@@ -8,13 +8,33 @@ En esta sección seguiremos fundamentalmente el libro de Abu-Mostafa \cite{Abu-M
 
 \subsection{Tipos de Aprendizaje Automático}
 
-El Aprendizaje Automático se suelen dividir en tres tipos distintos:
+La premisa básica del aprendizaje es el uso de un conjunto de oobservaciones para tratar de descubrir el proceso que hay detrás de las mismas. Esto es una premisa muy amplia, por lo que se divide en varios paradigmas, cada uno centrado en diferentes situaciones.\\
 
-\begin{itemize}
-\item \textbf{Aprendizaje supervisado:}
-\item \textbf{Aprendizaje por refuerzo:}
-\item \textbf{Aprendizaje no supervisado:}
-\end{itemize}
+En esta apartado se tratarán los paradigmas más importantes, destacando el aprendizaje supervisado ya que es el más estudiado y utilizado, y además es el paradigma en el que encaja la clasificación automática en etiquetas de imágenes, objetivo de este trabajo.\\
+
+\subsubsection{Aprendizaje supervisado}
+
+Cuando el conjunto de datos contiene de manera explícita la salida correcta para el dato, nos encontramos ante un caso de aprendizaje supervisado. Por ejemplo, supongamos una base de datos para el reconocimiento de dígitos escritos a mano. Sería razonable que la base de datos se compusiera de imágenes con ejemplos de dígitos escritos a mano y el dígito escrito en cada imagen, obteniendo un conjunto de parejas imagen y dígito.\\
+ 
+Lo común dentro de este caso es que se presente la base de datos en su totalidad, pero existen otras opciones.\\
+
+Por un lado, encontramos el aprendizaje activo, donde el conjunto de datos se obtiene mediante consultas. En este paradigma, se elige el punto x del espacio de entrada y se obtiene la salida de x. Esto permite una elección estratégica de de los puntos para maximizar el aprendizaje\\
+
+Por otro lado, encontramos el aprendizaje online. En esta ocasión, los datos se presentan de uno en uno. Por ejemplo, este caso se puede dar cuando admitimos nuevos datos durante ejecución, permitiendo la entrada de un dato y su clasificación, adaptando el modelo en consecuencia. También es de utilidad cuando tenemos limitaciones de computación o almacenamiento, permitiendo procesar los datos cuando no podemos procesar la base de datos completa. Destacar que el aprendizaje online puede ser usado en diferentes paradigmas del aprendizaje, y no sólo en el aprendizaje supervisado.\\
+
+\subsubsection{Aprendizaje por refuerzo}
+
+En cuanto no disponemos explícitamente de la salida correcta para un dato, no nos encontramos en el caso del aprendizaje supervisado. Aún así, hay situaciones en las que pese a no tener una salida a priori, podemos tener un grado de acierto de la acción. Por ejemplo, supongamos a un bebe aprendiendo que hacer ante un objeto caliente. El bebe tendría dos opciones, tocar o no tocar el objeto. Si no toca el objeto, la insatisfacción de su curiosidad le producirá algo de mal estar. Si lo toca, el dolor será mayor. Pese a que el objeto no presenta claramente la respuesta al problema del bebe, tras varios intentos aprenderá que es mejor no tocar el objeto.\\
+
+Esto caracteriza el aprendizaje por refuerzo, donde los datos no presentan claramente el resultado, pero si contienen una posible salida junto con una medida de la bondad de la salida, a diferencia del aprendizaje supervisado que contiene únicamente el dato y la salida. Es importante destacar que en el aprendizaje por refuerzo no sabemos la bondad de las demás posibles salidas.\\
+
+El aprendizaje por refuerzo es usado principalmente para aprender a jugar a un juego. Por ejemplo, en una partida de ajedrez tienes que elegir entre un conjunto de movimientos para tomar la mejor acción. Sin embargo, es muy difícil, dada una situación de la partida decidir cuál es la mejor acción, haciendo imposible la generación de un ejemplo para el aprendizaje supervisado. Sin embargo, es muy fácil generar un ejemplo de aprendizaje por refuerzo, simplemente hay que tomar una acción y luego, informar del resultado de la misma. Tras esto, es el algoritmo de aprendizaje por refuerzo el que analiza la información para tratar de encontrar la mejor jugada.\\
+
+\subsubsection{Aprendizaje no supervisado}
+
+El caso del aprendizaje no supervisado es en el que los datos no contienen ninguna información de la salida. En un principio, al no disponer de una salida esperada para los datos, parecería que no es posible aprender nada de los mismos. Sin embargo, este caso incluye el análisis de clúster o clustering. En él se pretende clasificar los datos en diferentes conjuntos o clústers, de manera que en cada conjunto tengamos elementos parecidos entre ellos.\\
+
+Además de su utilidad propia para detectar patrones y estructuras ocultas dentro de los datos, se puede utilizar como fase previa para un proceso de aprendizaje supervisado \todo[color=red!50]{Cita Lecun de la Nature} para mejorar el comportamiento final del sistema.\\
 
 \subsection{Componentes del Aprendizaje Automático}
 \subsection{¿Es posible aprender?}
