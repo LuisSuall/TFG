@@ -13,9 +13,9 @@ import javax.swing.JInternalFrame;
 import jmr.result.FloatResult;
 import jmr.result.ResultList;
 import jmr.result.ResultMetadata;
-import sri.ClassificationDB;
-import sri.ClassifierManager;
-import sri.ImageClassification;
+import sri.classification.ClassificationDB;
+import sri.classification.ClassifierManager;
+import sri.classification.ImageClassification;
 
 /**
  *

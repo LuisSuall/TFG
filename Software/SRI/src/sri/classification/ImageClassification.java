@@ -3,7 +3,7 @@
  * 
  * @author Luis Suárez Lloréns
  */
-package sri;
+package sri.classification;
 
 import java.util.ArrayList;
 

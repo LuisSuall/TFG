@@ -7,9 +7,9 @@ package classificationgui;
 
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import sri.ClassifierManager;
-import sri.ImageClassification;
-import sri.SynsetDictionary;
+import sri.classification.ClassifierManager;
+import sri.classification.ImageClassification;
+import sri.classification.SynsetDictionary;
 
 /**
  *

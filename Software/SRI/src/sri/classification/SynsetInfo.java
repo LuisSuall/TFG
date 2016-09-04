@@ -4,7 +4,7 @@
  * @author Luis Suárez Lloréns
  */
 
-package sri;
+package sri.classification;
 
 
 public class SynsetInfo {

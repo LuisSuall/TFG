@@ -4,7 +4,7 @@
  * @author Luis Suárez Lloréns
  */
 
-package sri;
+package sri.classification;
 
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
