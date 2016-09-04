@@ -13,6 +13,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jmr.result.FloatResult;
+import jmr.result.ResultList;
+import jmr.result.ResultMetadata;
 import sri.classification.ClassificationDB;
 
 public class FeatureDB extends ArrayList<ContourFeature> implements java.io.Serializable{
@@ -25,17 +28,20 @@ public class FeatureDB extends ArrayList<ContourFeature> implements java.io.Seri
         super(contourFeatureList);
     }
     
-    public void search(ContourFeature featureToSearch){
+    public ResultList search(ContourFeature featureToSearch){
         if (featureToSearch.size() != this.get(0).size()){
             featureToSearch.resizeFeature(this.get(0).size());
         }
         
-        ArrayList<Double> distance = new ArrayList<>();
+        ResultList resultList = new ResultList();
+        
         for(ContourFeature feature:this){
-            distance.add(featureToSearch.distance(feature));
+            FloatResult distance = new FloatResult((float) featureToSearch.distance(feature));
+            
+            resultList.add(new ResultMetadata(distance, feature.getPath()));
         }
         
-        //TODO: generar ResultList?
+        return resultList;
     }
     
     /**

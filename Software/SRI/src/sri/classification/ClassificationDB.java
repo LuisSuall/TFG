@@ -14,6 +14,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jmr.result.FloatResult;
+import jmr.result.ResultList;
+import jmr.result.ResultMetadata;
 
 public class ClassificationDB extends ArrayList<ImageClassification> implements java.io.Serializable{
     
@@ -43,7 +46,7 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
      * @param concept concept to search
      * @return new ClassificationDB with the best images
      */
-    public ClassificationDB search(String concept){        
+    public ResultList search(String concept){        
         return search(concept,DEFAULT_SEARCH_RESULT_N);
     }
     
@@ -54,7 +57,7 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
      * @param n number of images to search
      * @return new ClassificationDB with the best images
      */
-    public ClassificationDB search(String concept, int n){        
+    public ResultList search(String concept, int n){        
         SynsetDictionary synsetDictionary = new SynsetDictionary();
         synsetDictionary.load();
         
@@ -75,30 +78,16 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
      * @param n number of images to search
      * @return new ClassificationDB with the best images 
      */
-    public ClassificationDB search(ArrayList<Integer> idxList, int n){
-        ArrayList<Integer> bestResultsIdx = new ArrayList<>();
+    public ResultList search(ArrayList<Integer> idxList, int n){
+        ResultList searchResult = new ResultList();
         
-        for(int i=0; i<n; i++){
-            int bestIdx = -1;
-            double bestValue = -1.0;
+        for(ImageClassification imageClassification: this){
+            FloatResult value = new FloatResult(imageClassification.getBestClass(idxList));
             
-            for(int j=0; j<this.size(); j++){
-                ImageClassification imgClass = this.get(j);
-                int bestClass = imgClass.getBestClass(idxList);
-                if(imgClass.get(bestClass) > bestValue && !bestResultsIdx.contains(j)){
-                    bestIdx = j;
-                    bestValue = imgClass.get(bestClass);
-                }
-            }
-            
-            bestResultsIdx.add(bestIdx);
+            searchResult.add(new ResultMetadata(value, imageClassification.getImagePath()));
         }
         
-        ClassificationDB searchResult = new ClassificationDB();
-        
-        for(int i: bestResultsIdx){
-            searchResult.add(this.get(i));
-        }
+        searchResult.sort();
         
         return searchResult;
     }

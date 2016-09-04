@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import jmr.result.FloatResult;
+import jmr.result.JMRResult;
 import jmr.result.ResultList;
 import jmr.result.ResultMetadata;
 import sri.classification.ClassificationDB;
@@ -244,19 +245,19 @@ public class MainWindow extends javax.swing.JFrame {
         
         System.out.println("Consulta: "+querry);
         
-        ClassificationDB results = db.search(querry);
+        ResultList results = db.search(querry);
         
         ResultList resultList = new ResultList();
         
-        for(ImageClassification imageClass: results){
-            String path = imageClass.getImagePath();
+        for(JMRResult result: results){
             
-            float value = 1;
+            ResultMetadata myResult = (ResultMetadata) result;
             
-            resultList.add(new ResultMetadata(new FloatResult(value), loadImage(path)));
+            JMRResult resultValue = myResult.getResult();
+            String path = (String) myResult.getMetadata();
+            
+            resultList.add(new ResultMetadata(resultValue, loadImage(path)));
         }
-        
-        resultList.sort();
         
         ResultFrame vi = new ResultFrame(this,resultList);
         vi.setTitle("Consulta: "+querry);
