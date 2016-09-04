@@ -5,9 +5,14 @@
  */
 package classificationgui;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import jmr.result.FloatResult;
+import jmr.result.ResultList;
+import jmr.result.ResultMetadata;
 import sri.ClassificationDB;
 import sri.ClassifierManager;
 import sri.ImageClassification;
@@ -54,6 +59,18 @@ public class MainWindow extends javax.swing.JFrame {
         vi.setVisible(true);
     }  
     
+    private BufferedImage loadImage(String path){
+        BufferedImage img = null;
+        
+        try {
+            File f = new File(path);
+            img = ImageIO.read(f);
+        } catch (Exception ex) {
+            //TODO: Excepcion
+        }
+        
+        return img;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -229,13 +246,22 @@ public class MainWindow extends javax.swing.JFrame {
         
         ClassificationDB results = db.search(querry);
         
+        ResultList resultList = new ResultList();
+        
         for(ImageClassification imageClass: results){
             String path = imageClass.getImagePath();
             
-            ImageFrame vi = new ImageFrame(this, path);
-            vi.setTitle(path);
-            this.showInternalFrame(vi);           
+            float value = 1;
+            
+            resultList.add(new ResultMetadata(new FloatResult(value), loadImage(path)));
         }
+        
+        resultList.sort();
+        
+        ResultFrame vi = new ResultFrame(this,resultList);
+        vi.setTitle("Consulta: "+querry);
+        this.showInternalFrame(vi);
+        
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void loadDBButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDBButtonActionPerformed
