@@ -47,6 +47,10 @@ public class ContourFeature extends ArrayList<Double>{
         }
     }
     
+    public void normalizeOrder(){
+        
+    }
+    
     public void resizeFeature(int length){
         if (length < this.size()){
             reduceFeatureSize(length);
