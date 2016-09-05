@@ -13,16 +13,11 @@ La entrada de una neurona artificial será por tanto un conjunto de valores $\le
 
 Tras esto núcleo de la neurona combina las entradas que recibe. En el modelo de la neurona artificial, esta combinación se realiza mediante la suma de las entradas, es decir: $$\sum^N_{n=1} x_n w_n + b. $$
 
-La activación de la neurona es un proceso brusco. Si pasa de un umbral, se activa. Este proceso se modela en la práctica con una gran cantidad de funciones. La discusión sobre que función elegir tiene más que ver con el entrenamiento de las redes en su conjunto que con el funcionamiento de la neurona.\\
-
-Por ahora, se toma la función clásica en este campo, la sigmoide, $\sigma(x)$ definida de la siguiente manera:
-
-$$\sigma: \mathbb{R}\longrightarrow (0,1)$$
-$$\sigma(x)= \frac{1}{1+e^{-t}}$$
+La activación de la neurona es un proceso brusco. Si pasa de un umbral, se activa. Este proceso se modela en la práctica con una gran cantidad de funciones. La discusión sobre que función elegir tiene más que ver con el entrenamiento de las redes en su conjunto que con el funcionamiento de la neurona. La única restricción que se le impone es que sea diferenciable.\\
 
 Juntando todos los elementos, representamos una neurona artificial mediante la siguiente ecuación:
 
-$$\sigma \left( \sum^N_{n=1} x_n w_n + b. \right).$$
+$$f\left( \sum^N_{n=1} x_n w_n + b. \right).$$
 
 \subsection{Redes Neuronales Artificiales}
 
