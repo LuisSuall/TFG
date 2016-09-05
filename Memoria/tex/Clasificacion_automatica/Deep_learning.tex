@@ -41,22 +41,32 @@ El modelo de las redes neuronales artificiales es bastante claro tras estas rest
 \item \textbf{Capa de salida:}
 \end{itemize}
 
-Una red neuronal consta de una primera capa de entrada, seguida por varias capas ocultas, terminando en una capa de salida. En la figura \todo[color=red!50]{Introducir imagen de red neuronal} podemos ver un ejemplo de red neuronal artificial.\\
+Una red neuronal consta de una primera capa de entrada, seguida por varias capas ocultas, terminando en una capa de salida. En la figura \todo[color=red!50]{Introducir imagen de red neuronal} podemos ver un ejemplo de red neuronal artificial. Se puede denotar la arquitectura de la red por el número de capas ocultas y de salida que tenga. Se hace así al obviar dentro de la arquitectura la capa de entrada, por no tener pesos en comparación a las otras dos.\\
 
 \subsubsection{Propiedades}
 
-Estas redes crecieron en popularidad por su increíble potencia a la hora de poder aproximar cualquier función real. \todo[color=red!50]{Introducir artículos de potencia de RNA}\\
+Estas redes son muy generales. Las redes neuronales artificiales de dos capas son aproximadores universales. Es decir, una red neuronal de dos capas puede aproximar uniformemente cualquier función continua en un dominio de entrada compacto, con una precisión arbitraria dada, si tiene suficientes neuronas en la capa oculta. \todo[color=red!50]{Introducir artículos de potencia de RNA}\\
 
-Sin embargo, las redes de una capas oculta no han conseguido ser un éxito a nivel práctico. Estaban limitados por dos factores muy importantes. \\
+Sin embargo, las redes de una capas oculta no han conseguido ser un éxito a nivel práctico. El resultado teórico no nos informa del número de neuronas que tenemos en la capa intermedia y aún suponiendo que conocida una función, pudiéramos saber el número de neuronas necesaria, en el marco del aprendizaje automático no conocemos la función que queremos aproximar. Por tanto, pese a conocer esta propiedad, no la podemos utilizar al no saber si el tamaño de la capa será suficiente.\\
 
-Por un lado, el resultado teórico no nos informa del número de neuronas que tenemos en la capa intermedia y aún suponiendo que pudiéramos conseguirlo, en el marco del aprendizaje automático no conocemos la función que queremos aproximar. Por tanto, pese a conocer esta gran propiedad, no la podemos utilizar al no saber si el tamaño de la capa será suficiente.\\
+Por el otro, ya vimos que los modelos que tienen una gran capacidad para aprender pueden también sobreaprender. Una segunda mirada a la propiedad podría ser que tiene una capacidad infinita de aprender. Esto lleva a pensar que si la capa intermedia tiene demasiadas neuronas, sobreaprenderá, lo cual puede ser factor negativo.\\
 
-Por el otro, ya vimos que los modelos que tienen una gran capacidad para aprender tienden a sobreaprender. Una segunda mirada a la propiedad podría ser que tiene una capacidad infinita de aprender. Esto lleva a pensar que si la capa intermedia tiene demasiadas neuronas, sobreaprenderá, lo cual es un factor negativo. Este factor quizás fue el más importante para que no fuera un éxito total a nivel práctico.\\
 
-La solución parecía estar entonces en un aumento de capas ocultas. El razonamiento era que se esperaba que, a más capas se introdujeran en el modelo, las sucesivas capas obtendrían como datos de entrada funciones más complejas y útiles, pues si no fueran más útiles no las aprenderían la red, y sin necesidad de aumentar tanto el número de neuronas. Pero este proceso era imposible de llevar a cabo, pues la implementación del gradiente para redes neuronales profundas era tremendamente ineficiente a nivel computacional, haciendo inviable su uso.\\
+\subsection{Entrenamiento de una red neuronal}
 
-\subsection{Back Propagation y Deep Learning}
+Se ha hecho referencia varias veces a la importancia que tiene el proceso de aprendizaje en las redes neuronales, y la necesidad de que sea eficiente.
 
+\subsection{Deep Learning}
+
+El proceso habitual en el mundo del aprendizaje automático estaba limitado en su habilidad para procesar datos naturales directamente. Durante mucho tiempo hizo falta un minucioso proceso para diseñar un conjunto de características que transformaran los datos de entrada en una representación aceptable para el sistema de aprendizaje.\todo[color=red]{citar Lecun Nature}\\
+
+Se llama aprendizaje de la representación a un conjunto de métodos que automáticamente tratan de reconocer estas representaciones optimas para los posteriores métodos de aprendizaje. Deep Learning se encaja dentro de este tipo de métodos. En él, la composición de varias capas de funciones simples pero no lineales, hace que cada capa obtenga una representación más compleja y de más alto nivel. Con la composición de muchas de estas capas, se pueden aprender funciones muy muy complejas. El aspecto fundamental del Deep Learning es que las características obtenidas no han sido diseñadas por un ingeniero, se aprenden automáticamente siguiendo un procedimiento de caracter general.\\
+ 
+Esta técnica ha conseguido grandes avances en el mundo de la inteligencia artificial. Es extremadamente buena encontrando estructuras complejas dentro de los datos de alta dimensionalidad, haciéndola especialmente útil para muchos dominios. En concreto, es una de las partes fundamentales de los grandes resultados que se obtienen en el campo de la clasificación de imágenes. Evidentemente, este problema encaja dentro del caso anterior: datos con una gran dimensionalidad y características complejas que eran necesarias diseñar por los ingenieros.\\
+
+Pero la aplicación directa de estos métodos, pese a ser efectiva, puede tener algunos problemas con respecto a las imágenes. Imaginemos el problema de clasificar imágenes relativamente pequeñas, de 32x32 píxeles RGB. Tendríamos entonces 3072 datos de entrada. Por cada neurona de la primera capa, necesitaríamos 3073 pesos. Es fácil ver lo rápido que puede escalar el número de pesos al aumentar el tamaño de la red, cosa que por otra parte es necesario en un espacio de datos tan complejo.\\
+
+En esa visión, sin embargo, se obvia una importante característica de las imágenes, la importancia de la posición de un dato. Imaginemos que queremos detectar en imágenes de fotografías de carnet los ojos de las personas que aparecen. Podríamos, en vez de intentar analizar en búsqueda de un ojo la imagen en su conjunto, tomar una ventana del tamaño de un ojo, y pasarla por toda la imagen buscándolos. Por supuesto, al ser la ventana más pequeña, la red necesitará menos pesos para poder funcionar correctamente. Esta es la idea detrás de las redes neuronales convolucionales que introdujo el investigador Yann Lecun \todo[color=red!50]{cita lecun89 y 98}.\\ 
 
 \subsection{Redes neuronales convolucionales}
 
