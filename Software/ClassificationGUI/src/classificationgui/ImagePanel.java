@@ -42,6 +42,10 @@ public class ImagePanel extends javax.swing.JPanel {
      */
     protected boolean use_grid = true;
     /**
+     * Determina si se recoloca o no la imagen
+     */
+    protected boolean use_reposition = true;
+    /**
      * Zoom (escalado) a aplicar
      */
     protected int zoom = 1;
@@ -127,6 +131,13 @@ public class ImagePanel extends javax.swing.JPanel {
         return use_grid;
     }
     
+    public void setReposition(boolean reposition){
+        this.use_reposition = reposition;
+    }
+    
+    public boolean isRepositioned(){
+        return this.use_reposition;
+    }
     /**
      * Establece un nuevo valor de zoom
      * 
@@ -160,8 +171,14 @@ public class ImagePanel extends javax.swing.JPanel {
         ((Graphics2D)g).scale(zoom, zoom);
         if (img != null) {
             Rectangle r = this.getParent().getBounds();
-            x_image = (int)Math.max(0,r.getCenterX() - (img.getWidth()*zoom/2)) / zoom;
-            y_image = (int)Math.max(0,r.getCenterY() - (img.getHeight()*zoom/2)) / zoom;
+            if(use_reposition){
+                x_image = (int)Math.max(0,r.getCenterX() - (img.getWidth()*zoom/2)) / zoom;
+                y_image = (int)Math.max(0,r.getCenterY() - (img.getHeight()*zoom/2)) / zoom;
+            }
+            else{
+                x_image = 0;
+                y_image = 0;
+            }
             if(use_grid) paintGrid(g);
             g.drawImage(img, x_image, y_image, this);
         }

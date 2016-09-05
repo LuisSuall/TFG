@@ -33,6 +33,10 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         ImageClassification classification = classifier.classifyImage(imgPath);
         ArrayList<Integer> topClasses = classification.top(5);
         
+        this.classImagePanel.setGrid(false);
+        this.classImagePanel.setReposition(false);
+        this.classImagePanel.setImage("src/icons/115.jpg");
+        
         SynsetDictionary dictionary = new SynsetDictionary();
         dictionary.load();
         
@@ -63,6 +67,7 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         label3 = new java.awt.Label();
         label4 = new java.awt.Label();
         label5 = new java.awt.Label();
+        classImagePanel = new classificationgui.ImagePanel();
         mainPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         imagePanel = new classificationgui.ImagePanel();
@@ -74,9 +79,9 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         setResizable(true);
         setPreferredSize(new java.awt.Dimension(416, 500));
 
-        resultsPanel.setMaximumSize(new java.awt.Dimension(400, 125));
-        resultsPanel.setMinimumSize(new java.awt.Dimension(400, 125));
-        resultsPanel.setPreferredSize(new java.awt.Dimension(400, 125));
+        resultsPanel.setMaximumSize(new java.awt.Dimension(400, 135));
+        resultsPanel.setMinimumSize(new java.awt.Dimension(400, 135));
+        resultsPanel.setPreferredSize(new java.awt.Dimension(400, 135));
 
         label1.setText("label1");
 
@@ -87,6 +92,21 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         label4.setText("label4");
 
         label5.setText("label5");
+
+        classImagePanel.setMaximumSize(new java.awt.Dimension(100, 95));
+        classImagePanel.setMinimumSize(new java.awt.Dimension(100, 95));
+        classImagePanel.setPreferredSize(new java.awt.Dimension(100, 95));
+
+        javax.swing.GroupLayout classImagePanelLayout = new javax.swing.GroupLayout(classImagePanel);
+        classImagePanel.setLayout(classImagePanelLayout);
+        classImagePanelLayout.setHorizontalGroup(
+            classImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        classImagePanelLayout.setVerticalGroup(
+            classImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 95, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout resultsPanelLayout = new javax.swing.GroupLayout(resultsPanel);
         resultsPanel.setLayout(resultsPanelLayout);
@@ -100,27 +120,33 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
                     .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(360, 360, 360))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
+                .addComponent(classImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
         resultsPanelLayout.setVerticalGroup(
             resultsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(resultsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(resultsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(classImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(resultsPanelLayout.createSequentialGroup()
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         getContentPane().add(resultsPanel, java.awt.BorderLayout.PAGE_END);
 
         mainPanel.setPreferredSize(new java.awt.Dimension(400, 350));
+        mainPanel.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
         imagePanel.setLayout(imagePanelLayout);
@@ -135,16 +161,7 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(imagePanel);
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-        );
+        mainPanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
@@ -152,6 +169,7 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private classificationgui.ImagePanel classImagePanel;
     private classificationgui.ImagePanel imagePanel;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
