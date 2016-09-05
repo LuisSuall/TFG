@@ -7,16 +7,18 @@ package classificationgui;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
-import jmr.result.FloatResult;
 import jmr.result.JMRResult;
 import jmr.result.ResultList;
 import jmr.result.ResultMetadata;
 import sri.classification.ClassificationDB;
 import sri.classification.ClassifierManager;
-import sri.classification.ImageClassification;
+import sri.classification.SynsetDictionary;
+import sri.classification.SynsetInfo;
+import sri.feature.FeatureDB;
 
 /**
  *
@@ -25,7 +27,9 @@ import sri.classification.ImageClassification;
 public class MainWindow extends javax.swing.JFrame {
     
     private ClassifierManager classifier;
-    private ClassificationDB db;
+    private SynsetDictionary dictionary;
+    private ClassificationDB classificationDB;
+    private FeatureDB featureDB;
     
     /**
      * Creates new form MainWindow
@@ -33,6 +37,9 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         classifier = new ClassifierManager();
+        dictionary = new SynsetDictionary();
+        dictionary.load();
+        featureDB = new FeatureDB();
     }
 
     /**
@@ -245,7 +252,14 @@ public class MainWindow extends javax.swing.JFrame {
         
         System.out.println("Consulta: "+querry);
         
-        ResultList results = db.search(querry);
+        ArrayList<SynsetInfo> synsetList = dictionary.search(querry);
+        ArrayList<Integer> idxList= new ArrayList<>();
+        
+        for(SynsetInfo synsetInfo: synsetList){
+            idxList.add(synsetInfo.getIdx());
+        }
+        
+        ResultList results = classificationDB.search(idxList,0);
         
         ResultList resultList = new ResultList();
         
@@ -276,8 +290,8 @@ public class MainWindow extends javax.swing.JFrame {
                 String fileName = f.getAbsolutePath();
 
                 if(fileName.endsWith(".sridb")){
-                    db = new ClassificationDB();
-                    db.load(fileName);
+                    classificationDB = new ClassificationDB();
+                    classificationDB.load(fileName);
                 }
                 else{
                     //TODO
@@ -299,7 +313,7 @@ public class MainWindow extends javax.swing.JFrame {
                 String path = f.getAbsolutePath();
                 
                 ClassificationDB generatedDB = classifier.classifyFolder(path);
-                db = generatedDB;
+                classificationDB = generatedDB;
 
                 generatedDB.save(path+"/db.sridb");
 

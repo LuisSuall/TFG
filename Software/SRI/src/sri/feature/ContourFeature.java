@@ -48,6 +48,28 @@ public class ContourFeature extends ArrayList<Double>{
     }
     
     public void normalizeOrder(){
+        int maxIdx = -1;
+        double maxValue = Double.NEGATIVE_INFINITY;
+        
+        for(int i = 0; i < this.size(); i++){
+            if (this.get(i) > maxValue){
+                maxValue = this.get(i);
+                maxIdx = i;
+            }
+        }
+        
+        ArrayList<Double> orderedValues = new ArrayList<>();
+        
+        for(int i = maxIdx; i < this.size(); i++){
+            orderedValues.add(this.get(i));
+        }
+        for(int i = 0; i < maxIdx; i++){
+            orderedValues.add(this.get(i));
+        }
+        
+        for(int i = 0; i < this.size(); i++){
+            this.set(i, orderedValues.get(i));
+        }
         
     }
     
@@ -61,11 +83,66 @@ public class ContourFeature extends ArrayList<Double>{
     }
     
     private void reduceFeatureSize(int length){
+        ArrayList<Double> newValues = new ArrayList<>();
+        double step = this.size()/(this.size()-length);
+        double nextStepPosition = step;
+        double lastValue = 0.0;
         
+        for(int i = 0; i < this.size(); i++){
+            if ((double) i >= nextStepPosition){
+                nextStepPosition += step;
+            }
+            else if(newValues.size() < length){
+                newValues.add(this.get(i));
+            }
+            
+            lastValue = this.get(i);
+        }
+        
+        while(newValues.size() < length){
+            newValues.add(lastValue);
+        }
+        
+        this.clear();
+        
+        for(double value:newValues){
+            this.add(value);
+        }
     }
     
     private void increaseFeatureSize(int length){
+        ArrayList<Double> newValues = new ArrayList<>();
+        double step = this.size()/(this.size()-length);
+        double nextStepPosition = step;
+        double lastValue = 0.0;
         
+        for(int i = 0; i < this.size(); i++){
+            if ((double) i >= nextStepPosition){
+                nextStepPosition += step;
+                if(newValues.size() < length){
+                    newValues.add((this.get(i)+lastValue)/2);
+                }
+                if(newValues.size() < length){
+                    newValues.add(this.get(i));
+                }
+                
+            }
+            else if(newValues.size() < length){
+                newValues.add(this.get(i));
+            }
+            
+            lastValue = this.get(i);
+        }
+        
+        while(newValues.size() < length){
+            newValues.add(lastValue);
+        }
+        
+        this.clear();
+        
+        for(double value:newValues){
+            this.add(value);
+        }
     }
 
     public double distance(ContourFeature feature) {

@@ -41,6 +41,8 @@ public class FeatureDB extends ArrayList<ContourFeature> implements java.io.Seri
             resultList.add(new ResultMetadata(distance, feature.getPath()));
         }
         
+        resultList.sort();
+        
         return resultList;
     }
     
