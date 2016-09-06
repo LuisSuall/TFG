@@ -16,7 +16,23 @@ Luis Suárez Lloréns\\
 \vspace{0.7cm}
 \noindent{\textbf{Resumen}}\\
 
-Poner aquí el resumen.
+En la actualidad, la cantidad de información generada por el ser humano está creciendo a un ritmo muy rápido. Por ejemplo, con la fotografía digital, que elimina las limitaciones del carrete, la cantidad de imágenes en las manos de los usuarios ya empezó a crecer a gran velocidad. Este fenómeno ha crecido aún más con el crecimiento de las redes sociales, donde los usuarios depositan sus comentarios, fotos y videos.
+
+Este crecimiento genera un nuevo problema. El usuario tiene que ser capaz de encontrar su información entre tantos ficheros. La solución es un sistema de recuperación de información que sea capaz de encontrar el fichero del usuario tras una consulta del mismo. Los buscadores de web son un claro ejemplo de este tipo de sistemas.
+
+Este proyecto intenta crear un sistema de recuperación de imágenes, pero con una pequeña modificación. Normalmente, los sistemas de recuperación de imágenes necesitan información aportada por el usuario para realizar la búsqueda. Un ejemplo es la plataforma Instagram, donde los propios usuarios clasifican sus fotos, y luego se pueden buscar imágenes gracias a esa información. El objetivo del proyecto será que la aplicación que sea capaz de clasificar automáticamente las imágenes, sin necesidad de interacción del usuario, para después utilizar esa información generada para ser capaz de recuperar las imágenes.
+
+Normalmente, las aplicaciones existentes de recuperación de imágenes, que usan solo información de las imágenes para buscar, tienen definido un conjunto de descriptores de la imagen. Estos descriptores se comparan a los descriptores de la imagen de consulta, para recuperar imágenes que se parezcan a la de consulta.
+
+El objetivo es entonces transformar imágenes en palabras, y va a tratar dos enfoques del problema. Por un lado, tratar de describir las formas de un objeto y por otro, utilizar técnicas de aprendizaje automático para clasificar automáticamente imágenes.
+
+
+Para el primer objetivo, usaremos la lógica difusa. En el mundo real esta lleno de imprecisiones y de diferentes puntos de vista. por ejemplo, es común considerar la esquina de una mesa como un vértice, aunque seguramente esta estará redondeada. La lógica difusa es uno de los modelos matemáticos que intenta adaptar la lógica formal al mundo real, tratando de adaptarse y modelar las imprecisiones que se encuentran en el mundo real. Por tanto, usaremos la lógica difusa para definir conceptos básicos de los contornos: ``linealidad'', ``curvacidad'' y ``verticidad''. Estos elementos se podrán usar en el futuro para definir y poder reconocer formas más complejas, como por ejemplo polígonos.  
+
+Para el segundo objetivo, utilizaremos las técnicas de aprendizaje automático que mejores resultados han dado en las competiciones de clasificación de imágenes. Utilizaremos un modelo encajado dentro del conocido deep learning. Tradicionalmente, en los problemas de aprendizaje automático, se generaba un conjunto de características, que luego se daban como entrada a un clasificador. Los modelos de deep learinig se caracterizan por utilizar como entrada al clasificador el dato sin procesar. Es por tanto, el propio clasificador el que aprende por su cuenta las características. El tipo que clasificador que utilizaremos será una red neuronal convolucional, un tipo de red neuronal artificial. Estos modelos imitan el comportamiento de un cerebro, donde una gran cantidad de neuronas artificiales se comunican entre ellas para tratar de obtener el resultado  deseado.
+
+La aplicación utilizará las técnicas desarrolladas en los dos apartados para recuperar imágenes dentro del ordenador del usuario, de una manera sencilla, mostrándole al usuario los resultados ordenados según el nivel de satisfacción de la consulta.
+ 
 \cleardoublepage
 
 
@@ -27,11 +43,11 @@ Poner aquí el resumen.
 {\large\bfseries Project Title: Project Subtitle}\\
 \end{center}
 \begin{center}
-First name, Family name (student)\\
+Luis Suárez Lloréns\\
 \end{center}
 
 %\vspace{0.7cm}
-\noindent{\textbf{Keywords}: Image, Information retrieval, shape, fuzzy logic, machine learning, deep learning, neural networw, convolutional neural network}\\
+\noindent{\textbf{Keywords}: Image, Information retrieval, shape, fuzzy logic, machine learning, deep learning, neural network, convolutional neural network}\\
 
 \vspace{0.7cm}
 \noindent{\textbf{Abstract}}\\
@@ -42,9 +58,9 @@ A problem arise from this grow of information. The user is unable to find a file
 
 This project tries to create an Information Retrieval System for pictures and photos from the user’s device, with a little twist. Usually, Information Retrieval Systems need some information to be able to search. Web search engines use text, which is a really easy type of information to use for these purposes, because is a structured type of data. For pictures, some social media network like Instagram let their users tag the images, and after that uses those tags to search the database after a query . The objective of this project is to create an application that is able to automatically generate tags for the images of the user. Then, it will use that information to show images that fulfil the user’s query. Therefore, the application needs an Artificial Intelligence to be able to do the task. 
 
-Usually, the Information Retrieval Systems uses some set of descriptors like mean color, dominant colors, texture or edges of the image. Then, all those descriptors are compared, in order to show the closest images to the query image. So this kind of Information Retrieval System transform images into a vector of values for those descriptors.
+Usually, the Information Retrieval Systems for images that only uses the information from the images to search, have defined some set of descriptors like mean color, dominant colors, texture or edges of the image. Then, all those descriptors are compared, in order to show the closest images to the query image. So this kind of Information Retrieval System transform images into a vector of values for those descriptors.
 
-This project objective is to transform images into words. It will focus on two aspects. The first one is to define qualities of the shape of the object in order to be able to describe the shape of the object. The second one is the use of Artificial Intelligence techniques, like neural networks, to classify an image into a set of categories.
+This project objective is to transform images into words. It will focus on two aspects. The first one is to define qualities of the shape of the object in order to be able to describe the shape of the object. The second one is the use of machine learning techniques, like neural networks, to classify an image into a set of categories.
 
 The shape of an object is a really good source of information to be able to recognize the object. With only a black silhouette, we can easily distinguish two different elements. For example, the shape of a heart or the shape of a fish is really easy to recognize. Therefore, the shape must be a good descriptor of our images. But images, and the perception of the images by the people is really imprecise. For example, a person can classify a table’s corner as a vertex, another person can classify it as a no-vertex, because is too rounded to be a vertex.
 
