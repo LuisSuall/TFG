@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import jmr.result.FloatResult;
 import jmr.result.JMRResult;
 import jmr.result.ResultList;
 import jmr.result.ResultMetadata;
@@ -267,12 +268,14 @@ public class MainWindow extends javax.swing.JFrame {
             
             ResultMetadata myResult = (ResultMetadata) result;
             
-            JMRResult resultValue = myResult.getResult();
+            float value = (float) myResult.getResult().toDouble();
+            FloatResult resultValue = new FloatResult(1-value);
             String path = (String) myResult.getMetadata();
             
             resultList.add(new ResultMetadata(resultValue, loadImage(path)));
         }
         
+        resultList.sort();
         ResultFrame vi = new ResultFrame(this,resultList);
         vi.setTitle("Consulta: "+querry);
         this.showInternalFrame(vi);

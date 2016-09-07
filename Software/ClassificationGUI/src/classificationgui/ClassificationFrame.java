@@ -7,7 +7,9 @@ package classificationgui;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import sri.classification.ClassifierManager;
 import sri.classification.ImageClassification;
@@ -61,22 +63,51 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
     }
 
     private BufferedImage createClassImage(ArrayList<Double> values){
-        BufferedImage result = new BufferedImage(115,115,BufferedImage.TYPE_INT_RGB);
+        BufferedImage result = new BufferedImage(115,115,BufferedImage.TYPE_INT_ARGB);
         int it = 0;
         for(double value:values){
-            Color green = new Color(0, 200, 0);
-            int green_int = green.getRGB();
-            if(value>0.5){
-                for(int y = 0; y < 23; y++){
-                    for(int x = 0; x < 115; x++){
-                        result.setRGB(x, y+23*it, green_int);
-                    }
+            BufferedImage icon = loadIcon(value);
+
+            for(int y = 0; y < 23; y++){
+                for(int x = 0; x < 115; x++){
+                    int color = icon.getRGB(x, y);
+                    result.setRGB(x, y+23*it, color);
                 }
             }
+
             it +=1;
         }
         
         return result;
+    }
+    
+    private BufferedImage loadIcon(double value){
+        BufferedImage img = null;
+        
+        String imgPath;
+        if(value > 0.9){
+            imgPath = "src/icons/match5.png";
+        }
+        else if(value > 0.5){
+            imgPath = "src/icons/match4.png";
+        }
+        else if(value > 0.2){
+            imgPath = "src/icons/match3.png";
+        }
+        else if(value > 0.05){
+            imgPath = "src/icons/match2.png";
+        }else{
+            imgPath = "src/icons/match1.png";
+        }
+        
+        try {
+            File f = new File(imgPath);
+            img = ImageIO.read(f);
+        } catch (Exception ex) {
+            //TODO: Excepcion
+        }
+        
+        return img;        
     }
     /**
      * This method is called from within the constructor to initialize the form.
