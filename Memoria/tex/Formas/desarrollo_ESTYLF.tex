@@ -1,6 +1,6 @@
 \section{Modelado de formas con conjuntos difusos}
-\todo[inline,color=red!50]{Revisar a fondo esta sección}
-En la primera sección de este capítulo, se abordó un descriptor clásico para la recuperación de imágenes. Pese a ser de uso común, la curvatura es un concepto matemático poco intuitivo para la mayoría de la población. Utilizando la lógica difusa, se puede tratar de modelar conceptos lingüísticos comunes en el habla, tales como si un objeto es alargado o redondeado, adaptándose a las posibles imprecisiones del mundo real.\\
+
+Los descriptores relativos a formas hasta la fecha definen propiedades matemáticas de la misma, pero no tratan de definirla usando conceptos. La curvatura, uno de los descriptores más utilizados es buena muestra de ello. Pese a ser un concepto matemático común, no nos aporta ningún tipo de información, solo un conjunto de valores que la representa. Utilizando la lógica difusa, se puede tratar de modelar conceptos lingüísticos comunes en el habla, tales como si un objeto es alargado o redondeado, adaptándose a las posibles imprecisiones del mundo real.\\
 
 En una primera incursión en este tema\cite{JChamorro}, se trata de definir los conceptos más básicos sobre contornos, la ``linealidad'', la ``curvacidad'' y la ``verticidad'', que servirán de base para futuras propiedades. En este trabajo se muestran la definición de dichos conceptos, además de algunas correcciones y mejoras aportadas al artículo original.\\
 
@@ -20,20 +20,20 @@ Definimos la linealidad a través de un conjunto difuso:\\
 Cuya función de pertenencia es:\\
 
 \[
-\ \tilde{L} \left(S^C_{ij}\right) = A \left( 1-\frac{\sum^j_{k=1} \parallel p^k - \widehat{p}^k \parallel}{\sum^j_{k=1} \parallel p^k - \overline{p}^k \parallel} \right)
+\ \tilde{L} \left(S^C_{ij}\right) = A \left( 1-\frac{\sum^j_{k=i} \parallel p_k - \widehat{p}_k \parallel}{\sum^j_{k=i} \parallel p_k - \overline{p}_{S^C_{ij}} \parallel} \right)
 \]
 
-Donde $\parallel p^k - \widehat{p}^k \parallel$ es la distancia entre el punto $p^k$ y la recta de regresión de los puntos del segmento, $\parallel p^k - \overline{p}^k \parallel$ es la distancia entre el punto $p^k$ y la media de los puntos del segmento y $A$ es una función de ajuste.\\
+Donde $\parallel p_k - \widehat{p}_k \parallel$ es la distancia entre el punto $p^k$ y la recta de regresión de los puntos del segmento, $\parallel p_k - \overline{p}_{S^C_{ij}} \parallel$ es la distancia entre el punto $p^k$ y la media de los puntos del segmento $\overline{p}_{S^C_{ij}}$ y $A$ es una función de ajuste.\\
 
-Dado que los puntos $\widehat{p}^k$ son obtenidos a través de una recta de regresión, el numerador de la fórmula será siempre menor que el denominador. Obtenemos por tanto un valor entre 0 y 1, valiendo 0 si el ajuste de la recta de regresión es perfecto ---es decir, el segmento es una recta perfecta--- y 1 en el peor de los casos. Restando este valor a 1, obtenemos lo que buscábamos, un indicador que nos devuelva 1 si estamos ante una recta y vaya bajando hasta el 0, según los puntos del contorno se vayan alejando de una recta.\\
+Dado que los puntos $\widehat{p}_k$ son obtenidos a través de la proyección a una recta de regresión, el numerador de la fórmula será siempre menor o igual que el denominador. Obtenemos por tanto un valor entre 0 y 1, valiendo 0 si el ajuste de la recta de regresión es perfecto ---es decir, el segmento es una recta perfecta--- y 1 en el peor de los casos. Restando este valor a 1, obtenemos lo que buscábamos, un indicador que nos devuelva 1 si estamos ante una recta y vaya bajando hasta el 0, según los puntos del contorno se vayan alejando de una recta.\\
 
-Sin embargo, el rango real no varía en todo el intervalo $\left[ 0,1 \right]$, lo que hace necesaria la introducción de la función de ajuste $A$. Para la selección de dicha función, se diseñó un experimento en el que se transformaba una línea recta en una semicircunferencia. La fórmula para la creación de estos segmentos intermedios es:\\
+Sin embargo, el rango obtenido al aplicarlo a imágenes reales no varía en todo el intervalo $\left[ 0,1 \right]$, lo que hace necesaria la introducción de la función de ajuste $A$. Para la selección de dicha función, se diseñó un experimento en el que se transformaba una línea recta en una semicircunferencia. La fórmula para la creación de estos segmentos intermedios es:\\
 
 \[
 \ y = (1-p)+ p \sqrt{1-x^2}
 \]
 
-Donde $p$ es el porcentaje de semicircunferencia de la forma. En la figura 2 podemos encontrar los resultados de calcular la linealidad sin ningún tipo de ajuste, con 100 pasos intermedios.\\
+Donde $p$ es el porcentaje de semicircunferencia de la forma. En la figura \ref{fig2} podemos encontrar los resultados de calcular la linealidad sin ningún tipo de ajuste, con 100 pasos intermedios.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -41,10 +41,11 @@ Donde $p$ es el porcentaje de semicircunferencia de la forma. En la figura 2 pod
 \includegraphics[width=0.9\textwidth]{img/linea-curva.png}
 \end{center}
 
-\caption{Linealidad sin ajuste}
+\caption{Linealidad sin ajuste.}
+\label{fig2}
 \end{figure}
 
-Una primera aproximación fue pensar en funciones de ajuste del tipo $A(x) = x^q$ con $q \in \mathcal{R}^+$. Pero como podemos ver en la figura 3, necesitamos un $q$ grande para llevar los valores al 0, lo que deforma la gráfica.\\
+Una primera aproximación fue pensar en funciones de ajuste del tipo $A(x) = x^q$ con $q \in \mathcal{R}^+$. Pero como podemos ver en la figura \ref{fig3}, necesitamos un $q$ grande para llevar los valores a un valor cercano a 0, lo que deforma la gráfica.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -52,7 +53,8 @@ Una primera aproximación fue pensar en funciones de ajuste del tipo $A(x) = x^q
 \includegraphics[width=0.9\textwidth]{img/Ajuste-q.png}
 \end{center}
 
-\caption{Linealidad con ajuste tipo potencias. q = 3,5,20}
+\caption{Linealidad con ajuste tipo potencias. q = 3,5,20.}
+\label{fig3}
 \end{figure}
 
 Por tanto, se pasó a un ajuste de tipo "cambio de rango". Tomamos como posibles A la familia de funciones:\\
@@ -61,7 +63,7 @@ Por tanto, se pasó a un ajuste de tipo "cambio de rango". Tomamos como posibles
 \ A(x,\alpha) = \texttt{max}\left(\frac{x-\alpha}{1-\alpha} ,0\right)
 \]
 
-Así queda libre el ajuste de $\alpha$. Este valor está asociado al ángulo del arco de circunferencia que consideramos que ya no es una línea. En la figura 4 tenemos una gráfica que relaciona el ángulo del arco de circunferencia con su valor de $\alpha$.\\
+Queda libre el ajuste de $\alpha$. Este valor está asociado al ángulo del arco de circunferencia que consideramos que ya no es una línea. En la figura \ref{fig4} tenemos una gráfica que relaciona el ángulo del arco de circunferencia con su valor de $\alpha$.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -69,16 +71,17 @@ Así queda libre el ajuste de $\alpha$. Este valor está asociado al ángulo del
 \includegraphics[width=0.9\textwidth]{img/experimento-angulo.png}
 \end{center}
 
-\caption{Linealidad de los arcos de circunferencia}
+\caption{Linealidad de los arcos de circunferencia.}
+\label{fig4}
 \end{figure}
 
-Podemos aproximar la línea de la figura 4 para obtener una relación rápida entre el arco de circunferencia seleccionado y el $\alpha$ que debemos fijar. Obtenemos la siguiente función:\\
+Podemos aproximar la línea de la figura \ref{fig4} para obtener una relación rápida entre el arco de circunferencia que consideramos que ya no es una linea y el $\alpha$ que debemos fijar. Obtenemos la siguiente función:\\
 
 \[
 \ \alpha(\Theta) = 1- \frac{0.37}{\pi} \Theta
 \]
 
-Utilizando $\alpha = 0.63$ en el experimento de la figura 2, obtenemos el ajuste de la figura 5, que se comporta de manera lineal y que cubre de manera efectiva el rango [0,1].\\
+Utilizando $\alpha = 0.63$ en el experimento de la figura \ref{fig2}, obtenemos el ajuste de la figura \ref{fig5}, que se comporta de manera lineal y que cubre de manera efectiva el rango [0,1].\\
 
 
 \begin{figure}[H]
@@ -87,7 +90,8 @@ Utilizando $\alpha = 0.63$ en el experimento de la figura 2, obtenemos el ajuste
 \includegraphics[width=0.9\textwidth]{img/Ajuste-alfa.png}
 \end{center}
 
-\caption{Linealidad de los arcos de circunferencia}
+\caption{Linealidad de la figura \ref{fig2} ajustada.}
+\label{fig5}
 \end{figure}
 
 \subsubsection{Resultados}
@@ -100,9 +104,11 @@ Utilizaremos para ver la influencia del valor $\alpha$ la siguiente figura:\\
 \includegraphics[width=0.3\textwidth]{img/device3-1.png}
 \end{center}
 
+\caption{Cuadrado redondeado.}
+\label{cuadrado-red}
 \end{figure}
 
-Podemos ver en la figura 6, que si tomamos un $\alpha$ asociado a un ángulo pequeño, en este ejemplo 45º, vemos que obtenemos unos resultados que varían de manera muy drástica.
+Podemos ver en la figura \ref{fig6}, que si tomamos un $\alpha$ asociado a un ángulo pequeño, en este ejemplo 45º, vemos que obtenemos unos resultados que varían de manera muy drástica.
 
 \begin{figure}[H]
 \begin{center}
@@ -110,10 +116,11 @@ Podemos ver en la figura 6, que si tomamos un $\alpha$ asociado a un ángulo peq
 \includegraphics[width=0.9\textwidth]{img/lin-dev3-1-limpio-09075.png}
 \end{center}
 
-\caption{$\Theta = 45$ ($\alpha = 0.9075$)}
+\caption{$\Theta = 45$ ($\alpha = 0.9075$).}
+\label{fig6}
 \end{figure}
 
-De modo similar, en la figura 7 podemos ver que si el ángulo seleccionado es demasiado permisivo, en el ejemplo 180º, se obtienen valores que nunca alcanzan el 0.\\
+De modo similar, en la figura \ref{fig7} podemos ver que si el ángulo seleccionado es demasiado permisivo, en el ejemplo 180º, se obtienen valores que nunca alcanzan el 0.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -121,10 +128,11 @@ De modo similar, en la figura 7 podemos ver que si el ángulo seleccionado es de
 \includegraphics[width=0.9\textwidth]{img/lin-dev3-1-limpio-063.png}
 \end{center}
 
-\caption{$\Theta = 180$ ($\alpha = 0.63$)}
+\caption{$\Theta = 180$ ($\alpha = 0.63$).}
+\label{fig7}
 \end{figure}
 
-En la figura 8, ajustando $\alpha$ a un valor intermedio, conseguimos un ajuste más apropiado para esta figura.\\
+En la figura \ref{fig8}, ajustando $\alpha$ a un valor intermedio, conseguimos un ajuste más apropiado para esta figura.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -132,10 +140,11 @@ En la figura 8, ajustando $\alpha$ a un valor intermedio, conseguimos un ajuste 
 \includegraphics[width=0.9\textwidth]{img/lin-dev3-1-limpio-0815.png}
 \end{center}
 
-\caption{$\Theta = 90$ ($\alpha = 0.815$)}
+\caption{$\Theta = 90$ ($\alpha = 0.815$).}
+\label{fig8}
 \end{figure}
 
-Extraemos por tanto que tenemos un buen comportamiento de esta primera propiedad, la linealidad, quedando libre el parámetro $\alpha$ para ser ajustado según las necesidades del problema a tratar, o dicho de otro modo, para poder ajustar lo que se considera que no es lineal.\\
+Se extrae por tanto que tenemos un buen comportamiento de esta primera propiedad, la linealidad, quedando libre el parámetro $\alpha$ para ser ajustado según las necesidades del problema a tratar, o dicho de otro modo, para poder ajustar lo que se considera que no es lineal.\\
 
 \subsection{Curvacidad}
 
@@ -150,23 +159,22 @@ Entendemos la curvacidad como el grado en el que el segmento de un contorno es u
  
 \subsubsection{Resultados}
 
-Primero, veremos la gráfica de la curvacidad del cuadrado redondeado.
+Primero, veremos la gráfica de la curvacidad del cuadrado redondeado de la figura \ref{cuadrado-red}.
 
 \begin{figure}[H]
 \begin{center}
-
-\includegraphics[width=0.3\textwidth]{img/device3-1.png}
 \includegraphics[width=0.9\textwidth]{img/nolin-dev3-1-limpio-0815.png}
 \end{center}
 
-\caption{Curvacidad de la imagen cuadrado redondeado}
+\caption{Curvacidad de la imagen cuadrado redondeado.}
+\label{fig9}
 \end{figure}
 
-Podemos ver que actúa como esperábamos, obteniendo 4 valores altos, que corresponden a las 4 esquinas de la figura. Además nos lleva a pensar que se tienen que comportar de manera similar a la curvatura.\\
+Podemos ver en la figura \ref{fig9}que actúa como esperábamos, obteniendo 4 valores altos, que corresponden a las 4 esquinas de la figura. Además nos lleva a pensar que se tienen que comportar de manera similar a la curvatura.\\
 
-En la figura 10 podemos ver la gráfica de la curvacidad de una forma natural. Podemos observar que el comportamiento es adecuado, lo que reafirma el buen comportamiento de nuestras propiedades.\\
+En la figura \ref{fig10} podemos ver la gráfica de la curvacidad de una forma natural. Podemos observar que el comportamiento es adecuado, lo que reafirma el buen comportamiento de nuestras propiedades.\\
 
-Sin embargo, podemos ver que todos los picos asociados a los giros son positivos. Esto muestra la desventaja de este factor con respecto a la curvatura, que sí nos indica el sentido del giro mediante el signo del valor.\\
+Sin embargo, podemos ver que todos los picos asociados a los giros son positivos. Esto muestra la desventaja de este modelo con respecto a la curvatura, que sí nos indica el sentido del giro mediante el signo del valor.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -176,8 +184,12 @@ Sin embargo, podemos ver que todos los picos asociados a los giros son positivos
 \includegraphics[width=0.9\textwidth]{img/nolin-hat-7.png}
 \end{center}
 
-\caption{Curvacidad de la imagen sombrero}
+\caption{Curvacidad de la imagen sombrero.}
+\label{fig10}
 \end{figure}
+
+
+Evidentemente, al ser la propiedad opuesta a la linealidad, tiene la misma dependencia del parámetro $\alpha$, permitiendo ajustar que se considera curva según las necesidades del problema.\\
 
 \subsection{Verticidad}
 
@@ -209,12 +221,13 @@ Primero, veamos su comportamiento con una forma que contiene varios vértices re
 \includegraphics[width=0.9\textwidth]{img/vert-fig04-novvery.png}
 \end{center}
 
-\caption{Verticidad cuadrado con una esquina redondeada}
+\caption{Verticidad cuadrado con una esquina redondeada.}
+\label{fig11}
 \end{figure}
 
-En la figura 11 podemos ver que, efectivamente, nuestro grado de verticidad llega a 1 en los 3 vértices reales que tiene la figura y da un valor menor al vértice redondeado.\\
+En la figura \ref{fig11} podemos ver que, efectivamente, nuestro grado de verticidad llega a 1 en los 3 vértices reales que tiene la figura y da un valor menor al vértice redondeado.\\
 
-En la figura 12 tenemos la verticidad del cuadrado redondeado. Al tener unas esquinas más redondeadas que en el caso de la figura 11, los valores que obtenemos son mucho menores, como es de esperar.\\
+En la figura \ref{fig12} tenemos la verticidad del cuadrado redondeado. Al tener unas esquinas más redondeadas que en el caso de la figura \ref{fig11}, los valores que obtenemos son mucho menores, como es de esperar.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -224,5 +237,10 @@ En la figura 12 tenemos la verticidad del cuadrado redondeado. Al tener unas esq
 \includegraphics[width=0.9\textwidth]{img/vert-dev3-1-limpio.png}
 \end{center}
 
-\caption{Verticidad cuadrado redondeado}
+\caption{Verticidad cuadrado redondeado.}
+\label{fig12}
 \end{figure}
+
+Por tanto, la verticidad tiene un comportamiento deseable. Destacar que esta propiedad ha sido construida mediante el uso de propiedades más sencillas, intentando siempre utilizar los conceptos difusos para razonar.\\
+
+\todo[color=blue!50]{poner conclusiones de la investigación aquí?}
