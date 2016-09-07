@@ -5,6 +5,8 @@
  */
 package classificationgui;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import sri.classification.ClassifierManager;
@@ -32,10 +34,16 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         
         ImageClassification classification = classifier.classifyImage(imgPath);
         ArrayList<Integer> topClasses = classification.top(5);
+        ArrayList<Double> topClassesValues = new ArrayList<>();
+        
+        for(int classIdx:topClasses){
+            topClassesValues.add(classification.get(classIdx));
+        }
         
         this.classImagePanel.setGrid(false);
         this.classImagePanel.setReposition(false);
-        this.classImagePanel.setImage("src/icons/115.jpg");
+        BufferedImage classImage = createClassImage(topClassesValues);
+        this.classImagePanel.setImage(classImage);
         
         SynsetDictionary dictionary = new SynsetDictionary();
         dictionary.load();
@@ -52,6 +60,24 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
                             +" - "+classification.get(topClasses.get(4)));        
     }
 
+    private BufferedImage createClassImage(ArrayList<Double> values){
+        BufferedImage result = new BufferedImage(115,115,BufferedImage.TYPE_INT_RGB);
+        int it = 0;
+        for(double value:values){
+            Color green = new Color(0, 200, 0);
+            int green_int = green.getRGB();
+            if(value>0.5){
+                for(int y = 0; y < 23; y++){
+                    for(int x = 0; x < 115; x++){
+                        result.setRGB(x, y+23*it, green_int);
+                    }
+                }
+            }
+            it +=1;
+        }
+        
+        return result;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
