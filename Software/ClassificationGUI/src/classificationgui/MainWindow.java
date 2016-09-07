@@ -251,8 +251,6 @@ public class MainWindow extends javax.swing.JFrame {
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String querry = this.querryText.getText();
         
-        System.out.println("Consulta: "+querry);
-        
         ArrayList<SynsetInfo> synsetList = dictionary.search(querry);
         ArrayList<Integer> idxList= new ArrayList<>();
         
@@ -268,10 +266,10 @@ public class MainWindow extends javax.swing.JFrame {
             
             ResultMetadata myResult = (ResultMetadata) result;
             
-            float value = (float) myResult.getResult().toDouble();
+            float value = ((FloatResult) myResult.getResult()).getValue();
             FloatResult resultValue = new FloatResult(1-value);
             String path = (String) myResult.getMetadata();
-            
+
             resultList.add(new ResultMetadata(resultValue, loadImage(path)));
         }
         

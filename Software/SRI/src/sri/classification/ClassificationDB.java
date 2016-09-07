@@ -82,7 +82,10 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
         ResultList searchResult = new ResultList();
         
         for(ImageClassification imageClassification: this){
-            FloatResult value = new FloatResult(imageClassification.getBestClass(idxList));
+            int bestClass  = imageClassification.getBestClass(idxList);
+            
+            FloatResult value;
+            value = new FloatResult(imageClassification.get(bestClass).floatValue());
             
             searchResult.add(new ResultMetadata(value, imageClassification.getImagePath()));
         }
