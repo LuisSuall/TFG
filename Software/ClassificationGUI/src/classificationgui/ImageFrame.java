@@ -19,20 +19,24 @@ public class ImageFrame extends javax.swing.JInternalFrame {
     */
     protected JFrame parent=null;
     
-    /**
-     * Creates new form ImageFrame
-     */
-    public ImageFrame(JFrame parent, BufferedImage img) {
-        initComponents();
-        this.parent = parent;
-        this.imagePanel.setImage(img);
-    }
+    protected String path;
     
+//    /**
+//     * Creates new form ImageFrame
+//     */
+//    public ImageFrame(JFrame parent, BufferedImage img) {
+//        initComponents();
+//        this.parent = parent;
+//        this.imagePanel.setImage(img);
+//    }
+//    
     /**
      * Creates new form ImageFrame
      */
     public ImageFrame(JFrame parent, String imgPath) {
         initComponents();
+        
+        this.path = imgPath;
         this.parent = parent;
         this.imagePanel.setImage(imgPath);
     }

@@ -27,10 +27,13 @@ import sri.feature.FeatureDB;
  */
 public class MainWindow extends javax.swing.JFrame {
     
+    private static final int READY_MODE = 0;
+    private static final int BUSY_MODE = 1;
+    
     private ClassifierManager classifier;
     private SynsetDictionary dictionary;
-    private ClassificationDB classificationDB;
-    private FeatureDB featureDB;
+    private ClassificationDB classificationDB = new ClassificationDB();
+    private FeatureDB featureDB = new FeatureDB();
     
     /**
      * Creates new form MainWindow
@@ -89,20 +92,38 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        featurePopupMenu = new javax.swing.JPopupMenu();
+        CurvatureButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
+        CurvacityButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         buttonPanel = new javax.swing.JPanel();
-        oneImageToolBar = new javax.swing.JToolBar();
-        classifyOneImageButton = new javax.swing.JButton();
-        multipleImageToolBar = new javax.swing.JToolBar();
-        createDBBurron = new javax.swing.JButton();
-        loadDBButton = new javax.swing.JButton();
-        querryText = new javax.swing.JTextField();
+        openToolBar = new javax.swing.JToolBar();
+        openImageButton = new javax.swing.JButton();
+        openDBButton = new javax.swing.JButton();
+        classificationSearchToolBar = new javax.swing.JToolBar();
+        queryText = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
+        configurationToolBar = new javax.swing.JToolBar();
+        configurationButton = new javax.swing.JButton();
+        descriptorToolBar = new javax.swing.JToolBar();
+        computeDescriptorButton = new javax.swing.JButton();
+        computeClassificationButton = new javax.swing.JButton();
+        compareButton = new javax.swing.JButton();
+        activeClassificationDBButton = new javax.swing.JButton();
+        activeDescriptorDBButton = new javax.swing.JButton();
         desktopPanel = new javax.swing.JDesktopPane();
-        menuBar = new javax.swing.JMenuBar();
-        classifierMenu = new javax.swing.JMenu();
-        clasificador1MenuItem = new javax.swing.JRadioButtonMenuItem();
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        statusPanel = new javax.swing.JPanel();
+        statusLabel = new java.awt.Label();
+        dbUsedLabel = new java.awt.Label();
+
+        buttonGroup1.add(CurvatureButtonMenuItem);
+        CurvatureButtonMenuItem.setText("Curvatura");
+        featurePopupMenu.add(CurvatureButtonMenuItem);
+
+        buttonGroup1.add(CurvacityButtonMenuItem);
+        CurvacityButtonMenuItem.setSelected(true);
+        CurvacityButtonMenuItem.setText("Curvacidad");
+        featurePopupMenu.add(CurvacityButtonMenuItem);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Aplicación de Clasificación Automática");
@@ -111,52 +132,41 @@ public class MainWindow extends javax.swing.JFrame {
 
         buttonPanel.setPreferredSize(new java.awt.Dimension(816, 40));
 
-        oneImageToolBar.setRollover(true);
+        openToolBar.setRollover(true);
 
-        classifyOneImageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
-        classifyOneImageButton.setFocusable(false);
-        classifyOneImageButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        classifyOneImageButton.setMaximumSize(new java.awt.Dimension(30, 30));
-        classifyOneImageButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        classifyOneImageButton.addActionListener(new java.awt.event.ActionListener() {
+        openImageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        openImageButton.setFocusable(false);
+        openImageButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        openImageButton.setMaximumSize(new java.awt.Dimension(30, 30));
+        openImageButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        openImageButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                classifyOneImageButtonActionPerformed(evt);
+                openImageButtonActionPerformed(evt);
             }
         });
-        oneImageToolBar.add(classifyOneImageButton);
+        openToolBar.add(openImageButton);
 
-        multipleImageToolBar.setRollover(true);
-
-        createDBBurron.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/db_create.png"))); // NOI18N
-        createDBBurron.setFocusable(false);
-        createDBBurron.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        createDBBurron.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        createDBBurron.addActionListener(new java.awt.event.ActionListener() {
+        openDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        openDBButton.setFocusable(false);
+        openDBButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        openDBButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        openDBButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createDBBurronActionPerformed(evt);
+                openDBButtonActionPerformed(evt);
             }
         });
-        multipleImageToolBar.add(createDBBurron);
+        openToolBar.add(openDBButton);
 
-        loadDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/db_load.png"))); // NOI18N
-        loadDBButton.setFocusable(false);
-        loadDBButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        loadDBButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        loadDBButton.addActionListener(new java.awt.event.ActionListener() {
+        classificationSearchToolBar.setRollover(true);
+
+        queryText.setMinimumSize(new java.awt.Dimension(100, 27));
+        queryText.setPreferredSize(new java.awt.Dimension(300, 27));
+        queryText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadDBButtonActionPerformed(evt);
+                queryTextActionPerformed(evt);
             }
         });
-        multipleImageToolBar.add(loadDBButton);
-
-        querryText.setMinimumSize(new java.awt.Dimension(100, 27));
-        querryText.setPreferredSize(new java.awt.Dimension(300, 27));
-        querryText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                querryTextActionPerformed(evt);
-            }
-        });
-        multipleImageToolBar.add(querryText);
+        classificationSearchToolBar.add(queryText);
 
         searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search_db.png"))); // NOI18N
         searchButton.setFocusable(false);
@@ -167,22 +177,83 @@ public class MainWindow extends javax.swing.JFrame {
                 searchButtonActionPerformed(evt);
             }
         });
-        multipleImageToolBar.add(searchButton);
+        classificationSearchToolBar.add(searchButton);
+
+        configurationToolBar.setRollover(true);
+
+        configurationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        configurationButton.setFocusable(false);
+        configurationButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        configurationButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        configurationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                configurationButtonActionPerformed(evt);
+            }
+        });
+        configurationToolBar.add(configurationButton);
+
+        descriptorToolBar.setRollover(true);
+
+        computeDescriptorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        computeDescriptorButton.setComponentPopupMenu(featurePopupMenu);
+        computeDescriptorButton.setFocusable(false);
+        computeDescriptorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        computeDescriptorButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        descriptorToolBar.add(computeDescriptorButton);
+
+        computeClassificationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        computeClassificationButton.setFocusable(false);
+        computeClassificationButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        computeClassificationButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        computeClassificationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                computeClassificationButtonActionPerformed(evt);
+            }
+        });
+        descriptorToolBar.add(computeClassificationButton);
+
+        compareButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        compareButton.setFocusable(false);
+        compareButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        compareButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        descriptorToolBar.add(compareButton);
+
+        activeClassificationDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        activeClassificationDBButton.setEnabled(false);
+
+        activeDescriptorDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        activeDescriptorDBButton.setEnabled(false);
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addComponent(oneImageToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(multipleImageToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 223, Short.MAX_VALUE))
+                .addComponent(openToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(configurationToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(descriptorToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(classificationSearchToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
+                .addComponent(activeDescriptorDBButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(activeClassificationDBButton))
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(oneImageToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(multipleImageToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(descriptorToolBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(openToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(classificationSearchToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(configurationToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(activeClassificationDBButton)
+                    .addComponent(activeDescriptorDBButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(buttonPanel, java.awt.BorderLayout.PAGE_START);
@@ -193,37 +264,81 @@ public class MainWindow extends javax.swing.JFrame {
         desktopPanel.setLayout(desktopPanelLayout);
         desktopPanelLayout.setHorizontalGroup(
             desktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 816, Short.MAX_VALUE)
+            .addGap(0, 924, Short.MAX_VALUE)
         );
         desktopPanelLayout.setVerticalGroup(
             desktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 480, Short.MAX_VALUE)
         );
 
         getContentPane().add(desktopPanel, java.awt.BorderLayout.CENTER);
 
-        classifierMenu.setText("Clasificador");
+        statusPanel.setPreferredSize(new java.awt.Dimension(924, 20));
 
-        clasificador1MenuItem.setSelected(true);
-        clasificador1MenuItem.setText("Clasificador 1");
-        classifierMenu.add(clasificador1MenuItem);
+        statusLabel.setText("Modo: Preparado ");
 
-        jRadioButtonMenuItem1.setSelected(true);
-        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
-        classifierMenu.add(jRadioButtonMenuItem1);
+        dbUsedLabel.setText("Base de datos:");
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
-        classifierMenu.add(jCheckBoxMenuItem1);
+        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
+        statusPanel.setLayout(statusPanelLayout);
+        statusPanelLayout.setHorizontalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
+                .addComponent(dbUsedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 370, Short.MAX_VALUE)
+                .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        statusPanelLayout.setVerticalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
+                .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dbUsedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
 
-        menuBar.add(classifierMenu);
-
-        setJMenuBar(menuBar);
+        getContentPane().add(statusPanel, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void classifyOneImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classifyOneImageButtonActionPerformed
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        String querry = this.queryText.getText();
+        
+        ArrayList<SynsetInfo> synsetList = dictionary.search(querry);
+        ArrayList<Integer> idxList= new ArrayList<>();
+
+        for(SynsetInfo synsetInfo: synsetList){
+            idxList.add(synsetInfo.getIdx());
+        }
+
+        ResultList results = classificationDB.search(idxList,0);
+
+        ResultList resultList = new ResultList();
+
+        for(JMRResult result: results){
+
+            ResultMetadata myResult = (ResultMetadata) result;
+
+            float value = ((FloatResult) myResult.getResult()).getValue();
+            FloatResult resultValue = new FloatResult(1-value);
+            String path = (String) myResult.getMetadata();
+
+            resultList.add(new ResultMetadata(resultValue, loadImage(path)));
+        }
+
+        resultList.sort();
+        ResultFrame vi = new ResultFrame(this,resultList);
+        vi.setTitle("Consulta: "+querry);
+        this.showInternalFrame(vi);
+
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void queryTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queryTextActionPerformed
+        searchButtonActionPerformed(evt);
+    }//GEN-LAST:event_queryTextActionPerformed
+
+    private void openImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openImageButtonActionPerformed
 
         JFileChooser dlg = new JFileChooser();
 
@@ -231,9 +346,9 @@ public class MainWindow extends javax.swing.JFrame {
         if (resp == JFileChooser.APPROVE_OPTION) {
             try {
                 File f = dlg.getSelectedFile();
-                
+
                 if (f != null) {
-                    ClassificationFrame vi = new ClassificationFrame(this, f.getAbsolutePath(), this.classifier);
+                    ImageFrame vi = new ImageFrame(this, f.getAbsolutePath());
                     vi.setTitle(f.getName());
                     this.showInternalFrame(vi);
                 }
@@ -241,88 +356,51 @@ public class MainWindow extends javax.swing.JFrame {
                 //TODO: Salida expection
             }
         }
-        
-    }//GEN-LAST:event_classifyOneImageButtonActionPerformed
 
-    private void querryTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_querryTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_querryTextActionPerformed
+    }//GEN-LAST:event_openImageButtonActionPerformed
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String querry = this.querryText.getText();
-        
-        ArrayList<SynsetInfo> synsetList = dictionary.search(querry);
-        ArrayList<Integer> idxList= new ArrayList<>();
-        
-        for(SynsetInfo synsetInfo: synsetList){
-            idxList.add(synsetInfo.getIdx());
-        }
-        
-        ResultList results = classificationDB.search(idxList,0);
-        
-        ResultList resultList = new ResultList();
-        
-        for(JMRResult result: results){
-            
-            ResultMetadata myResult = (ResultMetadata) result;
-            
-            float value = ((FloatResult) myResult.getResult()).getValue();
-            FloatResult resultValue = new FloatResult(1-value);
-            String path = (String) myResult.getMetadata();
+    private void openDBButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openDBButtonActionPerformed
+        JFileChooser dlg = new JFileChooser();
 
-            resultList.add(new ResultMetadata(resultValue, loadImage(path)));
-        }
+        int resp = dlg.showOpenDialog(this);
+        if (resp == JFileChooser.APPROVE_OPTION) {
+            try {
+                File f = dlg.getSelectedFile();
+                String absolutePath = f.getAbsolutePath();
+                
+                System.out.println(absolutePath);
+                
+                if (absolutePath.endsWith(".sridb")){
+                    
+                    setClassificationDB(absolutePath);
+                }
+                else if (absolutePath.endsWith(".featdb")){
+                    setFeatureDB(absolutePath);
+                }
+            } catch(Exception ex){
+                
+            }
+        }   
+
+    }//GEN-LAST:event_openDBButtonActionPerformed
+
+    private void configurationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configurationButtonActionPerformed
+        // TODO launch dialog to configure the app.
+    }//GEN-LAST:event_configurationButtonActionPerformed
+
+    private void computeClassificationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeClassificationButtonActionPerformed
+        ImageFrame selectedImagePanel = (ImageFrame) desktopPanel.getSelectedFrame();
+        String path = selectedImagePanel.path;
         
-        resultList.sort();
-        ResultFrame vi = new ResultFrame(this,resultList);
-        vi.setTitle("Consulta: "+querry);
+        setStatusLabel(MainWindow.BUSY_MODE);
+        
+        ClassificationFrame vi = new ClassificationFrame(this,path,classifier);
+        vi.setTitle(selectedImagePanel.getTitle() + " - Clasificación");
+        
+        setStatusLabel(MainWindow.READY_MODE);
+        
         this.showInternalFrame(vi);
-        
-    }//GEN-LAST:event_searchButtonActionPerformed
-
-    private void loadDBButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDBButtonActionPerformed
-        JFileChooser dlg = new JFileChooser();
-
-        int resp = dlg.showOpenDialog(this);
-        if (resp == JFileChooser.APPROVE_OPTION) {
-            try {
-                File f = dlg.getSelectedFile();
-                
-                String fileName = f.getAbsolutePath();
-
-                if(fileName.endsWith(".sridb")){
-                    classificationDB = new ClassificationDB();
-                    classificationDB.load(fileName);
-                }
-                else{
-                    //TODO
-                }
-            } catch (Exception ex) {
-                //TODO: Salida expection
-            }
-        }
-    }//GEN-LAST:event_loadDBButtonActionPerformed
-
-    private void createDBBurronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDBBurronActionPerformed
-        JFileChooser dlg = new JFileChooser();
-        dlg.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        
-        int resp = dlg.showOpenDialog(this);
-        if (resp == JFileChooser.APPROVE_OPTION) {
-            try {
-                File f = dlg.getSelectedFile();
-                String path = f.getAbsolutePath();
-                
-                ClassificationDB generatedDB = classifier.classifyFolder(path);
-                classificationDB = generatedDB;
-
-                generatedDB.save(path+"/db.sridb");
-
-            } catch (Exception ex) {
-                //TODO: Salida expection
-            }
-        }
-    }//GEN-LAST:event_createDBBurronActionPerformed
+    }//GEN-LAST:event_computeClassificationButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,19 +438,51 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButtonMenuItem CurvacityButtonMenuItem;
+    private javax.swing.JRadioButtonMenuItem CurvatureButtonMenuItem;
+    private javax.swing.JButton activeClassificationDBButton;
+    private javax.swing.JButton activeDescriptorDBButton;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel buttonPanel;
-    private javax.swing.JRadioButtonMenuItem clasificador1MenuItem;
-    private javax.swing.JMenu classifierMenu;
-    private javax.swing.JButton classifyOneImageButton;
-    private javax.swing.JButton createDBBurron;
+    private javax.swing.JToolBar classificationSearchToolBar;
+    private javax.swing.JButton compareButton;
+    private javax.swing.JButton computeClassificationButton;
+    private javax.swing.JButton computeDescriptorButton;
+    private javax.swing.JButton configurationButton;
+    private javax.swing.JToolBar configurationToolBar;
+    private java.awt.Label dbUsedLabel;
+    private javax.swing.JToolBar descriptorToolBar;
     private javax.swing.JDesktopPane desktopPanel;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
-    private javax.swing.JButton loadDBButton;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JToolBar multipleImageToolBar;
-    private javax.swing.JToolBar oneImageToolBar;
-    private javax.swing.JTextField querryText;
+    private javax.swing.JPopupMenu featurePopupMenu;
+    private javax.swing.JButton openDBButton;
+    private javax.swing.JButton openImageButton;
+    private javax.swing.JToolBar openToolBar;
+    private javax.swing.JTextField queryText;
     private javax.swing.JButton searchButton;
+    private java.awt.Label statusLabel;
+    private javax.swing.JPanel statusPanel;
     // End of variables declaration//GEN-END:variables
+
+    private void setClassificationDB(String absolutePath) {
+        classificationDB.load(absolutePath);
+        this.dbUsedLabel.setText("Base de datos: "+absolutePath);
+        this.activeClassificationDBButton.setEnabled(true);
+        this.activeDescriptorDBButton.setEnabled(false);
+    }
+
+    private void setFeatureDB(String absolutePath) {
+        featureDB.load(absolutePath);
+        this.dbUsedLabel.setText("Base de datos: "+absolutePath);
+        this.activeClassificationDBButton.setEnabled(false);
+        this.activeDescriptorDBButton.setEnabled(true);
+    }
+
+    private void setStatusLabel(int mode) {
+        if (mode == MainWindow.READY_MODE){
+            this.statusLabel.setText("Modo: Preparado ");
+        }
+        else if (mode == MainWindow.BUSY_MODE){
+            this.statusLabel.setText("Modo: Calculando");
+        }
+    }
 }
