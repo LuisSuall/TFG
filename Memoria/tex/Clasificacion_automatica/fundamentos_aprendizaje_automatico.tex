@@ -48,9 +48,48 @@ Las nuevas peticiones de crédito serán evaluadas mediante la función $g$, no 
 
 La función $f$ es el objetivo del aprendizaje. La restricción más importante sin duda es la de ser completamente desconocida. Esto genera preguntas rápidamente, siendo quizás la primera que puede venir a la mente la que da título a este apartado. ¿Es posible aprender mediante un conjunto de ejemplos?\\
 
-Todos recordamos los pequeños puzzles consistentes en encontrar los siguientes números de una sucesión dada, encontrando la función que los genera. Pero estos puzzles requieren claramente una cantidad suficiente de información para obtener la respuesta. Un ejemplo de esta necesidad sería la sucesión ${2,4,\ldots}$. Con tan poca información, se nos pueden ocurrir muchas explicaciones distintas, y por tanto continuaciones distintas a la sucesión, siendo quizás las dos más evidentes la de ser todos los números pares o la de ser potencias de 2.\\
+Todos recordamos los pequeños puzzles consistentes en encontrar los siguientes números de una sucesión dada, encontrando la función que los genera. Si bien es cierto que, desde un punto de vista matemático, cualquier sucesión de números que demos como respuesta es una sucesión válida, se busca una respuesta mediante el uso de una regla simple. Pero estos puzzles requieren claramente una cantidad suficiente de información para obtener la respuesta. Un ejemplo de esta necesidad sería la sucesión ${2,4,\ldots}$. Con tan poca información, se nos pueden ocurrir muchas explicaciones distintas, y por tanto continuaciones distintas a la sucesión, siendo quizás las dos más evidentes la de ser todos los números pares o la de ser potencias de 2.\\
 
-Esto se debe claramente a que hay más de una función que puede generar ese fragmento de la sucesión. Este simple ejemplo pone en entredicho la posibilidad de aprender. Y para complicar más las cosas, este ejemplo no es una excepción.
-\subsection{Error y ruido}
-\subsection{Medidas de bondad del aprendizaje}
-\subsection{Sobreaprendizaje}
+Esto se debe claramente a que hay más de una sucesión que puede se inicia con ese fragmento de sucesión. Este simple ejemplo pone en entredicho la posibilidad de aprender. Y para complicar más las cosas, este ejemplo no es una excepción. Podemos generar problemas de este tipo con todo tipo de problemas donde varias de las posibles funciones del conjunto $\mathcal{H}$ aciertan en toda la muestra $\mathcal{D}$.\\
+
+Ahora bien, teniendo claro que no podemos asegurar el funcionamiento de nuestra estimación fuera de la muestra $\mathcal{D}$, podemos utilizar la probabilidad para tratar de dar una medida del acierto de la aproximación fuera de la muestra.\\
+
+Para ello, vamos a utilizar un problema clásico dentro de la estadística y la probabilidad. Supongamos que tenemos una bolsa con infinitas bolas blancas y negras. La proporción entre bolas blancas y negras hace que la probabilidad de tomar una bola negra sea $\mu$, mientras que la probabilidad de obtener una bola blanca será $1-\mu$. Asumimos que desconocemos este parámetro $\mu$. Para tratar de estimarlo, tomamos una muestra de $N$ bolas independientes, con reemplazamiento. Observamos la fracción de bolas negras en la muestra, que será nuestra estimación de $\mu$. ¿Qué nos dice esta fracción, a la que llamaremos $\nu$, sobre $\mu$?.\\
+
+Para cuantificar la relación entre $\nu$ y $\mu$, vamos a usar una cota, llamada la inecuación de Hoeffding. Dice que, para cualquier tamaño de muestra $N \in \mathbb{N}$,
+\[
+\ \mathbb{P}\left[ \mid \nu - \mu \mid > \epsilon \right] \leq 2e^{-2\epsilon^2 N} \qquad \textrm{para todo} \  \epsilon > 0.
+\]
+
+Esta inecuación nos da una información muy importante para nuestro problema. Podemos aumentar la probabilidad de que $\nu$ esté a una distancia de $\mu$ menor que $\epsilon$ simplemente aumentando el número de muestras $N$. Esto nos da una medida de la confianza que podemos tener en nuestra estimación para nuevos datos. Es decir, nos dice que podemos aprender, pero que jamás tendremos la certeza absoluta de que lo que aprendemos sea correcto. Solo podemos hablar en términos de que es muy probable que la aproximación sea correcta con un tamaño suficiente de los datos.\\
+
+Este ejemplo, lo podemos adaptar a nuestro problema de aprendizaje. Simplemente, cambiaremos la proporción de bolas negras en la bolsa $\mu$ por la proporción de fallos de la función estimadora $h$ en todo el conjunto de entrada $\mathcal{X}$. Llamaremos a esta proporción el error fuera de la muestra. Siendo $\mathcal{P}$ una probabilidad basada en la ditribución de $\mathcal{X}$ que se usa para muestrear los datos $x$, definimos el error de fuera de la muestra como:
+
+\[
+\ E_{out}(h)= \mathcal{P}\left[ h(x) \neq f(x)\right].
+\]
+
+De modo similar, el equivalente a la proporción de bolas negras en la muestra $\nu$ tiene su equivalente en la proporción de errores en el conjunto de aprendizaje $\mathcal{D}$. A esta proporción la llamaremos error en la muestra. Siendo $[\![$condición$]\!]=1$ si la condición es cierta y $[\![$condición$]\!]=0$ si es falsa, el error en la muestra se define como:
+
+\[
+\ E_{in}(h) = \frac{1}{N} \sum_{n=1}^N [\![h(x) \neq f(x)]\!].
+\]
+
+Entonces la inecuación de Hoeffding se puede reescribir como:
+
+\[
+\ \mathbb{P}\left[ \mid E_{in}(h) - E_{out}(h) \mid > \epsilon \right] \leq 2e^{-2\epsilon^2 N} \qquad \textrm{para todo} \  \epsilon > 0.
+\]
+
+Esto nos permite decir que podemos aprender fuera de la muestra. Pero para ello, vamos a necesitar un gran número de datos de entrada.\\
+
+Este proceso en realidad es una simplificación del problema real, pues al introducir en el problema el espacio de funciones $\mathcal{H}$ la cota se tiene que recalcular para considerar que tenemos más de una función $h$, aumentando la necesidad de número de muestras para poder obtener la misma seguridad. Además hay que realizar un estudio más preciso cuando el espacio de funciones $\mathcal{H}$ es infinito, utilizando para ello, entre otros elementos, la teoría de Vapnik-Chervonenskis. Sin embargo, dada la naturaleza simplemente introductiva de esta sección, vamos a quedarnos con esta versión simplificada, pues el concepto es el mismo que hemos desarrollado aquí, incluyendo la característica de un conjunto de funciones $\mathcal{H}$ infinito.\\
+
+\subsection{Ruido y sobreaprendizaje}
+
+
+La situación que hemos estudiado es un caso ideal. En la aplicación de estos conceptos a los casos del mundo real, tenemos que adaptarnos a situaciones que no son tan idílicas. Por ello, terminaremos esta sección introduciendo una par de conceptos para acercar esta teoría a su aplicación a los problemas del mundo real.\\
+
+La primera noción es sobre la naturaleza de la función que queremos aprender. Hasta ahora, hemos considerado que la función a estudiar tiene completamente definida la salida para un dato de entrada. Pero en muchas situaciones reales, esto no es así, pues hay ruido que hace que la salida de la función no esté completamente definida por la entrada.\\ 
+
+La segunda noción es el sobreaprendizaje. Por sobreaprendizaje entendemos que nuestra aproximación se pega tanto a los datos de aprendizaje que acaba obteniendo una mala generalización. Esto suele suceder cuando la familia de funciones $\mathcal{H}$ tiene más grados de libertad de los necesitados para aprender la función, y por tanto más posibilidades de aprendizaje de las necesarias, lo que le permite adaptarse a las peculiaridades de la muestra, empeorando por tanto su adaptación general. Estos errores pueden ser de todo tipo: ruido, datos raros e incluso fallo humano en la introducción de los datos.\\
