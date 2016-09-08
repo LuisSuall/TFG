@@ -20,6 +20,7 @@ import sri.classification.ClassifierManager;
 import sri.classification.SynsetDictionary;
 import sri.classification.SynsetInfo;
 import sri.feature.FeatureDB;
+import sri.feature.FeatureDBFactory;
 
 /**
  *
@@ -134,7 +135,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         openToolBar.setRollover(true);
 
-        openImageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        openImageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/OpenFile.png"))); // NOI18N
         openImageButton.setFocusable(false);
         openImageButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         openImageButton.setMaximumSize(new java.awt.Dimension(30, 30));
@@ -146,7 +147,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         openToolBar.add(openImageButton);
 
-        openDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        openDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Database.png"))); // NOI18N
         openDBButton.setFocusable(false);
         openDBButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         openDBButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -159,6 +160,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         classificationSearchToolBar.setRollover(true);
 
+        queryText.setEnabled(false);
         queryText.setMinimumSize(new java.awt.Dimension(100, 27));
         queryText.setPreferredSize(new java.awt.Dimension(300, 27));
         queryText.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +170,8 @@ public class MainWindow extends javax.swing.JFrame {
         });
         classificationSearchToolBar.add(queryText);
 
-        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search_db.png"))); // NOI18N
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Search.png"))); // NOI18N
+        searchButton.setEnabled(false);
         searchButton.setFocusable(false);
         searchButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         searchButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -181,7 +184,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         configurationToolBar.setRollover(true);
 
-        configurationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        configurationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Settings.png"))); // NOI18N
         configurationButton.setFocusable(false);
         configurationButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         configurationButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -194,14 +197,19 @@ public class MainWindow extends javax.swing.JFrame {
 
         descriptorToolBar.setRollover(true);
 
-        computeDescriptorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        computeDescriptorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/CompFeature.png"))); // NOI18N
         computeDescriptorButton.setComponentPopupMenu(featurePopupMenu);
         computeDescriptorButton.setFocusable(false);
         computeDescriptorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         computeDescriptorButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        computeDescriptorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                computeDescriptorButtonActionPerformed(evt);
+            }
+        });
         descriptorToolBar.add(computeDescriptorButton);
 
-        computeClassificationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        computeClassificationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/CompCategory.png"))); // NOI18N
         computeClassificationButton.setFocusable(false);
         computeClassificationButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         computeClassificationButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -212,16 +220,22 @@ public class MainWindow extends javax.swing.JFrame {
         });
         descriptorToolBar.add(computeClassificationButton);
 
-        compareButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        compareButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Compare.png"))); // NOI18N
+        compareButton.setEnabled(false);
         compareButton.setFocusable(false);
         compareButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         compareButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        compareButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compareButtonActionPerformed(evt);
+            }
+        });
         descriptorToolBar.add(compareButton);
 
-        activeClassificationDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        activeClassificationDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/CompCategory.png"))); // NOI18N
         activeClassificationDBButton.setEnabled(false);
 
-        activeDescriptorDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/analyse_img.png"))); // NOI18N
+        activeDescriptorDBButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/CompFeature.png"))); // NOI18N
         activeDescriptorDBButton.setEnabled(false);
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
@@ -389,18 +403,53 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_configurationButtonActionPerformed
 
     private void computeClassificationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeClassificationButtonActionPerformed
-        ImageFrame selectedImagePanel = (ImageFrame) desktopPanel.getSelectedFrame();
-        String path = selectedImagePanel.path;
+        ImageFrame selectedImageFrame = (ImageFrame) desktopPanel.getSelectedFrame();
+        String path = selectedImageFrame.path;
         
         setStatusLabel(MainWindow.BUSY_MODE);
         
         ClassificationFrame vi = new ClassificationFrame(this,path,classifier);
-        vi.setTitle(selectedImagePanel.getTitle() + " - Clasificación");
+        vi.setTitle(selectedImageFrame.getTitle() + " - Clasificación");
         
         setStatusLabel(MainWindow.READY_MODE);
         
         this.showInternalFrame(vi);
     }//GEN-LAST:event_computeClassificationButtonActionPerformed
+
+    private void compareButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareButtonActionPerformed
+        FeatureFrame selectedFeatureFrame = (FeatureFrame) desktopPanel.getSelectedFrame();
+        ContourFeature selectedFeature = selectedFeatureFrame.getContourFeature();
+        
+        ResultList resultList = featureDB.search(selectedFeature);
+        resultList.sort();
+        
+        ResultFrame vi = new ResultFrame(this,resultList);
+        vi.setTitle(selectedFeatureFrame.getTitle() + " - Consulta");
+        this.showInternalFrame(vi);
+    }//GEN-LAST:event_compareButtonActionPerformed
+
+    private void computeDescriptorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeDescriptorButtonActionPerformed
+        ImageFrame selectedImageFrame = (ImageFrame) desktopPanel.getSelectedFrame();
+        String path = selectedImageFrame.path;
+        
+        setStatusLabel(MainWindow.BUSY_MODE);
+        
+        int mode = -1;
+        
+        if (this.CurvatureButtonMenuItem.isSelected()){
+            mode = FeatureDBFactory.CURVATURE_MODE;
+        }
+        else if (this.CurvacityButtonMenuItem.isSelected()){
+            mode = FeatureDBFactory.CURVACITY_MODE;
+        }
+        
+        FeatureFrame vi = new FeatureFrame(this,path,mode);
+        vi.setTitle(selectedImageFrame.getTitle() + " - Clasificación");
+        
+        setStatusLabel(MainWindow.READY_MODE);
+        
+        this.showInternalFrame(vi);
+    }//GEN-LAST:event_computeDescriptorButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -468,6 +517,11 @@ public class MainWindow extends javax.swing.JFrame {
         this.dbUsedLabel.setText("Base de datos: "+absolutePath);
         this.activeClassificationDBButton.setEnabled(true);
         this.activeDescriptorDBButton.setEnabled(false);
+        
+        this.searchButton.setEnabled(true);
+        this.queryText.setEnabled(true);
+        
+        this.compareButton.setEnabled(false);
     }
 
     private void setFeatureDB(String absolutePath) {
@@ -475,6 +529,11 @@ public class MainWindow extends javax.swing.JFrame {
         this.dbUsedLabel.setText("Base de datos: "+absolutePath);
         this.activeClassificationDBButton.setEnabled(false);
         this.activeDescriptorDBButton.setEnabled(true);
+        
+        this.searchButton.setEnabled(false);
+        this.queryText.setEnabled(false);
+        
+        this.compareButton.setEnabled(true);
     }
 
     private void setStatusLabel(int mode) {

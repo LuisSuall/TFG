@@ -22,8 +22,8 @@ import jfi.shape.fuzzy.FuzzyContourFactory;
  */
 public class FeatureDBFactory {
     
-    private static final int CURVATURE_MODE = 0;
-    private static final int CURVACITY_MODE = 1;
+    public static final int CURVATURE_MODE = 0;
+    public static final int CURVACITY_MODE = 1;
     
     public FeatureDBFactory(){
         
