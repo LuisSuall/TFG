@@ -416,8 +416,8 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_computeClassificationButtonActionPerformed
 
     private void compareButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareButtonActionPerformed
-        FeatureFrame selectedFeatureFrame = (FeatureFrame) desktopPanel.getSelectedFrame();
-        ContourFeature selectedFeature = selectedFeatureFrame.getContourFeature();
+        GraphInternalFrame selectedGraphFrame = (GraphInternalFrame) desktopPanel.getSelectedFrame();
+        ContourFeature selectedFeature = selectedGraphFrame.getContourFeature();
         
         ResultList results = featureDB.search(selectedFeature);
         ResultList resultList = new ResultList();
@@ -436,7 +436,7 @@ public class MainWindow extends javax.swing.JFrame {
         resultList.sort();
         
         ResultFrame vi = new ResultFrame(this,resultList);
-        vi.setTitle(selectedFeatureFrame.getTitle() + " - Consulta");
+        vi.setTitle(selectedGraphFrame.getTitle() + " - Consulta");
         this.showInternalFrame(vi);
     }//GEN-LAST:event_compareButtonActionPerformed
 
@@ -455,7 +455,10 @@ public class MainWindow extends javax.swing.JFrame {
             mode = FeatureDBFactory.CURVACITY_MODE;
         }
         
-        FeatureFrame vi = new FeatureFrame(this,path,mode);
+        FeatureDBFactory factory = new FeatureDBFactory();
+        ContourFeature cf = factory.createContourFeature(path, mode);
+        
+        GraphInternalFrame vi = new GraphInternalFrame(this,cf);
         vi.setTitle(selectedImageFrame.getTitle() + " - Clasificación");
         
         setStatusLabel(MainWindow.READY_MODE);
