@@ -1,17 +1,30 @@
-\section{Requisitos}
+\section{Comentarios iniciales}
+
+En esta sección, plantearemos de forma ordenada la documentación necesaria para la creación del prototipo para la recuperación de imágenes. Contendrá los pasos típicos seguidos dentro de la Ingeniería del Software. Para evitar que la sección se alargue en exceso, se reduce el número de diagramas, mostrando solo los de las partes más importantes del proyecto.\\
+
+Además, la aplicación contiene un cambio con respecto a los objetivos iniciales. Como se ha visto en la sección \ref{ch1}, no se han llegado a la clasificación de las formas mediante descriptores lingüísticos. Aún así, se ha desarrollado unos descriptores que pueden ser útiles para el proceso de recuperación. Así, la aplicación contará con un sistema de búsqueda por descriptores, que nos permitirá buscar siluetas parecidas a la que introduzcamos como consulta.\\
+
+\section{Requisitos del sistema}
 
 \subsection{Requisitos funcionales}
 
-RF-1: Clasificar una imágen.
-RF-2: Clasificar un conjunto de imágenes.
-RF-3: Almacenar un conjunto de clasificaciones en disco.
-RF-4: Cargar un conjunto de clasificaciones desde disco.
-RF-5: Buscar en un conjunto de clasificaciones los resultados que mejor cumplan un concepto.
-RF-6: Calcular los descriptores de un contorno.
-RF-7: Calcular los descriptores de un conjunto de contornos.
-RF-8: Almacenar en disco los decriptores de un conjunto de contornos.
-RF-9: Cargar desde disco los descriptores de un conjunto de contornos.
-RF-10: Utilizar los descriptores para encontrar los contornos más parecido al de muestra.
+\begin{itemize}
+\item \textbf{RF-1: }Abrir una imagen.
+\item \textbf{RF-2: }Abrir una base de datos de clasificaciones.
+\item \textbf{RF-3: }Abrir una base de datos de descriptores.
+\item \textbf{RF-4: }Clasificar una imagen.
+\item \textbf{RF-5: }Obtener los descriptores de una imagen.
+\item \textbf{RF-6: }Recuperar imágenes en una base de datos de descriptores según una silueta dada.
+\item \textbf{RF-7: }Recuperar imágenes en una base de datos de clasificaciones según un concepto dado.
+\item \textbf{RF-8: }Crear una base de datos de descriptores.
+\item \textbf{RF-9: }Almacenar en disco una base de datos de descriptores.
+\item \textbf{RF-10: }Crear una base de datos de clasificaciones.
+\item \textbf{RF-11: }Almacenar en disco una base de datos de clasificaciones.
+\end{itemize}
+
 \subsection{Requisitos no funcionales}
 
-RNF-1: El sistema debe tener una interfaz gráfica sencilla de manejar.
+\begin{itemize}
+\item \textbf{RNF-1: }El sistema debe tener una interfaz intuitiva.
+\item \textbf{RNF-2: }El sistema ser eficiente, entendiendo por eficiente el tratar de evitar repetir cálculos.
+\end{itemize}
