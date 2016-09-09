@@ -40,7 +40,7 @@ public class FeatureDBFactory {
 
                 @Override
                 public boolean accept(File dir, String name) {
-                    return name.endsWith(".jpg");
+                    return name.endsWith(".gif");
                 }
             };
             
@@ -61,7 +61,6 @@ public class FeatureDBFactory {
     }
     
     public ContourFeature createContourFeature(String path, int mode, int size){
-        
         BufferedImage img = null;
         
         try {
@@ -92,20 +91,11 @@ public class FeatureDBFactory {
             }
         }
 
-        System.out.println("LAS PARTES DIVER");
         ContourFeature contourFeature = new ContourFeature(path,values);
         contourFeature.resizeFeature(size);
         
-        for(double value: contourFeature){
-            System.out.println(value);
-        }
-        
         contourFeature.normalize();
         contourFeature.normalizeOrder();
-        
-        for(int i = 0; i < contourFeature.size();i++){
-            System.out.println(contourFeature.get(i));
-        }
         
         return contourFeature;
     }

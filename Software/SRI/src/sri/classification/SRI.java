@@ -5,6 +5,10 @@
  */
 package sri.classification;
 
+import sri.feature.ContourFeature;
+import sri.feature.FeatureDB;
+import sri.feature.FeatureDBFactory;
+
 /**
  *
  * @author luis
@@ -15,19 +19,15 @@ public class SRI {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SynsetDictionary dict = new SynsetDictionary();
-        dict.load();
-
-        ClassifierManager cl = new ClassifierManager();
-        ClassificationDB db = cl.classifyFolder("/home/luis/TFG/Software/Ejemplos/");
-        double sum = 0;
-        for(ImageClassification img:db){
-            System.out.println(img.getImagePath());
-            System.out.println(img.getBestClass());
-            System.out.println(img.getProbabilityBestClass());
-            System.out.println(dict.searchByIdx(img.getBestClass()).getConcept());
+        FeatureDBFactory factory = new FeatureDBFactory();
+        FeatureDB db = factory.createFeatureDB("/home/luis/MPEG7dataset/original/", FeatureDBFactory.CURVATURE_MODE);
+        
+        for(ContourFeature cf:db){
+            System.out.println(cf.getPath());
+            System.out.println(cf.size());
         }
-        System.out.println("La suma es: "+Double.toString(sum));
+        
+        db.save("/home/luis/MPEG7dataset/original/aa.featdb");
     }
     
 }

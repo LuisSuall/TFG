@@ -383,8 +383,6 @@ public class MainWindow extends javax.swing.JFrame {
                 File f = dlg.getSelectedFile();
                 String absolutePath = f.getAbsolutePath();
                 
-                System.out.println(absolutePath);
-                
                 if (absolutePath.endsWith(".sridb")){
                     
                     setClassificationDB(absolutePath);
@@ -421,7 +419,20 @@ public class MainWindow extends javax.swing.JFrame {
         FeatureFrame selectedFeatureFrame = (FeatureFrame) desktopPanel.getSelectedFrame();
         ContourFeature selectedFeature = selectedFeatureFrame.getContourFeature();
         
-        ResultList resultList = featureDB.search(selectedFeature);
+        ResultList results = featureDB.search(selectedFeature);
+        ResultList resultList = new ResultList();
+        
+        for(JMRResult result: results){
+
+            ResultMetadata myResult = (ResultMetadata) result;
+
+            float value = ((FloatResult) myResult.getResult()).getValue();
+            FloatResult resultValue = new FloatResult(value);
+            String path = (String) myResult.getMetadata();
+
+            resultList.add(new ResultMetadata(resultValue, loadImage(path)));
+        }
+        
         resultList.sort();
         
         ResultFrame vi = new ResultFrame(this,resultList);
