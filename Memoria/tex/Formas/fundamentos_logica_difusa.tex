@@ -194,4 +194,20 @@ Pero no podemos obtener todas las propiedades usuales de los conjuntos ordinario
 
 no se cumplen. Dado $x \in X$ y supongamos que $A(x)=\frac{1}{2}$, se cumple $\left( A \cup \overline{A} \right) (x) = \left( A \cap \overline{A} \right) (x) = A(x)$. Por tanto, tenemos un contrajemplo, que nos hace descartar las propiedades anteriores.\\
 
-%\subsection{Lógica difusa}
+\subsection{Modificadores lingüísticos}
+
+En el habla, utilizamos adjetivos que alteran la intensidad de una categoría. Por ejemplo, ``muy altos'' modifica la categoría ``altos'' en pos de hacerla más restrictiva, quedándonos únicamente con las personas realmente altas. En la lógica difusa, se crean unos operadores, llamados modificadores lingüísticos, que permiten adaptar esta realidad, realzando valores de la función de pertenencia o haciéndola más o menos permisiva.\\
+
+Se pueden definir muchos modificadores lingüísticos. Vamos a mostrar algunos de los más básicos. Sea $\mu_A$ la función de pertenencia de un conjunto difuso, se definen los siguientes modificadores lingüísticos:
+
+\begin{itemize}
+\item \textbf{``Muy'': }$\mu_A = \mu_A^2$.
+\item \textbf{``Muy muy'': }$\mu_A = \mu_A^4$.
+\item \textbf{``Más'': }$\mu_A = \mu_A^{1.25}$.
+\item \textbf{`Un poco'': }$\mu_A = \sqrt{\mu_A}$.
+\item \textbf{``Menos'': }$\mu_A = \mu_A^{0.75}$.
+\end{itemize}
+
+Los tres primeros forman parte de los modificadores lingüísticos de concentración. Se llaman así ya que reducen mucho la función de pertenencia de los elementos que tienen una baja pertenencia al conjunto, dejando casi sin alterar los elementos que tienen un alto valor de función de pertenencia, consiguiendo un efecto de concentración en torno a los valores que mejor cumplen la condición del conjunto difuso. De manera opuesta, los dos últimos modificadores lingüísticos se conocen como de dilatación.\\
+
+En la teoría de conjuntos difusos podemos encontrar muchos más modificadores lingüísticos y categorías de los mismos.\\
