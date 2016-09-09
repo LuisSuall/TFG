@@ -87,15 +87,25 @@ public class FeatureDBFactory {
         else if(mode == FeatureDBFactory.CURVACITY_MODE){
             FuzzyContour fuzzyContour= FuzzyContourFactory.getLinearityInstance(contour);
             
-            for(int i = 0; i < fuzzyContour.size(); i++){              
+            for(int i = 0; i < fuzzyContour.size(); i++){
                 values.add(1-fuzzyContour.membershipDegree(contour.get(i)));
             }
         }
 
+        System.out.println("LAS PARTES DIVER");
         ContourFeature contourFeature = new ContourFeature(path,values);
         contourFeature.resizeFeature(size);
+        
+        for(double value: contourFeature){
+            System.out.println(value);
+        }
+        
         contourFeature.normalize();
         contourFeature.normalizeOrder();
+        
+        for(int i = 0; i < contourFeature.size();i++){
+            System.out.println(contourFeature.get(i));
+        }
         
         return contourFeature;
     }

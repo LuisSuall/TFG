@@ -19,6 +19,7 @@ import sri.classification.ClassificationDB;
 import sri.classification.ClassifierManager;
 import sri.classification.SynsetDictionary;
 import sri.classification.SynsetInfo;
+import sri.feature.ContourFeature;
 import sri.feature.FeatureDB;
 import sri.feature.FeatureDBFactory;
 

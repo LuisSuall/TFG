@@ -50,9 +50,12 @@ public class ContourFeature extends ArrayList<Double>{
     public void normalizeOrder(){
         int maxIdx = -1;
         double maxValue = Double.NEGATIVE_INFINITY;
-        
+        System.out.println("Corazon partio");
         for(int i = 0; i < this.size(); i++){
+            
+            System.out.println(this.get(i));
             if (this.get(i) > maxValue){
+                System.out.println("Quien me va a entregar sus emociones");
                 maxValue = this.get(i);
                 maxIdx = i;
             }
@@ -63,10 +66,13 @@ public class ContourFeature extends ArrayList<Double>{
         for(int i = maxIdx; i < this.size(); i++){
             orderedValues.add(this.get(i));
         }
+        System.out.println("Quien me va a pedir que nunca la abandone");
         for(int i = 0; i < maxIdx; i++){
             orderedValues.add(this.get(i));
         }
         
+        System.out.println(orderedValues.size());
+        System.out.println(this.size());
         for(int i = 0; i < this.size(); i++){
             this.set(i, orderedValues.get(i));
         }
@@ -84,7 +90,7 @@ public class ContourFeature extends ArrayList<Double>{
     
     private void reduceFeatureSize(int length){
         ArrayList<Double> newValues = new ArrayList<>();
-        double step = this.size()/(this.size()-length);
+        double step = this.size()/(double)(this.size()-length);
         double nextStepPosition = step;
         double lastValue = 0.0;
         
@@ -112,7 +118,7 @@ public class ContourFeature extends ArrayList<Double>{
     
     private void increaseFeatureSize(int length){
         ArrayList<Double> newValues = new ArrayList<>();
-        double step = this.size()/(this.size()-length);
+        double step = this.size()/(double)(this.size()-length);
         double nextStepPosition = step;
         double lastValue = 0.0;
         
