@@ -1,4 +1,4 @@
-\section{Fundamentos de las redes neuronales convolucionales}
+\section{Redes neuronales aplicadas a imágenes}
 Desde el punto de vista del aprendizaje automático, se ha abordado con múltiples herramientas y modelos el problema de la clasificación automática de imágenes. Los avances sucedidos en el campo, también han tenido un efecto en dentro de la clasificación automática de imágenes. Dentro de esos avances, hay que destacar la aparición de la técnica ``Back Propagation'' que hizo posible el entrenamiento de redes neuronales de gran profundidad. Este tipo de modelos, que tratan de imitar el comportamiento de un cerebro, han producido un gran avance en este campo.\\
 
 Las redes neuronales convolucionales, dan un paso más allá, obteniendo grandes resultados en los tipos de datos en el que la información de un punto está especialmente vinculada a la de sus vecinos, como pasa en las imágenes.\\
@@ -7,7 +7,17 @@ Dada la gran utilidad e importancia de este modelo concreto para la tarea, se de
 
 \subsection{Definición de neurona artificial}
 
-Por ser un modelo bioinspirado, primero es necesario conocer el funcionamiento básico de una neurona natural. Las neuronas son la unidad básica de nuestro cerebro. En él, podemos encontrar aproximadamente 86 mil millones de neuronas, conectadas en entre ellas mediante $10^{14}$ y $10^{15}$ sinapsis. En la figura \todo[color=red!50]{Figura de una neurona al canto} podemos ver las diferentes partes de una neurona. Las dendritas funcionan como la entrada de información por medio de la sinapsis con otras neuronas. El impulso es transmitido al núcleo de la neurona y tras esto, la señal de salida es emitida por el axión hacia otras neuronas. Estudiaremos el proceso paso a paso definiendo en cada momento el equivalente de la neurona artificial, para llegar a la fórmula final que la representa.\\
+Por ser un modelo bioinspirado, primero es necesario conocer el funcionamiento básico de una neurona natural. Las neuronas son la unidad básica de nuestro cerebro. En él, podemos encontrar aproximadamente 86 mil millones de neuronas, conectadas en entre ellas mediante $10^{14}$ y $10^{15}$ sinapsis. En la figura \ref{partes-neurona} podemos ver las diferentes partes de una neurona. Las dendritas funcionan como la entrada de información por medio de la sinapsis con otras neuronas. El impulso es transmitido al núcleo de la neurona y tras esto, la señal de salida es emitida por el axión hacia otras neuronas. Estudiaremos el proceso paso a paso definiendo en cada momento el equivalente de la neurona artificial, para llegar a la fórmula final que la representa.\\
+
+\begin{figure}
+\begin{center}
+
+\includegraphics[scale=0.35]{img/partes_neurona.jpg}
+\end{center}
+
+\caption{Partes de una neurona.}
+\label{NN}
+\end{figure}
 
 La entrada de una neurona artificial será por tanto un conjunto de valores $\left\lbrace x_1,x_2,\ldots,x_N\right\rbrace$ con $x_n \in \mathbb{R}$, para $n = 1,\ldots,N$. Las dendritas de la neurona, pueden ser excitadas, facilitando la activación de la neurona o inhibidas, dificultándolo. Para simular esto, se añaden una serie de pesos $\left\lbrace w_1,w_2,\ldots,w_N\right\rbrace$ con $w_n \in \mathbb{R}$, para $n = 1,\ldots,N$, que multiplicarán a las entradas y un valor adicional $b \in \mathbb{R}$, llamado bías, que representa la facilidad de la neurona para activarse. Los pesos y el bías son de una gran importancia para el aprendizaje de la red, pues una vez definida la red, son los únicos elementos que se puede aprender. Esto simula también el aprendizaje humano, que se realiza mediante el cambio de comportamiento de las neuronas y de como se afectan unas a otras, haciendo que puedan pasar a inhibir, excitar o incluso a desaparecer el enlace por carecer de importancia, simulado en las redes neuronales como un peso 0.\\
 
@@ -36,7 +46,17 @@ El modelo de las redes neuronales artificiales es bastante claro tras estas rest
 \item \textbf{Capa de salida:} Salida de la red. Funcionamiento similar a una capa oculta, con la diferencia que la función de activación puede ser diferente al resto de la red. La elección de la función de activación depende del problema de la red, para permitir dar una salida acorde al problema.
 \end{itemize}
 
-Una red neuronal consta de una primera capa de entrada, seguida por varias capas ocultas, terminando en una capa de salida. En la figura \todo[color=red!50]{Introducir imagen de red neuronal} podemos ver un ejemplo de red neuronal artificial. Se puede denotar la arquitectura de la red por el número de capas ocultas y de salida que tenga. Se hace así al obviar dentro de la arquitectura la capa de entrada, por no tener pesos en comparación a las otras dos.\\
+\begin{figure}
+\begin{center}
+
+\includegraphics[scale=0.5]{img/NN.png}
+\end{center}
+
+\caption{Red neuronal de dos capas.}
+\label{NN}
+\end{figure}
+
+Una red neuronal consta de una primera capa de entrada, seguida por varias capas ocultas, terminando en una capa de salida. En la figura \ref{NN} podemos ver un ejemplo de red neuronal artificial. Se puede denotar la arquitectura de la red por el número de capas ocultas y de salida que tenga. Se hace así al obviar dentro de la arquitectura la capa de entrada, por no tener pesos en comparación a las otras dos.\\
 
 \subsubsection{Propiedades}
 
@@ -111,9 +131,9 @@ Se llama aprendizaje de la representación a un conjunto de métodos que automá
  
 Esta técnica ha conseguido grandes avances en el mundo de la inteligencia artificial. Es extremadamente buena encontrando estructuras complejas dentro de los datos de alta dimensionalidad, haciéndola especialmente útil para muchos dominios. En concreto, es una de las partes fundamentales de los grandes resultados que se obtienen en el campo de la clasificación de imágenes. Evidentemente, este problema encaja dentro del caso anterior: datos con una gran dimensionalidad y características complejas que eran necesarias diseñar por los ingenieros.\\
 
-Pero la aplicación directa de estos métodos, pese a ser efectiva, puede tener algunos problemas con respecto a las imágenes. Imaginemos el problema de clasificar imágenes relativamente pequeñas, de 32x32 píxeles RGB. Tendríamos entonces 3072 datos de entrada. Por cada neurona de la primera capa, necesitaríamos 3073 pesos. Es fácil ver lo rápido que puede escalar el número de pesos al aumentar el tamaño de la red, cosa que por otra parte es necesario en un espacio de datos tan complejo.\\
+Pero la aplicación directa de estos métodos, pese a ser efectiva, puede tener algunos problemas con respecto a las imágenes. Imaginemos el problema de clasificar imágenes relativamente pequeñas, de 32x32 píxeles RGB. Tendríamos entonces 3072 datos de entrada. Por cada neurona de la primera capa, necesitaríamos 3073 pesos. Es fácil ver lo rápido que puede escalar el número de pesos al aumentar el tamaño de la red en un espacio de datos tan complejo.\\
 
-En esa visión, sin embargo, se obvia una importante característica de las imágenes, la importancia de la posición de un dato. Imaginemos que queremos detectar en imágenes de fotografías de carnet los ojos de las personas que aparecen. Podríamos, en vez de intentar analizar en búsqueda de un ojo la imagen en su conjunto, tomar una ventana del tamaño de un ojo, y pasarla por toda la imagen buscándolos. Por supuesto, al ser la ventana más pequeña, la red necesitará menos pesos para poder funcionar correctamente. Esta es la idea detrás de las redes neuronales convolucionales que introdujo el investigador Yann Lecun \cite{lecun-89e}\cite{lecun-98}.\\ 
+En esa visión, sin embargo, se obvian características importantes de las imágenes, que permiten que existan modelos diferentes de redes neuronales mejor adaptadas al problema. Las redes neuronales convolucionales que introdujo el investigador Yann Lecun \cite{lecun-89e}\cite{lecun-98} tratan de explotar estas características, consiguiendo grandes resultados en su aplicación en la práctica.\\ 
 
 \subsection{Redes neuronales convolucionales}
 
