@@ -56,7 +56,7 @@ Ahora bien, teniendo claro que no podemos asegurar el funcionamiento de nuestra 
 
 Para ello, vamos a utilizar un problema clásico dentro de la estadística y la probabilidad. Supongamos que tenemos una bolsa con infinitas bolas blancas y negras. La proporción entre bolas blancas y negras hace que la probabilidad de tomar una bola negra sea $\mu$, mientras que la probabilidad de obtener una bola blanca será $1-\mu$. Asumimos que desconocemos este parámetro $\mu$. Para tratar de estimarlo, tomamos una muestra de $N$ bolas independientes, con reemplazamiento. Observamos la fracción de bolas negras en la muestra, que será nuestra estimación de $\mu$. ¿Qué nos dice esta fracción, a la que llamaremos $\nu$, sobre $\mu$?.\\
 
-Para cuantificar la relación entre $\nu$ y $\mu$, vamos a usar una cota, llamada la inecuación de Hoeffding. Dice que, para cualquier tamaño de muestra $N \in \mathbb{N}$,
+Para cuantificar la relación entre $\nu$ y $\mu$, vamos a usar una cota, llamada la inecuación de Hoeffding. Dice que, para cualquier tamaño de muestra $N \in \mathbb{N}$,\\
 \[
 \ \mathbb{P}\left[ \mid \nu - \mu \mid > \epsilon \right] \leq 2e^{-2\epsilon^2 N} \qquad \textrm{para todo} \  \epsilon > 0.
 \]

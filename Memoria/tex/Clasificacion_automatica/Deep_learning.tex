@@ -31,9 +31,9 @@ Las redes neuronales artificiales simplifican esta realidad, incluyendo las sigu
 
 El modelo de las redes neuronales artificiales es bastante claro tras estas restricciones con respecto a las redes de neuronas naturales. Se definen de 3 tipos de capas distintas:
 \begin{itemize}
-\item \textbf{Capa de entrada:} 
-\item \textbf{Capa oculta:}
-\item \textbf{Capa de salida:}
+\item \textbf{Capa de entrada:} Red sin ningún tipo de pesos ni función de activación. Pasan directamente los datos de entrada a la primera capa oculta.
+\item \textbf{Capa oculta:} Toman los datos de la capa anterior, utiliza los pesos de cada neurona para combinarlos, calculan la función de activación y pasan su salida a la siguiente capa. Normalmente, todas las capas ocultas de la red tienen el mismo tipo de función de activación.
+\item \textbf{Capa de salida:} Salida de la red. Funcionamiento similar a una capa oculta, con la diferencia que la función de activación puede ser diferente al resto de la red. La elección de la función de activación depende del problema de la red, para permitir dar una salida acorde al problema.
 \end{itemize}
 
 Una red neuronal consta de una primera capa de entrada, seguida por varias capas ocultas, terminando en una capa de salida. En la figura \todo[color=red!50]{Introducir imagen de red neuronal} podemos ver un ejemplo de red neuronal artificial. Se puede denotar la arquitectura de la red por el número de capas ocultas y de salida que tenga. Se hace así al obviar dentro de la arquitectura la capa de entrada, por no tener pesos en comparación a las otras dos.\\
@@ -49,7 +49,59 @@ Por el otro, ya vimos que los modelos que tienen una gran capacidad para aprende
 
 \subsection{Entrenamiento de una red neuronal}
 
-Se ha hecho referencia varias veces a la importancia que tiene el proceso de aprendizaje en las redes neuronales, y la necesidad de que sea eficiente.
+Hasta ahora, hemos visto las redes neuronales como una familia de funciones paramétricas no lineal. Evidentemente, nuestro objetivo es obtener los mejores parámetros para ajustar la red y que consiga la mejor aproximación al problema planteado. Es equivalente conseguir la mejor aproximación a reducir una medida de error. Tomaremos como medida del error la suma de los errores cuadráticos. Siendo $y(x,w)$ el resultado de la ejecución de la red al dato de entrada $x$, usando los pesos $w$, siendo ${x_n}$ el conjunto de datos de entrenamiento, con $n=1\ldots N$,junto con los vectores objetivo ${t_n}$, la función de suma del error cuadrático que usaremos, para unos pesos $w$, es:
+
+\[
+\ E(W)= \frac{1}{2} \sum_{n=1}^N \parallel y(x_n,w)-t_n \parallel^2 .
+\]
+
+En la práctica, la no linealidad de la red neuronal hace que $E(w)$ sea no convexo, luego pueden aparecer mínimos locales, lo que complica la tarea de buscar el mínimo del error.\\
+
+\subsubsection{Uso del gradiente}
+
+Como sabemos, el gradiente de una función $f(x)$, $\nabla f(x)$, tiene la propiedad de indicar la dirección de máximo crecimiento en el punto $x$. Esto es equivalente a que $-\nabla f(x)$ sea la dirección de máximo decrecimiento de la función en el punto $x$. Esta propiedad se usa para el entrenamiento de las redes neuronales y en muchos otros modelos habituales dentro del aprendizaje automático.\\
+
+El acercamiento más sencillo a esta técnica es elegir la actualización de los pesos de la red dando un pequeño paso en la dirección del gradiente negativo. Siendo $w^{(\tau)}$ los pesos en la iteración $\tau$ y siendo $\eta>0$ el ratio de aprendizaje, la actualización de los pesos se realiza mediante
+
+\[
+\ w^{(\tau +1)}=w^{(\tau)}+\eta \nabla E(w^{(\tau)}) .
+\]
+
+Después de la actualización, se vuelve a repetir el proceso con los nuevos pesos. Notar que cada actualización requiere el procesado de todos los datos del conjunto de entrenamiento. Los métodos que hacen esto se conocen como métodos ``batch''. Existen métodos de este tipo más eficientes, que además aseguran descender siempre en cada paso que dan. En el modelo anterior que pese a avanzar en la dirección de máximo decrecimiento no está asegurado dicho descenso, pues al ser fijo el ratio de aprendizaje $\eta$ puede hacernos avanzar más de lo deseado en esa dirección, permitiendo crecer el error tras una actualización.\\
+
+Existe también una versión on-line, que se suele llamar optimización secuencial, del método del gradiente descendiente que ha conseguido grandes resultados en el entrenamiento de redes neuronales con grandes bases de datos. Sea $E_n(w)$ el error en la muestra $n$. El método de actualización de la optimización secuencial sería
+
+\[
+\ w^{(\tau +1)}=w^{(\tau)}+\eta \nabla E_n(w^{(\tau)}) .
+\]
+
+El proceso sigue tomando imágenes de manera secuencial o haciendo un muestreo aleatorio con reemplazo. También existen enfoques intermedios, que son muy utilizados y que siguen esta misma idea.\\
+
+Este tipo de versiones del gradiente descendiente donde no se usa todos los datos de entrenamiento en cada iteración, si no un subconjunto de los mismos, se llaman gradiente descendiente estocástico. Entre sus ventajas, destacar por un lado el cálculo de la actualización usando un subconjunto de los datos de entrada es más rápido que el mismo cálculo con la base de datos de entrenamiento entera, lo que es muy importante con conjuntos de entrenamiento que pueden llegar a contener millones de datos. Además, el gradiente obtenido en el proceso estocástico puede sacar el proceso de mínimos locales, pues al no usar todos los datos, el gradiente puede no ser 0. Por último, maneja mejor la redundancia de datos. En el caso extremo de tomar un conjunto de entrenamiento y duplicar su tamaño, duplicando uno a uno todos los datos, el método del gradiente descendiente estocástico apenas se vería afectado, mientras que el gradiente descendiente usual tardaría en realizar una actualización el doble de tiempo.\\
+
+Destacar que el método de actualización de los pesos utilizado para explicar estos conceptos es muy simple. Existen técnicas que, basandose en el mismo concepto de desplazarse en la dirección del gradiente, introducen mejoras como ratio de aprendizaje descendente, ratio de aprendizaje variable o tener en cuenta los movimientos anteriores, es decir su inercia.\\ 
+
+\subsubsection{Backpropagation}
+
+Hemos visto que, sin importar el tipo de entrenamiento que elijamos, el proceso se basa en calcular el gradiente de una función. Esto no supone ningún tipo de problema, pues las funciones utilizadas para la activación de las neuronas artificiales tienen derivadas fácilmente calculables. El problema es la eficiencia de dicha operación, pues tanto la derivada usual mediante el uso de la regla de la cadena, como las aproximaciones usando diferencias finitas son muy lentas cuando la red crece en número de capas y número de pesos. Hablaremos más de esto cuando entremos a fondo en la eficiencia.\\
+
+Para salvar este obstáculo, se diseñó una nueva técnica para el cálculo del gradiente, conocido como ``backpropagation''. Destacar que esta palabra solo hace referencia al hecho de propagar los errores por la red hacia atrás, es decir del final de la red al principio, aunque es común utilizarla para hablar del proceso completo de cálculo del gradiente. Nos centraremos en calcular $\nabla E_n(w)$.\\
+ 
+ \todo[inline,color=red]{Cuentas de la backpropagation}
+ 
+En el fondo, todo este proceso no es más que una simple aplicación de la regla de la cadena. Su potencial se encuentra principalmente en su eficiencia.\\
+
+Lo primero que tenemos que destacar es que simplemente evaluar una red ya es un proceso que no es muy eficiente. Para una red grande, lo normal es que el número de pesos $W$ sea muchas veces mayor que el número de neuronas. Por lo tanto, el mayor tiempo empleado durante la ejecución de la evaluación de la red es en las operaciones de productos y sumas entre los pesos y los valores de la capa anterior, permitiéndonos considerar el calculo de la función de activación como un overhead. Por tanto, el tiempo de ejecución dependerá linealmente de $W$, luego el coste computacional de la operación es $O(W)$.\\
+
+La alternativa a la técnica backpropagation es el uso de la aproximación de las diferentes derivadas por medio de diferencias finitas. Esta aproximación la podemos expresar mediante
+
+\[
+\ \frac{\delta E_n}{\delta w_{ij}} = \frac{E_n(w_{ij}+\epsilon) - E_n(w_{ij})}{\epsilon} +O(\epsilon),\qquad\textrm{con }\epsilon>0.
+\]
+
+Para obtener una buena aproximación, tenemos que acercar $\epsilon$ todo lo posible a 0 pero sin llegar a tener problemas de inestabilidades numéricas. Pero pese a poder obtener buenos resultados con esta aproximación o con algunas de coste similar y mayor precisión, no es eficiente. Tendríamos que repetir el cálculo de la aproximación una vez por cada peso de la red, y un simple cálculo de $E_n(w)$ ya es una operación $O(W)$. Luego el cálculo del gradiente utilizando diferencias finitas para aproximar las derivadas es una operación de coste computacional $O(W^2)$.\\
+
+Aún así, este método es muy simple de programar. Por lo tanto tiene su lugar en el desarrollo de redes neuronales, para poder comprobar que el método del cálculo del gradiente, mucho más complicado y más propicio a fallos de programación, funciona correctamente.\\
 
 \subsection{Deep Learning}
 
@@ -66,4 +118,4 @@ En esa visión, sin embargo, se obvia una importante característica de las imá
 \subsection{Redes neuronales convolucionales}
 
 
-\subsection{Comparativa de redes neuronales}
+%\subsection{Comparativa de redes neuronales}
