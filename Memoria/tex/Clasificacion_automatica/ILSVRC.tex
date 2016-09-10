@@ -12,12 +12,12 @@ El fin de esta base de datos es facilitar la tarea de la investigación en el ca
 
 ImageNet no posee los derechos de las imágenes contenidas en la base de datos. Por ello, lo único que pueden dar de manera abierta es el enlace a la imagen, de manera similar a los buscadores de imágenes. Sin embargo, las base de datos está completamente disponible para investigadores y docentes que usen las imágenes con fines no comerciales.\\
 
-Dentro de ImageNet, existe una competición llamada ImageNet Large Scale Visual Recognition Competition (ILSVRC). Aunque ahora la competición tiene varias modalidades distintas para competir, desde sus inicios el problema principal ha sido el de clasificar imágenes dentro de 1.000 categorías distintas. Estas categorías representan un marco muy amplio, podemos encontrar desde material de oficina como impresoras a una gran variedad de animales.\\
-
-Dada esta variedad tan amplia, y a ser un problema conocido, se ha tomado los datos de esta competición, en concreto la edición de 2012, para realizar el aprendizaje de nuestro modelo.\\
-
-\subsection{Modelo utilizado}
+Dentro de ImageNet, existe una competición llamada ImageNet Large Scale Visual Recognition Competition (ILSVRC). Aunque ahora la competición tiene varias modalidades distintas para competir, desde sus inicios el problema principal ha sido el de clasificar imágenes dentro de 1.000 categorías distintas. Estas categorías representan un marco muy amplio, podemos encontrar desde material de oficina como impresoras a una gran variedad de animales. Dada esta variedad tan amplia, y a ser un problema conocido, se ha tomado los datos de esta competición, en concreto la edición de 2012, para realizar el aprendizaje de nuestro modelo.\\
 
 \subsection{Información del aprendizaje}
 
-\todo[color=red!50]{Comentar hardware y software, tiempo de ejecución, limitación de I/O y mostrar gráficos del aprendizaje}
+Para el entrenamiento del clasificador utilizamos la librería Caffe \cite{jia2014caffe}. Caffe es un framework de deep learning, desarrollado por el  Berkeley Vision and Learning Center (BVLC). Además, tiene una amplia comunidad que ayuda a mantener el código del proyecto y los modelos de acuerdo al estado del arte. Una de sus principales ventajas es la sencillez. Todas las opciones de optimización se hacen con simples cambios de configuración, sin tener que programar nada. Los modelos de redes se definen en un fichero simple, donde solamente hay que definir el tipo y la estructura de cada capa. Además, es tambíen una librería rápida, permitiendo beneficiarse del uso de tarjetas gráficas junto con las librerías CUDA y CuDNN de Nvidia.\\
+
+El modelo entrenado fue caffenet, una versión modificada de la red Alexnet, ganadora de la competición ILSVRC en el año 2012, y que superó con creces todos los resultados de la competición, al ser la primera red en adoptar el modelo de las redes neuronales convolucionales\todo[color=blue!40]{¿Ampliar sobre alexnet?}. El entrenamiento se ejecutó sobre una gráfica GTX 1080 de Nvidia, usando las últimas versiones disponibles de las librerías CUDA y CuDNN. En la figura \todo[color=red!50]{figura del aprendizaje} podemos ver la evolución del error durante el proceso de aprendizaje. Dicho proceso duró más de 2 días, lastrado por bloqueos de I/O, aunque la gravedad es estos bloqueos fue menor.\\
+ 
+Los pesos seleccionados son los correspondientes a la iteración 370.000, con un error de test X y un porcentaje de acierto en la clasificación del Y\% \todo[color=red!50]{Introducir los datos}.
