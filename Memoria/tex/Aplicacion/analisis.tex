@@ -1,1 +1,27 @@
+\newpage
 \section{Análisis}
+
+El prototipo se desarrollará en Java, un lenguaje muy conocido. Tiene una gran cantidad de librerías y cuenta con una buena colección de herramientas para facilitar la construcción de interfaces de usuario. Además tiene entre sus grandes ventajas el ser interpretado, eliminando problemas en el desarrollo entre diferentes sistemas y arquitecturas.\\ 
+
+Este proyecto contiene varias áreas bien diferenciadas. Para facilitar el trabajo sobre el mismo, dividiremos el proyecto en 5 áreas: Aplicación, Recuperador utilizando descriptores, Recuperador utilizando clasificaciones, Generación de descriptores y Generación de clasificaciones. Vamos a realizar un pequeño estudio de los tecnologías disponibles y el trabajo necesario para cada una de estos módulos.\\
+
+\subsubsection{Aplicación}
+
+En este módulo, Java pone a la disposición del desarrollador herramientas que facilitan el desarrollo de interfaces de usuario. No es necesario entonces el uso de otras librerías para el desarrollo de la interfaz. El desarrollo de éste módulo requerirá la creación de una ventana principal que permita el acceso a todas las utilidades al alcance del usuario final y las ventanas para mostrar los resultados de las distintas operaciones.\\
+
+\subsubsection{Recuperador utilizando descriptores}
+
+Este módulo requiere ser implementado totalmente, al no existir herramientas básicas que tengan esta funcionalidad. Se encargará de la gestión de los descriptores una vez generados. Es decir, debe realizar la tarea de creación, almacenado y carga de una base de datos de descriptores, y realizar la búsqueda y posterior recuperación de las formas en función de esto. La gestión de la base de datos se realizará de una manera simplificada, como una colección de descriptores, que se serializará para se almacenamiento y posterior recuperación. Este último detalle es evidentemente mejorable, pero para un primer prototipo es suficiente.\\
+
+\subsubsection{Recuperador utilizando clasificaciones}
+
+Igual que en el módulo anterior, requiere ser implementado totalmente. De manera similar, también requiere realizar la tarea de la gestión de una base de datos de clasificaciones y la búsqueda. En este caso además, se requiere el almacenamiento de los datos de los resultados del clasificador, es decir, para cada valor de la predicción del clasificador poder decir el concepto asociado así como sus predecesores en la arquitectura jerárquica de WordNet.\\
+
+\subsubsection{Generación de descriptores}
+
+Se utilizará una librería , llamada Java Fuzzy Imaging (JFI). En concreto, se utilizarán los paquetes relacionados con formas, desarrollado conjuntamente con el director de este proyecto, Jesús Chamorro Martínez. La labor de este módulo es la creación de los descriptores utilizados en el projecto, la curvatura y la curvacidad.\\
+  
+\subsubsection{Generación de clasificadores}
+
+Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe para el entrenamiento del modelo. Esta librería es muy sencilla de usar, pero no tiene interfaz para el lenguaje Java. El problema aquí es que el único paquete disponible en el lenguaje Java que contiene el tipo de redes que se necesita aplicar a este problema es la librería DeepLearning4J, que es de pago. Dado que el resto de librerías de este ámbito (Torch, TensorFlow,...) tampoco tiene una API para Java, se eligió Caffe por su facilidad de uso y buen rendimiento.\\
+
