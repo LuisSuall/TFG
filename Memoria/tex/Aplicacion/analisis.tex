@@ -25,10 +25,184 @@ Se utilizará una librería , llamada Java Fuzzy Imaging (JFI). En concreto, se 
 
 Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe para el entrenamiento del modelo. Esta librería es muy sencilla de usar, pero no tiene interfaz para el lenguaje Java. El problema aquí es que el único paquete disponible en el lenguaje Java que contiene el tipo de redes que se necesita aplicar a este problema es la librería DeepLearning4J, que es de pago. Dado que el resto de librerías de este ámbito (Torch, TensorFlow,...) tampoco tienen una API para Java, se eligió Caffe por su facilidad de uso y buen rendimiento.\\
 
+\newpage
 \subsection{Casos de uso}
+
+\subsubsection{Abrir imagen}
+
+\begin{itemize}
+\item \textbf{Nombre: }Abrir imagen.
+\item \textbf{Descripción: }El usuario indica que quiere abrir una imagen y selecciona la imagen en un menú. El sistema carga dicha imagen y se la muestra al usuario.
+\item \textbf{Actor: }Usuario.
+\item \textbf{Precondición: } 
+\item \textbf{Flujo normal: }
+\begin{enumerate}
+\item El usuario acciona el botón ``Abrir imagen''.
+\item El sistema muestra un navegador para que el usuario seleccione la imagen.
+\item El usuario selecciona una imagen.
+\item El sistema carga la imagen.
+\item Se muestra la imagen al usuario.
+\end{enumerate}
+\item \textbf{Flujo alternativo:}
+\begin{itemize}
+\item (3.1) El usuario cancela la selección y se termina el proceso.
+\end{itemize}
+\item \textbf{Postcondición: }Se crea una ventana con la imagen.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Abrir base de datos}
+
+\begin{itemize}
+\item \textbf{Nombre: }Abrir base de datos.
+\item \textbf{Descripción: }El usuario indica que quiere abrir una base de datos y la selecciona en un menú. El sistema carga dicha base de datos en el sistema, e indica al usuario la base abierta y su tipo.
+\item \textbf{Actor: }Usuario.
+\item \textbf{Precondición: }
+\item \textbf{Flujo normal: }
+\begin{enumerate}
+\item El usuario acciona el botón ``Abrir base de datos.''
+\item El sistema muestra un navegador para que el usuario seleccione la base de datos.
+\item El usuario selecciona una base de datos.
+\item El sistema determina el tipo de base de datos.
+\item El sistema carga la base de datos según su tipo.
+\item Se muestra al usuario la base de datos abierta en un mensaje del interfaz.
+\end{enumerate}
+\item \textbf{Flujo alternativo:}
+\begin{itemize}
+\item (3.1) El usuario cancela la selección y se termina el proceso.
+\item (4.1) La base de datos no es correcta, se cancela la operación.
+\end{itemize}
+\item \textbf{Postcondición: } El sistema tiene abierta para consultas la base de datos indicada. Mediante el interfaz se muestran tanto el nombre como el tipo de la base seleccionada.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Clasificar imagen seleccionada}
+
+\begin{itemize}
+\item \textbf{Nombre: }Clasificar imagen seleccionada.
+\item \textbf{Descripción: } El usuario indica que quiere clasificar la imagen seleccionada, y el sistema muestra al usuario el resultado de la clasificación.
+\item \textbf{Actor: }Usuario.
+\item \textbf{Precondición: }El usuario tiene una imagen activa.
+\item \textbf{Flujo normal: }
+\begin{enumerate}
+\item El usuario acciona el botón ``Clasificar imagen''.
+\item El sistema recupera la información de la imagen seleccionada.
+\item Se clasifica la imagen.
+\item Se muestra al usuario el resultado.
+\end{enumerate}
+\item \textbf{Flujo alternativo:}
+\begin{itemize}
+\item (1.1) El usuario no tiene una imagen activa, el proceso termina.
+\end{itemize}
+\item \textbf{Postcondición: }Se crea una ventana de clasificación con los resultados.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Seleccionar tipo de descriptor utilizado}
+
+\begin{itemize}
+\item \textbf{Nombre: }Seleccionar tipo de descriptor utilizado.
+\item \textbf{Descripción: }El usuario elige el descriptor a utilizar y el sistema almacena esa preferencia.
+\item \textbf{Actor: }Usuario.
+\item \textbf{Precondición: }
+\item \textbf{Flujo normal: }
+\begin{enumerate}
+\item El usuario selecciona ``descriptor utilizado''.
+\item El sistema muestra las distintas opciones.
+\item El usuario selecciona una de las opciones.
+\end{enumerate}
+\item \textbf{Flujo alternativo:}
+\item \textbf{Postcondición: }El sistema empieza a utilizar el descriptor indicado.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Calcular descriptor de la imagen seleccionada}
+
+\begin{itemize}
+\item \textbf{Nombre: }Calcular descriptor de la imagen seleccionada.
+\item \textbf{Descripción: }El usuario indica que quiere calcular el descriptor de una forma seleccionada, y el sistema muestra al usuario el resultado del cálculo del descriptor.
+\item \textbf{Actor: }Usuario.
+\item \textbf{Precondición: }El usuario tiene una forma activa.
+\item \textbf{Flujo normal: }
+\begin{enumerate}
+\item El usuario acciona el botón ``Calcular descriptor de forma''.
+\item El sistema recupera la información de la forma seleccionada.
+\item Se calcula el descriptor de la forma en base a la medida activa.
+\item Se muestra al usuario el resultado.
+\end{enumerate}
+\item \textbf{Flujo alternativo:}
+\begin{itemize}
+\item (1.1) El usuario no tiene una forma activa, el proceso termina.
+\end{itemize}
+\item \textbf{Postcondición: }Se crea una ventana de descriptor con los resultados.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Buscar con un descriptor}
+
+\begin{itemize}
+\item \textbf{Nombre: }Buscar con un descriptor.
+\item \textbf{Descripción: } El usuario indica que quiere buscar en base al descriptor seleccionado en la base de datos, y el sistema la muestra de manera ordenada toda la base de datos según su búsqueda.
+\item \textbf{Actor: }Usuario.
+\item \textbf{Precondición: }Hay una ventana de descriptor activa y una base de datos de descriptores activa.
+\item \textbf{Flujo normal: }
+\begin{itemize}
+\item El usuario acciona el botón ``Búsqueda por descriptor''.
+\item El sistema ordena las formas de la base de datos activa según su proximidad al descriptor consultado.
+\item El sistema muestra los formas de manera ordenada.
+\end{itemize}
+\item \textbf{Flujo alternativo:}
+\item \textbf{Postcondición: }Se crea una ventana con los resultados de la búsqueda.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Buscar por un concepto}
+
+\begin{itemize}
+\item \textbf{Nombre: }Buscar por un concepto.
+\item \textbf{Descripción: }El usuario indica el concepto a buscar en la base de datos y el sistema muestra ordenadamente las imágenes de la base de datos según su cumplimiento del concepto.
+\item \textbf{Actor: }Usuario.
+\item \textbf{Precondición: }El sistema tiene una base de datos de clasificaciones activa.
+\item \textbf{Flujo normal: }
+\begin{itemize}
+\item El usuario escribe el concepto y acciona el botón ``Búsqueda por concepto''.
+\item El sistema ordena las imágenes de la base de datos activa según su grado de cumplimiento del concepto indicado.
+\item El sistema muestra los imágenes de manera ordenada.
+\end{itemize}
+\item \textbf{Flujo alternativo:}
+\item \textbf{Postcondición: }Se crea una ventana con los resultados de la búsqueda.
+\end{itemize}
+
+\newpage
+
+\subsubsection{Crear base de datos}
+
+\begin{itemize}
+\item \textbf{Nombre: }Crear base de datos.
+\item \textbf{Descripción: }El administrador indica el tipo de base de datos a generar, la carpeta a clasificar y donde guardar la base de datos, y el sistema realiza la acción. Proceso realizado fuera de la aplicación.
+\item \textbf{Actor: }Administrador del sistema.
+\item \textbf{Precondición: }
+\item \textbf{Flujo normal: }
+\begin{itemize}
+\item El administrador indica: tipo de base de datos, carpeta de entrada y dirección donde guardar la base de datos.
+\item El sistema almacena la nueva base de datos.
+\end{itemize}
+\item \textbf{Flujo alternativo:}
+\item \textbf{Postcondición: } Se genera y almacena la nueva base de datos.
+\end{itemize}
+
+\newpage
 
 \subsection{Diagrama de casos de uso}
 
 \subsection{Diagrama de estados}
 
 \subsection{Diagrama de clases}
+
+\subsection{Explicación de los tipos de datos y algoritmos fundamentales}
