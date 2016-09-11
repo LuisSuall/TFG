@@ -69,7 +69,7 @@ Por el otro, ya vimos que los modelos que tienen una gran capacidad para aprende
 
 \subsection{Entrenamiento de una red neuronal}
 
-Hasta ahora, hemos visto las redes neuronales como una familia de funciones paramétricas no lineal. Evidentemente, nuestro objetivo es obtener los mejores parámetros para ajustar la red y que consiga la mejor aproximación al problema planteado. Es equivalente conseguir la mejor aproximación a reducir una medida de error. Tomaremos como medida del error la suma de los errores cuadráticos. Siendo $y(x,w)$ el resultado de la ejecución de la red al dato de entrada $x$, usando los pesos $w$, siendo ${x_n}$ el conjunto de datos de entrenamiento, con $n=1\ldots N$,junto con los vectores objetivo ${t_n}$, la función de suma del error cuadrático que usaremos, para unos pesos $w$, es:
+Vamos a estudiar el desarrollo seguido en \cite{Bishop:2006:PRM:1162264}. Hasta ahora, hemos visto las redes neuronales como una familia de funciones paramétricas no lineal. Evidentemente, nuestro objetivo es obtener los mejores parámetros para ajustar la red y que consiga la mejor aproximación al problema planteado. Es equivalente conseguir la mejor aproximación a reducir una medida de error. Tomaremos como medida del error la suma de los errores cuadráticos. Siendo $y(x,w)$ el resultado de la ejecución de la red al dato de entrada $x$, usando los pesos $w$, siendo ${x_n}$ el conjunto de datos de entrenamiento, con $n=1\ldots N$,junto con los vectores objetivo ${t_n}$, la función de suma del error cuadrático que usaremos, para unos pesos $w$, es:
 
 \[
 \ E(W)= \frac{1}{2} \sum_{n=1}^N \parallel y(x_n,w)-t_n \parallel^2 .
@@ -137,5 +137,25 @@ En esa visión, sin embargo, se obvian características importantes de las imág
 
 \subsection{Redes neuronales convolucionales}
 
+Consideremos el problema del reconocimiento de números escritos a mano. Cada entrada es una imagen, que contiene un conjunto de valores de píxeles, y cuya salida esperada es la distribución de probabilidad sobre los diez tipos de números. Sabemos que la identidad de los números es invariante a escalados, pequeñas rotaciones y algunos tipos de deformaciones. Una red neuronal, con la suficiente cantidad de ejemplos, podría aprender esas invarianzas.\\
 
+Pero sin embargo, este acercamiento ignora una propiedad fundamental de las imágenes. Los píxeles más cercanos están mucho más relacionados que los píxeles lejanos. En Visión por Computador, el uso de esta propiedad es muy normal, extrayendo propiedades locales de subregiones de la imagen. Dicha información local puede ser mezclada en etapas posteriores para detectar características de nivel superior, obteniendo finalmente una visión general de la imagen en su conjunto. Además las características locales que son útiles en una región es muy probable que también lo sea en otras, por ejemplo si el objeto esta desplazado.\\
+
+Estas ideas se incorporan en las redes neuronales convolucionales mediante 3 aspectos: campo de entrada local, compartir pesos y submuestrear. En la capa de convolución, las neuronas se organizan en serie planos. Las neuronas de cada plano sólo tienen una pequeña ventana de entrada y además, todas las neuronas de un plano están obligadas a tener los mismos pesos. Si pensamos en las neuronas de una capa como detectores de características, podemos ver que tratan de extraer la misma característica pero a diferentes partes de la imagen. Debido a compartir pesos, la evaluación de una capa de este tipo de redes es equivalente a una convolución de la imagen con un kernel que dependería de los pesos de la capa. Como normalmente necesitamos detectar más de una propiedad para construir un modelo, lo normal es tener varios planos dentro de cada capa de convolución. Cada uno de estos planos contará con su propio conjunto de pesos, sirviendo cada capa para detectar una característica distinta.\\
+
+La salida de la capa de convolución son la entrada de la capa de submuestreo. Se crean el mismo número de planos que en la capa de convolución. Para cada plano, se divide en pequeñas ventanas no solapadas y se genera el plano tras el submuestreo eligiendo uno de los valores de la ventana, normalmente el mayor. Este tipo de capas se utiliza para ir reduciendo poco a poco el tamaño de la red, ayudando a mejorar la velocidad de una ejecución de la red y reduciendo el número de parámetros, ayudando a un aprendizaje más rápido y controlando también el sobreentrenamiento.
+
+\begin{figure}
+\begin{center}
+
+\includegraphics[scale=0.5]{img/lenet5.png}
+\end{center}
+
+\caption{Arquitectura de LeNet-5.}
+\label{Lenet}
+\end{figure}
+
+En la figura \ref{Lenet} encontramos una representación visual de la red neuronal convolucional ``LeNet-5'', utilizada para clasificar dígitos. Se puede ver que en las capas de convolución (por ejemplo C1) encontramos diferentes planos. Cada plano calcula algún tipo de característica, y por tanto, todas las neuronas de cada plano comparten pesos. Además podemos ver otras características usuales de las redes neuronales convolucionales como el uso de los campos de entrada locales y el uso de submuestreo. La arquitectura aquí definida suele ser además la más usual, donde encontramos una repetición de capas de convolución y submuestreo hasta llegar a una serie de capas totalmente conectadas que acaban en la capa de salida.\\
+
+Este tipo de modelos ha conseguido un gran éxito al ser aplicados a imágenes, demostrando su utilidad en varias bases de datos estándares de imágenes, convirtiéndose en el estado del arte de este tema.\\
 %\subsection{Comparativa de redes neuronales}
