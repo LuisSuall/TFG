@@ -10,25 +10,47 @@ import java.util.ArrayList;
 
 public class ContourFeature extends ArrayList<Double>{
     
+    /**
+     * Path to the image.
+     */
     private String path;
     
+    /**
+     * Default constructor.
+     */
     public ContourFeature(){
         super();
     }
     
+    /**
+     * Constructs a Contour feature with set values.
+     * 
+     * @param path path of the image
+     * @param values feature values of the image
+     */
     public ContourFeature(String path, ArrayList<Double> values){
         super(values);
         this.path = path;
     }
     
+    /**
+     * Returns the path to the image.
+     * @return path
+     */
     public String getPath() {
         return path;
     }
-
+    /**
+     * Modifies the path to the image.
+     * @param path
+     */
     public void setPath(String path) {
         this.path = path;
     }
     
+    /**
+     * Change feature range to [0,1].
+     */
     public void normalize(){
         double min = Double.POSITIVE_INFINITY;
         double max = Double.NEGATIVE_INFINITY;
@@ -47,6 +69,9 @@ public class ContourFeature extends ArrayList<Double>{
         }
     }
     
+    /**
+     * Reorders the feature to have as first value his maximum.
+     */
     public void normalizeOrder(){
         int maxIdx = -1;
         double maxValue = Double.NEGATIVE_INFINITY;
@@ -73,6 +98,10 @@ public class ContourFeature extends ArrayList<Double>{
         
     }
     
+    /**
+     * Changes the length of the feature to a new length.
+     * @param length new length
+     */
     public void resizeFeature(int length){
         if (length < this.size()){
             reduceFeatureSize(length);
@@ -82,6 +111,10 @@ public class ContourFeature extends ArrayList<Double>{
         }            
     }
     
+    /**
+     * Reduces the length of the feature to a new length.
+     * @param length new length
+     */
     private void reduceFeatureSize(int length){
         ArrayList<Double> newValues = new ArrayList<>();
         double step = this.size()/(double)(this.size()-length);
@@ -110,6 +143,10 @@ public class ContourFeature extends ArrayList<Double>{
         }
     }
     
+    /**
+     * Increases the length of the feature to a new length.
+     * @param length new length
+     */
     private void increaseFeatureSize(int length){
         ArrayList<Double> newValues = new ArrayList<>();
         double step = this.size()/(double)(this.size()-length);
@@ -145,6 +182,11 @@ public class ContourFeature extends ArrayList<Double>{
         }
     }
 
+    /**
+     * Calculates the euclidean distance between to a feature.
+     * @param feature feature to compare
+     * @return distance between features
+     */
     public double distance(ContourFeature feature) {
         if(this.size() == feature.size()){
             double result = 0;

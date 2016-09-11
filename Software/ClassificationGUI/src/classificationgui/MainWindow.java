@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Main window of the app
+ * 
+ * @author Luis Suárez Lloréns
  */
 package classificationgui;
 
@@ -23,22 +23,36 @@ import sri.feature.ContourFeature;
 import sri.feature.FeatureDB;
 import sri.feature.FeatureDBFactory;
 
-/**
- *
- * @author Luis Suárez Lloréns
- */
 public class MainWindow extends javax.swing.JFrame {
     
+    /**
+     * Mode used to inform that the app is ready for new inputs.
+     */
     private static final int READY_MODE = 0;
+    /**
+     * Mode used to inform that the app is busy.
+     */
     private static final int BUSY_MODE = 1;
     
+    /**
+     * Classifier used to classify the images into concepts.
+     */
     private ClassifierManager classifier;
+    /**
+     * Dictionary to translate concepts into classification values.
+     */
     private SynsetDictionary dictionary;
+    /**
+     * Classification database.
+     */
     private ClassificationDB classificationDB = new ClassificationDB();
+    /**
+     * Feature database.
+     */
     private FeatureDB featureDB = new FeatureDB();
     
     /**
-     * Creates new form MainWindow
+     * Creates new form MainWindow.
      */
     public MainWindow() {
         initComponents();
@@ -49,10 +63,10 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     /**
-     * Sitúa la ventana interna <tt>vi</tt> debajo de la ventana interna activa 
-     * y con el mismo tamaño.
+     * Places the internal frame vi under the active internal frame with the
+     * same shape.
      * 
-     * @param vi la ventana interna
+     * @param vi internal frame
      */
     private void locateInternalFrame(JInternalFrame vi) {
         JInternalFrame vSel = desktopPanel.getSelectedFrame();
@@ -63,9 +77,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     /**
-     * Muestra la ventana interna <tt>vi</tt> 
+     * Shows the internal frame vi.
      * 
-     * @param vi la ventana interna
+     * @param vi internal frame
      */
     private void showInternalFrame(JInternalFrame vi) {
         this.locateInternalFrame(vi);
@@ -73,6 +87,13 @@ public class MainWindow extends javax.swing.JFrame {
         vi.setVisible(true);
     }  
     
+    /**
+     * Loads an image.
+     * 
+     * @param path path to the image
+     * 
+     * @return BufferedImage from the path 
+     */
     private BufferedImage loadImage(String path){
         BufferedImage img = null;
         
@@ -527,6 +548,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel statusPanel;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Sets the DB to use.
+     * @param absolutePath path to the DB
+     */
     private void setClassificationDB(String absolutePath) {
         classificationDB.load(absolutePath);
         this.dbUsedLabel.setText("Base de datos: "+absolutePath);
@@ -538,7 +563,11 @@ public class MainWindow extends javax.swing.JFrame {
         
         this.compareButton.setEnabled(false);
     }
-
+    
+    /**
+     * Sets the DB to use.
+     * @param absolutePath path to the DB
+     */
     private void setFeatureDB(String absolutePath) {
         featureDB.load(absolutePath);
         this.dbUsedLabel.setText("Base de datos: "+absolutePath);

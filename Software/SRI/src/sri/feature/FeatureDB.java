@@ -20,14 +20,28 @@ import sri.classification.ClassificationDB;
 
 public class FeatureDB extends ArrayList<ContourFeature> implements java.io.Serializable{
 
+    /**
+     * Default constructor.
+     */
     public FeatureDB(){
         super();
     }
     
+    /**
+     * Creates a FeatureDB from a list of ContourFeature.
+     * 
+     * @param contourFeatureList input list of ContourFeature
+     */
     public FeatureDB(ArrayList<ContourFeature> contourFeatureList){
         super(contourFeatureList);
     }
     
+    /**
+     * Searches the DB for similar features to the input feature.
+     * 
+     * @param featureToSearch feature to search
+     * @return ResultList with the images and distance value to featureToSearch
+     */
     public ResultList search(ContourFeature featureToSearch){
         if (featureToSearch.size() != this.get(0).size()){
             featureToSearch.resizeFeature(this.get(0).size());

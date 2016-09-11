@@ -1,27 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Internal frame for the result of a search
+ * 
+ * @author Luis Suárez Lloréns
  */
+
 package classificationgui;
 
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import jmr.result.ResultList;
 
-/**
- *
- * @author Luis Suárez Lloréns
- */
 public class ResultFrame extends javax.swing.JInternalFrame {
 
     /**
-    * Referencia al la ventana que ha lanzado este ventana interna
-    */
+     * Reference to the window that launched this internal frame.
+     */
     protected JFrame parent=null;
     
     /**
-     * Creates new form ImageFrame
+     * Creates new form ResultFrame.
+     * 
+     * @param parent window that launched this internal frame
+     * @param list list to display
      */
     public ResultFrame(JFrame parent, ResultList list) {
         initComponents();

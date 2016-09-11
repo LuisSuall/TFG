@@ -32,7 +32,7 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
     }
     
     /**
-     * Creates a DB with a list of ImageClassification
+     * Creates a DB from a list of ImageClassification
      * 
      * @param imageClassifications list of ImageClassification
      */
@@ -44,7 +44,7 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
      * Searches for the best classified images in the DB by concept.
      * 
      * @param concept concept to search
-     * @return new ClassificationDB with the best images
+     * @return ResultList with the images and success value
      */
     public ResultList search(String concept){        
         return search(concept,DEFAULT_SEARCH_RESULT_N);
@@ -55,7 +55,7 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
      * 
      * @param concept concept to search
      * @param n number of images to search
-     * @return new ClassificationDB with the best images
+     * @return ResultList with the images and success value
      */
     public ResultList search(String concept, int n){        
         SynsetDictionary synsetDictionary = new SynsetDictionary();
@@ -76,7 +76,7 @@ public class ClassificationDB extends ArrayList<ImageClassification> implements 
      * 
      * @param idxList list of index
      * @param n number of images to search
-     * @return new ClassificationDB with the best images 
+     * @return ResultList with the images and success value
      */
     public ResultList search(ArrayList<Integer> idxList, int n){
         ResultList searchResult = new ResultList();

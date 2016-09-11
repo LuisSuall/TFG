@@ -9,7 +9,7 @@ package sri.classification;
 
 public class SynsetInfo {
     /**
-     * Index of the synset
+     * Index of the synset.
      */
     private int idx;
     /**

@@ -75,6 +75,11 @@ public class ImageClassification extends ArrayList<Double> {
         }
     }
 
+    /**
+     * Returns the indexs of the best n classifications values.
+     * @param n number of classifications
+     * @return list of indexs of the best values
+     */
     public ArrayList<Integer> top(int n){
         ArrayList<Integer> bestResultsIdx = new ArrayList<>();
         
@@ -96,7 +101,7 @@ public class ImageClassification extends ArrayList<Double> {
     }
     
     /**
-     * Returns the path to the image
+     * Returns the path to the image.
      * @return path
      */
     public String getImagePath() {
@@ -104,7 +109,7 @@ public class ImageClassification extends ArrayList<Double> {
     }
 
     /**
-     * Returns the best classification class
+     * Returns the best classification class.
      * @return Index of the best class
      */
     public int getBestClass() {
@@ -112,7 +117,7 @@ public class ImageClassification extends ArrayList<Double> {
     }
     
     /**
-     * Returns the best classification class of a set list of classes
+     * Returns the best classification class of a set list of classes.
      * @param idxList list of classes
      * @return Index of the best class
      */
@@ -131,7 +136,7 @@ public class ImageClassification extends ArrayList<Double> {
     }
 
     /**
-     * Returns the probability of the best class
+     * Returns the probability of the best class.
      * @return probability of the best class
      */
     public double getProbabilityBestClass() {

@@ -16,6 +16,9 @@ import java.util.logging.Logger;
 
 public class SynsetDictionary extends ArrayList<SynsetInfo>{
 
+    /**
+     * Default path to load the dictionary.
+     */
     private static final String DEFAULT_DICTIONARY_PATH = "../synset_words.txt";
 
     /**
@@ -92,10 +95,17 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
         return null;
     }
 
+    /**
+     * Loads the default dictionary.
+     */
     public void load() {
         this.load(DEFAULT_DICTIONARY_PATH);
     }
 
+    /**
+     * Loads a dictionary from a file.
+     * @param path path to the dictionary file
+     */
     public void load(String path) {
         this.clear();
         
@@ -118,6 +128,11 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
         }
     }
     
+    /**
+     * Splits the line into two strings, one with the first word an the other with the rest of the line.
+     * @param line line to split
+     * @return splited line
+     */
     private ArrayList<String> splitInfo(String line){
         ArrayList<String> splitedLine = new ArrayList<>();
         

@@ -1,8 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Internal frame for a feature
+ * 
+ * @author Luis Suárez Lloréns
  */
+
 package classificationgui;
 
 import java.awt.image.BufferedImage;
@@ -10,19 +11,21 @@ import javax.swing.JFrame;
 import sri.feature.ContourFeature;
 import sri.feature.FeatureDBFactory;
 
-/**
- *
- * @author Luis Suárez Lloréns
- */
 public class FeatureFrame extends javax.swing.JInternalFrame {
 
     /**
-    * Referencia al la ventana que ha lanzado este ventana interna
-    */
+     * Reference to the window that launched this internal frame.
+     */
     protected JFrame parent=null;
     
+    /**
+     * Path of the image used to compute the feature.
+     */
     protected String path;
     
+    /**
+     * Feature of the image asociated to the FeatureFrame.
+     */
     protected ContourFeature feature;
     
 //    /**
@@ -35,7 +38,11 @@ public class FeatureFrame extends javax.swing.JInternalFrame {
 //    }
 //    
     /**
-     * Creates new form ImageFrame
+     * Creates new form ImageFrame.
+     * 
+     * @param parent window that launched this internal frame
+     * @param imgPath path to the image
+     * @param mode mode used to calculate the feature
      */
     public FeatureFrame(JFrame parent, String imgPath, int mode) {
         initComponents();
@@ -99,6 +106,11 @@ public class FeatureFrame extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Return the feature of the FeatureFrame.
+     * 
+     * @return ContourFeature of the frame 
+     */
     ContourFeature getContourFeature() {
         return feature;
     }

@@ -1,8 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Internal frame for a classification
+ * 
+ * @author Luis Suárez Lloréns
  */
+
 package classificationgui;
 
 import java.awt.Color;
@@ -15,19 +16,18 @@ import sri.classification.ClassifierManager;
 import sri.classification.ImageClassification;
 import sri.classification.SynsetDictionary;
 
-/**
- *
- * @author Luis Suárez Lloréns
- */
 public class ClassificationFrame extends javax.swing.JInternalFrame {
 
     /**
-    * Referencia al la ventana que ha lanzado este ventana interna
-    */
+     * Reference to the window that launched this internal frame.
+     */
     protected JFrame parent=null;
     
     /**
-     * Creates new form ClassificationFrame
+     * Creates new ClassificationFrame.
+     * @param parent window that launched this internal frame
+     * @param imgPath path to the image
+     * @param classifier classifier to use to calculate the classification
      */
     public ClassificationFrame(JFrame parent, String imgPath, ClassifierManager classifier) {
         initComponents();

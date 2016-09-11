@@ -17,18 +17,36 @@ import jfi.shape.fuzzy.FuzzyContour;
 import jfi.shape.fuzzy.FuzzyContourFactory;
 
 /**
- *
+ * Factory to create ContourFeature and FeatureDB
+ * 
  * @author Luis Suárez Lloréns
  */
 public class FeatureDBFactory {
     
+    /**
+     * Mode used to create ContourFeature based on curvature.
+     */
     public static final int CURVATURE_MODE = 0;
+    
+    /**
+     * Mode used to create ContourFeature based on curvacity.
+     */
     public static final int CURVACITY_MODE = 1;
     
+    /**
+     * Default constructor.
+     */
     public FeatureDBFactory(){
         
     }
     
+    /**
+     * Creates a FeatureDB with all the shapes from a folder.
+     * 
+     * @param folderPath path of the folder to classify
+     * @param mode selected mode
+     * @return FeatureDB of the folder
+     */  
     public FeatureDB createFeatureDB(String folderPath, int mode){
         File folder = new File(folderPath);
         ArrayList<String> paths = new ArrayList<>();
@@ -56,10 +74,26 @@ public class FeatureDBFactory {
         return null;
     }
     
+    
+    /**
+     * Creates a ContourFeature from a image.
+     * 
+     * @param path path of the image
+     * @param mode selected mode
+     * @return ContourFeature of the image
+     */
     public ContourFeature createContourFeature(String path, int mode){
         return createContourFeature(path,mode,100);
     }
     
+    /**
+     * Creates a ContourFeature from a image.
+     * 
+     * @param path path of the image
+     * @param mode selected mode
+     * @param size size of the feature
+     * @return ContourFeature of the image
+     */
     public ContourFeature createContourFeature(String path, int mode, int size){
         BufferedImage img = null;
         

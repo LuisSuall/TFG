@@ -1,3 +1,10 @@
+/**
+ * Internal frame for a feature
+ * 
+ * @author Luis Suárez Lloréns
+ * @author Jesús Chamorro Martínez (jesus@decsai.ugr.es)
+ */
+
 package classificationgui;
 
 import java.awt.BorderLayout;
@@ -13,17 +20,24 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import sri.feature.ContourFeature;
 
-/**
- *
- * @author Luis Suárez Lloréns
- * @author Jesús Chamorro Martínez (jesus@decsai.ugr.es)
- */
 public class GraphInternalFrame extends javax.swing.JInternalFrame {
  
-    
+    /**
+     * Reference to the window that launched this internal frame.
+     */
     protected JFrame parent=null;
+    /**
+     * Feature of the image asociated to the FeatureFrame.
+     */
     private ContourFeature contourFeature;
     
+    /**
+     * Creates new form ImageFrame.
+     * 
+     * @param parent window that launched this internal frame
+     * @param imgPath path to the image
+     * @param mode mode used to calculate the feature
+     */
     public GraphInternalFrame(JFrame parent, ContourFeature cfeature) {
         initComponents();
         
@@ -49,6 +63,10 @@ public class GraphInternalFrame extends javax.swing.JInternalFrame {
         return dataset;
     }
     
+    /**
+     * Returns the ContourFeature of the internal frame.
+     * @return contourFeature
+     */
     public ContourFeature getContourFeature(){
         return contourFeature;
     }
