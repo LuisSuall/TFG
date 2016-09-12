@@ -1,4 +1,3 @@
-\newpage
 \section{Análisis y diseño}
 
 El prototipo se desarrollará en Java, un lenguaje muy conocido. Tiene una gran cantidad de librerías y cuenta con una buena colección de herramientas para facilitar la construcción de interfaces de usuario. Además tiene entre sus grandes ventajas el ser interpretado, eliminando problemas en el desarrollo entre diferentes sistemas y arquitecturas.\\ 
@@ -25,7 +24,6 @@ Se utilizará una librería , llamada Java Fuzzy Imaging (JFI). En concreto, se 
 
 Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe para el entrenamiento del modelo. Esta librería es muy sencilla de usar, pero no tiene interfaz para el lenguaje Java. El problema aquí es que el único paquete disponible en el lenguaje Java que contiene el tipo de redes que se necesita aplicar a este problema es la librería DeepLearning4J, que es de pago. Dado que el resto de librerías de este ámbito (Torch, TensorFlow,...) tampoco tienen una API para Java, se eligió Caffe por su facilidad de uso y buen rendimiento.\\
 
-\newpage
 \subsection{Casos de uso}
 
 \subsubsection{Abrir imagen}
@@ -49,8 +47,6 @@ Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe par
 \end{itemize}
 \item \textbf{Postcondición: }Se crea una ventana con la imagen.
 \end{itemize}
-
-\newpage
 
 \subsubsection{Abrir base de datos}
 
@@ -76,8 +72,6 @@ Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe par
 \item \textbf{Postcondición: } El sistema tiene abierta para consultas la base de datos indicada. Mediante el interfaz se muestran tanto el nombre como el tipo de la base seleccionada.
 \end{itemize}
 
-\newpage
-
 \subsubsection{Clasificar imagen seleccionada}
 
 \begin{itemize}
@@ -99,8 +93,6 @@ Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe par
 \item \textbf{Postcondición: }Se crea una ventana de clasificación con los resultados.
 \end{itemize}
 
-\newpage
-
 \subsubsection{Seleccionar tipo de descriptor utilizado}
 
 \begin{itemize}
@@ -117,8 +109,6 @@ Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe par
 \item \textbf{Flujo alternativo:}
 \item \textbf{Postcondición: }El sistema empieza a utilizar el descriptor indicado.
 \end{itemize}
-
-\newpage
 
 \subsubsection{Calcular descriptor de la imagen seleccionada}
 
@@ -141,8 +131,6 @@ Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe par
 \item \textbf{Postcondición: }Se crea una ventana de descriptor con los resultados.
 \end{itemize}
 
-\newpage
-
 \subsubsection{Buscar con un descriptor}
 
 \begin{itemize}
@@ -159,8 +147,6 @@ Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe par
 \item \textbf{Flujo alternativo:}
 \item \textbf{Postcondición: }Se crea una ventana con los resultados de la búsqueda.
 \end{itemize}
-
-\newpage
 
 \subsubsection{Buscar por un concepto}
 
@@ -179,8 +165,6 @@ Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe par
 \item \textbf{Postcondición: }Se crea una ventana con los resultados de la búsqueda.
 \end{itemize}
 
-\newpage
-
 \subsubsection{Crear base de datos}
 
 \begin{itemize}
@@ -197,11 +181,55 @@ Se ha comentado en el capítulo \ref{ch2} que se ha usado la librería Caffe par
 \item \textbf{Postcondición: } Se genera y almacena la nueva base de datos.
 \end{itemize}
 
-\newpage
-
 \subsection{Diagrama de casos de uso}
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.9\textwidth]{img/diagramadecasosdeuso.pdf}
+\end{center}
+
+\caption{Diagrama de casos de uso.}
+\label{casouso}
+\end{figure}
+
+En la figura \ref{casosuso} encontramos el diagrama de casos de uso. Este sirve de pequeño resumen de los casos de uso del sistema. Podemos ver claramente las acciones que se deben implementar en la aplicación, todas en las que participa el usuario. Además destacamos la existencia de un caso de uso del administrador del sistema, la creación de base de datos, pues este puede ser un proceso muy pesado para la ejecución durante el uso del usuario, provocando bloqueos muy largos de la aplicación. Por tanto, esa tarea se realizará off-line por el administrador, quedando fuera de la aplicación.\\
 
 \subsection{Diagrama de estados}
+
+Vamos a realizar los diagramas de estado, pero solo de los procesos más significativos. Esto se hace dado que hay varios procesos muy similares, como abrir imagen y abrir base de datos. Por tanto se han elegido los más significativos para evitar caer en repeticiones innecesarias.
+
+\subsubsection{Abrir base de datos}
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.7\textwidth]{img/abrirdb.pdf}
+\end{center}
+
+\caption{Diagrama de estados de ``Abrir base de datos''.}
+\label{abrirdb}
+\end{figure}
+
+\subsubsection{Clasificar imagen seleccionada}
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.6\textwidth]{img/classimg.pdf}
+\end{center}
+
+\caption{Diagrama de estados de ``Clasificar imagen seleccionada''.}
+\label{classimg}
+\end{figure}
+
+\subsubsection{Buscar con un concepto}
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.6\textwidth]{img/searchc.pdf}
+\end{center}
+
+\caption{Diagrama de estados de ``Buscar con un concepto''.}
+\label{searchc}
+\end{figure}
 
 \subsection{Diagrama de clases}
 

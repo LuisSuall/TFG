@@ -18,6 +18,16 @@ Dentro de ImageNet, existe una competición llamada ImageNet Large Scale Visual 
 
 Para el entrenamiento del clasificador utilizamos la librería Caffe \cite{jia2014caffe}. Caffe es un framework de deep learning, desarrollado por el  Berkeley Vision and Learning Center (BVLC). Además, tiene una amplia comunidad que ayuda a mantener el código del proyecto y los modelos de acuerdo al estado del arte. Una de sus principales ventajas es la sencillez. Todas las opciones de optimización se hacen con simples cambios de configuración, sin tener que programar nada. Los modelos de redes se definen en un fichero simple, donde solamente hay que definir el tipo y la estructura de cada capa. Además, es tambíen una librería rápida, permitiendo beneficiarse del uso de tarjetas gráficas junto con las librerías CUDA y CuDNN de Nvidia.\\
 
-El modelo entrenado fue caffenet, una versión modificada de la red Alexnet, ganadora de la competición ILSVRC en el año 2012, y que superó con creces todos los resultados de la competición, al ser la primera red en adoptar el modelo de las redes neuronales convolucionales\todo[color=blue!40]{¿Ampliar sobre alexnet?}. El entrenamiento se ejecutó sobre una gráfica GTX 1080 de Nvidia, usando las últimas versiones disponibles de las librerías CUDA y CuDNN. En la figura \todo[color=red!50]{figura del aprendizaje} podemos ver la evolución del error durante el proceso de aprendizaje. Dicho proceso duró más de 2 días, lastrado por bloqueos de I/O, aunque la gravedad es estos bloqueos fue menor.\\
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.9\textwidth]{img/resultados.png}
+\end{center}
+
+\caption{Resultados del entrenamiento.}
+\label{resultados}
+\end{figure}
+
+El modelo entrenado fue caffenet, una versión modificada de la red Alexnet, ganadora de la competición ILSVRC en el año 2012, y que superó con creces todos los resultados de la competición, al ser la primera red en adoptar el modelo de las redes neuronales convolucionales. El entrenamiento se ejecutó sobre una gráfica GTX 1080 de Nvidia, usando las últimas versiones disponibles de las librerías CUDA y CuDNN. El proceso de aprendizaje duró más de 2 días, lastrado por bloqueos de I/O, aunque la gravedad es estos bloqueos fue menor.\\
  
-Los pesos seleccionados son los correspondientes a la iteración 370.000, con un error de test X y un porcentaje de acierto en la clasificación del Y\% \todo[color=red!50]{Introducir los datos}.
+En la figura \ref{resultados} podemos ver el desarrollo de los error de entrenamiento y de test de la red. Como se podría esperar, ambos errores son muy similares hasta un punto donde el error de entrenamiento empieza a bajar más que el de test. Esto empieza a mostrar signos del sobreentreno, pues muestra mejores resultados de entrenamiento que de test, cuando se esperarían resultados parecidos. Aún así, no se observa un efecto catastrófico de sobreentrenamiento. Esto puede deberse a que quizás todo el control de la dimensionalidad de las redes neuronales convolucionales consigue reducir efectivamente los problemas de sobreentrenamiento.  Los pesos seleccionados son los correspondientes a la iteración 370.000, con un error de test 1.80 y un porcentaje de acierto en la clasificación del 57.92\%.
