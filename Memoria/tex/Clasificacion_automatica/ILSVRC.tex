@@ -31,3 +31,51 @@ Para el entrenamiento del clasificador utilizamos la librería Caffe \cite{jia20
 El modelo entrenado fue caffenet, una versión modificada de la red Alexnet, ganadora de la competición ILSVRC en el año 2012, y que superó con creces todos los resultados de la competición, al ser la primera red en adoptar el modelo de las redes neuronales convolucionales. El entrenamiento se ejecutó sobre una gráfica GTX 1080 de Nvidia, usando las últimas versiones disponibles de las librerías CUDA y CuDNN. El proceso de aprendizaje duró más de 2 días, lastrado por bloqueos de I/O, aunque la gravedad es estos bloqueos fue menor.\\
  
 En la figura \ref{resultados} podemos ver el desarrollo de los error de entrenamiento y de test de la red. Como se podría esperar, ambos errores son muy similares hasta un punto donde el error de entrenamiento empieza a bajar más que el de test. Esto empieza a mostrar signos del sobreentreno, pues muestra mejores resultados de entrenamiento que de test, cuando se esperarían resultados parecidos. Aún así, no se observa un efecto catastrófico de sobreentrenamiento. Esto puede deberse a que quizás todo el control de la dimensionalidad de las redes neuronales convolucionales consigue reducir efectivamente los problemas de sobreentrenamiento.  Los pesos seleccionados son los correspondientes a la iteración 370.000, con un error de test 1.80 y un porcentaje de acierto en la clasificación del 57.92\%.
+
+\subsection{Ejemplos de resultados}
+
+Vamos a ver algunos ejemplos de clasificaciones. Se muestran los cinco resultados más significativos para el clasificador, así como un indicador visual del grado de creencia de dicho resultado.\\
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.6\textwidth]{img/Pez.png}
+\end{center}
+
+\caption{Resultados de clasificación de un pez .}
+\end{figure}
+
+Como ya hemos dicho tenemos un abanico de categorías muy grande. No sólo es capaz de clasificar el pez de la imagen justo en el tipo de pez que le corresponde, si no que también tenemos objetos que son mucho menos comunes.\\
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.5\textwidth]{img/Abaco.png}
+\end{center}
+
+\caption{Resultados de clasificación de un ábaco.}
+\end{figure}
+
+Estos resultados, dan una buena base a nuestro sistema de recuperación de imágenes. El sistema obtiene resultados muy lógicos y de una alta calidad en una gran variedad de términos lingüísticos. Pero en la siguiente imagen, vemos un pequeño inconveniente de la técnica.\\
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.5\textwidth]{img/Gatomelon.png}
+\end{center}
+
+\caption{Resultados de clasificación de un ``gato-melón''.}
+\end{figure}
+
+Al mezclar dos conceptos distintos en una sola imagen, en este caso los conceptos gato y melón, el sistema se equivoca. Esto es normal, pues se ha entrenado solo con imágenes que representan un único concepto. Aún así, este sistema se podría utilizar con este tipo de imágenes, utilizando técnicas de segmentación.\\
+
+Por último, vemos un ejemplo de su uso para recuperar imágenes. En un conjunto de 50 imágenes variadas, al introducir la consulta ``Púa'', el sistema consigue recuperar perfectamente las 5 imágenes que encajan en esta categoría introducida.\\
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=0.9\textwidth]{img/Puas.png}
+\end{center}
+
+\caption{Recuperación de púas de guitarra.}
+\end{figure}
