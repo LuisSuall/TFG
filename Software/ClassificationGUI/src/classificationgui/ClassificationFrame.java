@@ -35,11 +35,11 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         this.imagePanel.setImage(imgPath);
         
         ImageClassification classification = classifier.classifyImage(imgPath);
-        ArrayList<Integer> topClasses = classification.top(5);
-        ArrayList<Double> topClassesValues = new ArrayList<>();
+        ArrayList<String> topClasses = classification.top(5);
+        ArrayList<Float> topClassesValues = new ArrayList<>();
         
-        for(int classIdx:topClasses){
-            topClassesValues.add(classification.get(classIdx));
+        for(String synset:topClasses){
+            topClassesValues.add(classification.get(synset).getValue());
         }
         
         this.classImagePanel.setGrid(false);
@@ -48,21 +48,16 @@ public class ClassificationFrame extends javax.swing.JInternalFrame {
         this.classImagePanel.setImage(classImage);
         
         SynsetDictionary dictionary = new SynsetDictionary();
-        dictionary.load();
+        dictionary.loadWordsDictionary();
         
-        this.label1.setText(dictionary.searchByIdx(topClasses.get(0)).getConcept()
-                            +" - "+classification.get(topClasses.get(0)));
-        this.label2.setText(dictionary.searchByIdx(topClasses.get(1)).getConcept()
-                            +" - "+classification.get(topClasses.get(1)));
-        this.label3.setText(dictionary.searchByIdx(topClasses.get(2)).getConcept()
-                            +" - "+classification.get(topClasses.get(2)));
-        this.label4.setText(dictionary.searchByIdx(topClasses.get(3)).getConcept()
-                            +" - "+classification.get(topClasses.get(3)));
-        this.label5.setText(dictionary.searchByIdx(topClasses.get(4)).getConcept()
-                            +" - "+classification.get(topClasses.get(4)));        
+        this.label1.setText(dictionary.get(topClasses.get(0)));
+        this.label2.setText(dictionary.get(topClasses.get(1)));
+        this.label3.setText(dictionary.get(topClasses.get(2)));
+        this.label4.setText(dictionary.get(topClasses.get(3)));
+        this.label5.setText(dictionary.get(topClasses.get(4)));        
     }
 
-    private BufferedImage createClassImage(ArrayList<Double> values){
+    private BufferedImage createClassImage(ArrayList<Float> values){
         BufferedImage result = new BufferedImage(115,115,BufferedImage.TYPE_INT_ARGB);
         int it = 0;
         for(double value:values){

@@ -5,6 +5,8 @@
  */
 package sri.classification;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import sri.feature.ContourFeature;
 import sri.feature.FeatureDB;
 import sri.feature.FeatureDBFactory;
@@ -19,15 +21,9 @@ public class SRI {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        FeatureDBFactory factory = new FeatureDBFactory();
-        FeatureDB db = factory.createFeatureDB("/home/luis/MPEG7dataset/original/", FeatureDBFactory.CURVATURE_MODE);
-        
-        for(ContourFeature cf:db){
-            System.out.println(cf.getPath());
-            System.out.println(cf.size());
-        }
-        
-        db.save("/home/luis/MPEG7dataset/original/aa.featdb");
+        ClassifierManager manager = new ClassifierManager();
+        ClassificationDB db = manager.classifyFolder("/home/luis/TFG/Software/Ejemplos/");
+        db.save("/home/luis/TFG/Software/Ejemplos/db.sridb");
     }
     
 }

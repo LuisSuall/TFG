@@ -6,22 +6,21 @@
 package sri.classification;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import javafx.util.Pair;
 
-public class ImageClassification extends ArrayList<Double> {
+public class ImageClassification extends HashMap<String,ClassificationNode> {
     
     /**
      * Path of the image.
      */
     private String imagePath;
-    /**
-     * Idx of the best classification.
-     */
-    private int bestClass;
-    /**
-     * Value of the best classification.
-     */
-    private double probabilityBestClass;
     
+    private ArrayList<String> rootsNodes;
+
     /**
      * Constructs an empty ImageClassification for an image.
      * 
@@ -31,73 +30,11 @@ public class ImageClassification extends ArrayList<Double> {
         super();
         this.imagePath = imagePath;
     }
-    
-    /**
-     * Constructs an ImageClassification with set values.
-     * 
-     * @param imagePath path of the image
-     * @param values clasification values of the image
-     */
-    public ImageClassification (String imagePath, ArrayList<Double> values){
-        super(values);
-        this.imagePath = imagePath;
-        
-        setBestClassInfo();
-    }
-    
-    /**
-     * Changes the classification values.
-     * 
-     * @param values new classification values 
-     */
-    public void setClassificationValues (ArrayList<Double> values){
-        this.clear();
-        
-        for(Double value : values){
-            this.add(value);
-        }
-        
-        setBestClassInfo();
-    }
-    
-    /**
-     * Updates the best classification information.
-     */
-    public void setBestClassInfo(){
-        bestClass = -1;
-        probabilityBestClass = 0.0;
-        
-        for (int i = 0; i < this.size(); i++){
-            if (this.get(i) > probabilityBestClass){
-                bestClass = i;
-                probabilityBestClass = this.get(i);
-            }
-        }
-    }
 
-    /**
-     * Returns the indexs of the best n classifications values.
-     * @param n number of classifications
-     * @return list of indexs of the best values
-     */
-    public ArrayList<Integer> top(int n){
-        ArrayList<Integer> bestResultsIdx = new ArrayList<>();
-        
-        for(int i=0; i<n; i++){
-            int bestIdx = -1;
-            double bestValue = -1.0;
-            
-            for(int j=0; j<this.size(); j++){
-                if(this.get(j) > bestValue && !bestResultsIdx.contains(j)){
-                    bestIdx = j;
-                    bestValue = this.get(j);
-                }
-            }
-            
-            bestResultsIdx.add(bestIdx);
-        }
-        
-        return bestResultsIdx;
+    public ImageClassification(String imagePath, ArrayList<String> rootsNodes, Map<? extends String, ? extends ClassificationNode> m) {
+        super(m);
+        this.rootsNodes = rootsNodes;
+        this.imagePath = imagePath;
     }
     
     /**
@@ -108,39 +45,81 @@ public class ImageClassification extends ArrayList<Double> {
         return imagePath;
     }
 
-    /**
-     * Returns the best classification class.
-     * @return Index of the best class
-     */
-    public int getBestClass() {
-        return bestClass;
-    }
-    
-    /**
-     * Returns the best classification class of a set list of classes.
-     * @param idxList list of classes
-     * @return Index of the best class
-     */
-    public int getBestClass(ArrayList<Integer> idxList){
-        int bestIdx = -1;
-        double max = -1;
-        
-        for(int idx : idxList){
-            if(this.get(idx)>max){
-                bestIdx = idx;
-                max = this.get(idx);
-            }
-        }
-        
-        return bestIdx;
+    public ArrayList<String> getRootsNodes() {
+        return rootsNodes;
     }
 
-    /**
-     * Returns the probability of the best class.
-     * @return probability of the best class
-     */
-    public double getProbabilityBestClass() {
-        return probabilityBestClass;
+    public float valueOf(String concept) {
+        ArrayList<String> synsetsToSearch = new ArrayList<>();
+        SynsetDictionary dictionary = new SynsetDictionary();
+        dictionary.loadWordsDictionary();
+        
+        for(String root:rootsNodes){
+            synsetsToSearch.add(root);
+        }
+        
+        float value = 0;
+        
+        for(int i = 0; i < synsetsToSearch.size();i++){
+            String synset = synsetsToSearch.get(i);
+            String def = dictionary.get(synset);
+            
+            if(def.contains(concept)){
+                if(this.get(synset).getValue()>value){
+                    value = this.get(synset).getValue();
+                    if(value > 0.5){
+                        synsetsToSearch.clear();
+                    }
+                }   
+            }
+            
+            if(this.get(synset).getValue()>value){
+                if(this.get(synset).getSonsSynsets() != null){
+                    for(String synsetSon: this.get(synset).getSonsSynsets()){
+                        synsetsToSearch.add(synsetSon);
+                    }
+                }
+            }
+            
+        }
+        
+        return value;
     }
     
+    public ArrayList<String> top(int n){
+        ArrayList<Pair<String,Float>> leafs = new ArrayList<>();
+        
+        ArrayList<String> synsetsToSearch = new ArrayList<>();
+        
+        for(String root:rootsNodes){
+            synsetsToSearch.add(root);
+        }
+        
+        for(int i = 0; i < synsetsToSearch.size();i++){
+            String synset = synsetsToSearch.get(i);
+
+            if(this.get(synset).getSonsSynsets() != null){
+                for(String synsetSon: this.get(synset).getSonsSynsets()){
+                    synsetsToSearch.add(synsetSon);
+                }
+            }
+            else{
+                leafs.add(new Pair<String,Float>(synset,this.get(synset).getValue()));
+            }    
+        }
+        
+        Collections.sort(leafs,new Comparator<Pair<String,Float>>(){
+            public int compare(Pair<String,Float> p1, Pair<String,Float> p2){
+                return p2.getValue().compareTo(p1.getValue());
+            }
+        });
+        
+        ArrayList<String> result = new ArrayList<>();
+        
+        for(int i = 0; i < n; i++){
+            result.add(leafs.get(i).getKey());
+        }
+        
+        return result;
+    }
 }

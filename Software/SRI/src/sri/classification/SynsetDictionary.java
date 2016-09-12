@@ -11,15 +11,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SynsetDictionary extends ArrayList<SynsetInfo>{
+public class SynsetDictionary extends HashMap<String,String>{
 
     /**
-     * Default path to load the dictionary.
+     * Default path to load the words dictionary.
      */
-    private static final String DEFAULT_DICTIONARY_PATH = "../synset_words.txt";
+    private static final String DEFAULT_WORDS_PATH = "../words.txt";
+    /**
+     * Default path to load the is-a dictionary.
+     */
+    private static final String DEFAULT_IS_A_PATH = "../is_a.txt";
 
     /**
      * Default constructor.
@@ -28,98 +33,44 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
     }
 
     /**
-     * Creates a synset dictionary with a list of synset information.
-     * 
-     * @param c Array of SynsetInformation
-     */
-    public SynsetDictionary(ArrayList<SynsetInfo> c) {
-        super(c);
-    }
-    
-    /**
-     * Returns a list of synset information that contains a concept.
-     * 
-     * @param concept concept to search
-     * @return list of synset that contains the concept
-     */
-    public ArrayList<SynsetInfo> search(String concept){
-        ArrayList<SynsetInfo> result = new ArrayList<>();
-        
-        for(SynsetInfo synset : this){
-            if(synset.getConcept().contains(concept))
-                result.add(synset);
-        }
-        
-        return result;
-    }
-    
-    /**
-     * Returns the synset information of a concept.
-     * 
-     * @param concept concept to search
-     * @return information of the synset
-     */
-    public SynsetInfo searchByConcept(String concept){
-        for(SynsetInfo synsetInfo: this){
-            if (synsetInfo.getConcept().equals(concept))
-                return synsetInfo;
-        }
-        return null;
-    }
-    
-    /**
-     * Returns the synset information of a synset.
-     * 
-     * @param synset synset to search
-     * @return information of the synset
-     */
-    public SynsetInfo searchBySynset(String synset){
-        for(SynsetInfo synsetInfo: this){
-            if (synsetInfo.getSynset().equals(synset))
-                return synsetInfo;
-        }
-        return null;
-    }
-    
-    /**
-     * Returns the synset information with a set index.
-     * 
-     * @param idx index to search
-     * @return information of the synset
-     */
-    public SynsetInfo searchByIdx(int idx){
-        for(SynsetInfo synsetInfo: this){
-            if (synsetInfo.getIdx() == idx)
-                return synsetInfo;
-        }
-        return null;
-    }
-
-    /**
      * Loads the default dictionary.
      */
-    public void load() {
-        this.load(DEFAULT_DICTIONARY_PATH);
+    public void loadWordsDictionary() {
+        this.load(DEFAULT_WORDS_PATH, '\t');
+    }
+    
+    void loadIsADictionary() {
+        this.clear();
+        
+        File f = new File(DEFAULT_IS_A_PATH);
+        
+        try (FileReader fis = new FileReader(f);BufferedReader reader = new BufferedReader(fis)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                ArrayList<String> splitedLine = splitInfo(line,' ');
+                this.put(splitedLine.get(1),splitedLine.get(0));
+            }  
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SynsetDictionary.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SynsetDictionary.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
      * Loads a dictionary from a file.
      * @param path path to the dictionary file
      */
-    public void load(String path) {
+    public void load(String path,char mark) {
         this.clear();
         
         File f = new File(path);
         
         try (FileReader fis = new FileReader(f);BufferedReader reader = new BufferedReader(fis)) {
             String line;
-            int idx = 0;
             while ((line = reader.readLine()) != null) {
-                ArrayList<String> splitedLine = splitInfo(line);
-                SynsetInfo synsetInfo = new SynsetInfo(idx, splitedLine.get(0), splitedLine.get(1));
-                
-                this.add(synsetInfo);
-                idx++;
+                ArrayList<String> splitedLine = splitInfo(line,mark);
+                this.put(splitedLine.get(0),splitedLine.get(1));
             }  
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SynsetDictionary.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,11 +84,11 @@ public class SynsetDictionary extends ArrayList<SynsetInfo>{
      * @param line line to split
      * @return splited line
      */
-    private ArrayList<String> splitInfo(String line){
+    private ArrayList<String> splitInfo(String line,char mark){
         ArrayList<String> splitedLine = new ArrayList<>();
         
-        splitedLine.add(line.substring(0, line.indexOf(' ')));
-        splitedLine.add(line.substring(line.indexOf(' ')+1));
+        splitedLine.add(line.substring(0, line.indexOf(mark)));
+        splitedLine.add(line.substring(line.indexOf(mark)+1));
         
         return splitedLine;
     }

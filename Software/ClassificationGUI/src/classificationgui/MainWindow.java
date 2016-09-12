@@ -7,7 +7,6 @@ package classificationgui;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -17,8 +16,6 @@ import jmr.result.ResultList;
 import jmr.result.ResultMetadata;
 import sri.classification.ClassificationDB;
 import sri.classification.ClassifierManager;
-import sri.classification.SynsetDictionary;
-import sri.classification.SynsetInfo;
 import sri.feature.ContourFeature;
 import sri.feature.FeatureDB;
 import sri.feature.FeatureDBFactory;
@@ -39,10 +36,6 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private ClassifierManager classifier;
     /**
-     * Dictionary to translate concepts into classification values.
-     */
-    private SynsetDictionary dictionary;
-    /**
      * Classification database.
      */
     private ClassificationDB classificationDB = new ClassificationDB();
@@ -57,8 +50,6 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         classifier = new ClassifierManager();
-        dictionary = new SynsetDictionary();
-        dictionary.load();
         featureDB = new FeatureDB();
     }
 
@@ -339,16 +330,9 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String querry = this.queryText.getText();
+        String query = this.queryText.getText();
         
-        ArrayList<SynsetInfo> synsetList = dictionary.search(querry);
-        ArrayList<Integer> idxList= new ArrayList<>();
-
-        for(SynsetInfo synsetInfo: synsetList){
-            idxList.add(synsetInfo.getIdx());
-        }
-
-        ResultList results = classificationDB.search(idxList,0);
+        ResultList results = classificationDB.search(query);
 
         ResultList resultList = new ResultList();
 
@@ -365,7 +349,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         resultList.sort();
         ResultFrame vi = new ResultFrame(this,resultList);
-        vi.setTitle("Consulta: "+querry);
+        vi.setTitle("Consulta: "+query);
         this.showInternalFrame(vi);
 
     }//GEN-LAST:event_searchButtonActionPerformed
@@ -480,7 +464,7 @@ public class MainWindow extends javax.swing.JFrame {
         ContourFeature cf = factory.createContourFeature(path, mode);
         
         GraphInternalFrame vi = new GraphInternalFrame(this,cf);
-        vi.setTitle(selectedImageFrame.getTitle() + " - Clasificación");
+        vi.setTitle(selectedImageFrame.getTitle() + " - Descriptor");
         
         setStatusLabel(MainWindow.READY_MODE);
         

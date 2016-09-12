@@ -9,10 +9,12 @@ package sri.classification;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,12 +29,25 @@ public class ClassifierManager {
      */
     private String modelWeightsPath;
     
+    private ArrayList<String> outputToSynset;
+    private SynsetDictionary isA;
+    private SynsetDictionary synsetToWords;
+    
     /**
      * Creates a ClassifierManager for the default model.
      */
     public ClassifierManager(){  
         modelDefPath = "../Clasificadores/caffenet/deploy.prototxt";
         modelWeightsPath = "../Clasificadores/caffenet/weights.caffemodel";
+        outputToSynset = loadOutputToSynset();
+        
+        isA = new SynsetDictionary();
+        isA.loadIsADictionary();
+        
+        synsetToWords = new SynsetDictionary();
+        synsetToWords.loadWordsDictionary();
+        
+        
     }
 
     /**
@@ -91,18 +106,19 @@ public class ClassifierManager {
         BufferedReader stdInput = new BufferedReader(new 
             InputStreamReader(p.getInputStream()));
         
-        ArrayList<Double> values = new ArrayList<>();
+        ArrayList<Float> values = new ArrayList<>();
         String s;
         try{
             while ((s = stdInput.readLine()) != null) {
-                values.add(Double.parseDouble(s));
+                values.add(Float.parseFloat(s));
             }
         }
         catch(Exception e){
             System.err.println("Exception reading bash scipt: " + e.getMessage());
         }
 
-        ImageClassification imageClassification = new ImageClassification(imgPath,values);
+        
+        ImageClassification imageClassification = generateImageClassification(imgPath , values);
 
         return imageClassification;
     } 
@@ -155,6 +171,77 @@ public class ClassifierManager {
         }
         
         return null;
+    }
+
+    private ArrayList<String> loadOutputToSynset() {
+        ArrayList<String> result = new ArrayList<>();
+        
+        File f = new File("../synset_words.txt");
+        
+        try (FileReader fis = new FileReader(f);BufferedReader reader = new BufferedReader(fis)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.add(line.substring(0, line.indexOf(' ')));
+            }  
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SynsetDictionary.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SynsetDictionary.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        return result;
+    }
+
+    private ImageClassification generateImageClassification(String path, ArrayList<Float> values) {
+        ArrayList<String> rootNodes = new ArrayList<>();
+        HashMap<String,ClassificationNode> tree = new HashMap<>();
+        
+        for(int i = 0; i < values.size(); i++){
+            String father = isA.get(outputToSynset.get(i));
+            ArrayList<String> sons = null;
+            float value = values.get(i);
+            
+            ClassificationNode node = new ClassificationNode(father, sons, value);
+            
+            tree.put(outputToSynset.get(i), node);
+            
+            generateHierarchy(outputToSynset.get(i),rootNodes,tree);
+        }
+        
+        return new ImageClassification(path, rootNodes, tree);
+    }
+
+    private void generateHierarchy(String synset, ArrayList<String> rootNodes, HashMap<String, ClassificationNode> tree) {
+        if(isA.containsKey(synset)){
+            String father = isA.get(synset);
+            
+            if(tree.containsKey(father)){
+                ClassificationNode fatherNode = tree.get(father);
+                if(!fatherNode.getSonsSynsets().contains(synset))
+                    fatherNode.addSon(synset);
+                
+                if(fatherNode.getValue() < tree.get(synset).getValue()){
+                    fatherNode.setValue(tree.get(synset).getValue());
+                    generateHierarchy(father, rootNodes,tree);
+                }                
+            }
+            else{
+                String grandfather = isA.get(father);
+                ArrayList<String> sons = new ArrayList<>();
+                sons.add(synset);
+                float value = tree.get(synset).getValue();
+                ClassificationNode fatherNode = new ClassificationNode(grandfather, sons, value);
+                
+                tree.put(father, fatherNode);
+                
+                generateHierarchy(father, rootNodes,tree);
+            }
+        }
+        else{
+            if(!rootNodes.contains(synset)){
+                rootNodes.add(synset);
+            }
+        }
     }
     
 }
