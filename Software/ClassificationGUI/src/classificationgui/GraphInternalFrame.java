@@ -35,8 +35,7 @@ public class GraphInternalFrame extends javax.swing.JInternalFrame {
      * Creates new form ImageFrame.
      * 
      * @param parent window that launched this internal frame
-     * @param imgPath path to the image
-     * @param mode mode used to calculate the feature
+     * @param cfeature feature of the contour
      */
     public GraphInternalFrame(JFrame parent, ContourFeature cfeature) {
         initComponents();

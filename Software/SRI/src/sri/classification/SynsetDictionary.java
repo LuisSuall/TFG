@@ -33,13 +33,16 @@ public class SynsetDictionary extends HashMap<String,String>{
     }
 
     /**
-     * Loads the default dictionary.
+     * Loads the synset to words dictionary.
      */
     public void loadWordsDictionary() {
         this.load(DEFAULT_WORDS_PATH, '\t');
     }
     
-    void loadIsADictionary() {
+    /**
+     * Loads the "is a" dictionary.
+     */
+    public void loadIsADictionary() {
         this.clear();
         
         File f = new File(DEFAULT_IS_A_PATH);

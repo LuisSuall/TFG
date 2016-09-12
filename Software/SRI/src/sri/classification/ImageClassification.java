@@ -1,5 +1,7 @@
 /**
- * Classification of an image
+ * Classification of an image.
+ * 
+ * Classifications are stored in a tree. 
  * 
  * @author Luis Suárez Lloréns
  */
@@ -18,7 +20,9 @@ public class ImageClassification extends HashMap<String,ClassificationNode> {
      * Path of the image.
      */
     private String imagePath;
-    
+    /**
+     * Starting nodes of the tree.
+     */
     private ArrayList<String> rootsNodes;
 
     /**
@@ -31,8 +35,14 @@ public class ImageClassification extends HashMap<String,ClassificationNode> {
         this.imagePath = imagePath;
     }
 
-    public ImageClassification(String imagePath, ArrayList<String> rootsNodes, Map<? extends String, ? extends ClassificationNode> m) {
-        super(m);
+    /**
+     * Construct an ImageClassification
+     * @param imagePath path of the image
+     * @param rootsNodes starting nodes of the tree
+     * @param tree classification tree
+     */
+    public ImageClassification(String imagePath, ArrayList<String> rootsNodes, Map<? extends String, ? extends ClassificationNode> tree) {
+        super(tree);
         this.rootsNodes = rootsNodes;
         this.imagePath = imagePath;
     }
@@ -44,11 +54,19 @@ public class ImageClassification extends HashMap<String,ClassificationNode> {
     public String getImagePath() {
         return imagePath;
     }
-
+    /**
+     * Returns the roots of the tree.
+     * @return roots of the tree
+     */
     public ArrayList<String> getRootsNodes() {
         return rootsNodes;
     }
 
+    /**
+     * Searches the tree to find a concept
+     * @param concept concept to find
+     * @return value asociated to the concept
+     */
     public float valueOf(String concept) {
         ArrayList<String> synsetsToSearch = new ArrayList<>();
         SynsetDictionary dictionary = new SynsetDictionary();
@@ -86,8 +104,13 @@ public class ImageClassification extends HashMap<String,ClassificationNode> {
         return value;
     }
     
+    /**
+     * Get the n best leaves of the tree
+     * @param n number of leaves to return
+     * @return synset of the leaves
+     */
     public ArrayList<String> top(int n){
-        ArrayList<Pair<String,Float>> leafs = new ArrayList<>();
+        ArrayList<Pair<String,Float>> leaves = new ArrayList<>();
         
         ArrayList<String> synsetsToSearch = new ArrayList<>();
         
@@ -104,11 +127,11 @@ public class ImageClassification extends HashMap<String,ClassificationNode> {
                 }
             }
             else{
-                leafs.add(new Pair<String,Float>(synset,this.get(synset).getValue()));
+                leaves.add(new Pair<String,Float>(synset,this.get(synset).getValue()));
             }    
         }
         
-        Collections.sort(leafs,new Comparator<Pair<String,Float>>(){
+        Collections.sort(leaves,new Comparator<Pair<String,Float>>(){
             public int compare(Pair<String,Float> p1, Pair<String,Float> p2){
                 return p2.getValue().compareTo(p1.getValue());
             }
@@ -117,7 +140,7 @@ public class ImageClassification extends HashMap<String,ClassificationNode> {
         ArrayList<String> result = new ArrayList<>();
         
         for(int i = 0; i < n; i++){
-            result.add(leafs.get(i).getKey());
+            result.add(leaves.get(i).getKey());
         }
         
         return result;

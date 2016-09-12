@@ -173,6 +173,10 @@ public class ClassifierManager {
         return null;
     }
 
+    /**
+     * Loads the synset names of the net output.
+     * @return synset names of the net output
+     */
     private ArrayList<String> loadOutputToSynset() {
         ArrayList<String> result = new ArrayList<>();
         
@@ -192,6 +196,13 @@ public class ClassifierManager {
         return result;
     }
 
+    /**
+     * Generate a new ImageClassification
+     * @param path path to the image
+     * @param values classification values
+     * 
+     * @return a new ImageClassification
+     */
     private ImageClassification generateImageClassification(String path, ArrayList<Float> values) {
         ArrayList<String> rootNodes = new ArrayList<>();
         HashMap<String,ClassificationNode> tree = new HashMap<>();
@@ -211,6 +222,12 @@ public class ClassifierManager {
         return new ImageClassification(path, rootNodes, tree);
     }
 
+    /**
+     * Generate the WordNet Hierarchy on the tree
+     * @param synset Synset to actualize 
+     * @param rootNodes list of root nodes
+     * @param tree tree to actualize
+     */
     private void generateHierarchy(String synset, ArrayList<String> rootNodes, HashMap<String, ClassificationNode> tree) {
         if(isA.containsKey(synset)){
             String father = isA.get(synset);

@@ -60,7 +60,7 @@ public class ImagePanel extends javax.swing.JPanel {
     /**
      * Cosntruye un panel con la imagen pasada por parámetro
      * 
-     * @param img imagen
+     * @param imgPath dirección a la imagen
      */
     public ImagePanel(String imgPath){
         initComponents();
@@ -81,7 +81,7 @@ public class ImagePanel extends javax.swing.JPanel {
     /**
      * Asigna una imagen al panel
      * 
-     * @param img la imagen a asignar 
+     * @param imgPath la imagen a asignar 
      */
     public final void setImage(String imgPath) {
         BufferedImage img = null;
@@ -116,7 +116,7 @@ public class ImagePanel extends javax.swing.JPanel {
     /**
      * Establece si hay o no grid
      * 
-     * @param grid  
+     * @param grid  booleano de grid
      */
     public void setGrid(boolean grid){
         this.use_grid = grid;
