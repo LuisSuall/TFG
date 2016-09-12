@@ -18,7 +18,7 @@ Igual que en el módulo anterior, requiere ser implementado totalmente. De maner
 
 \subsubsection{Generación de descriptores}
 
-Se utilizará una librería , llamada Java Fuzzy Imaging (JFI). En concreto, se utilizarán los paquetes relacionados con formas, desarrollado conjuntamente con el director de este proyecto, Jesús Chamorro Martínez. La labor de este módulo es la creación de los descriptores utilizados en el projecto, la curvatura y la curvacidad.\\
+Se utilizará una librería, llamada Java Fuzzy Imaging (JFI). En concreto, se utilizarán los paquetes relacionados con formas, desarrollado conjuntamente con el director de este proyecto, Jesús Chamorro Martínez. La labor de este módulo es la creación de los descriptores utilizados en el projecto, la curvatura y la curvacidad.\\
   
 \subsubsection{Generación de clasificadores}
 
@@ -233,4 +233,81 @@ Vamos a realizar los diagramas de estado, pero solo de los procesos más signifi
 
 \subsection{Diagrama de clases}
 
+Vamos a mostrar los diagramas de clases de los módulos principales de la aplicación, los módulos de búsqueda, obviando el del módulo de la aplicación, que se limita a una clase ``MainWindow'' que tiene todos los métodos asociados a los distintos botones, y un conjunto de clases asociadas, una por cada ventana interna de la aplicación.
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=1\textwidth]{img/clases-desc.pdf}
+\end{center}
+
+\caption{Diagrama de clases del módulo ``Buscar con descriptores''.}
+\end{figure}
+
+Podemos apreciar una estructura muy simple. Tenemos una clase de tipo ``Factory'' que crea las instancias tanto de una base de datos de descriptores como de descriptores de contornos. Realiza esta tarea llamando a la librería JFI. La clase ``FeatureDB'' gestiona una colección de descriptores, permitiéndonos buscar por ellos. La clase ``ContourFeature'' se encarga de almacenar y modificar los valores de la característica.\\
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics[width=1\textwidth]{img/clases-class.pdf}
+\end{center}
+
+\caption{Diagrama de clases del módulo ``Buscar con clasificación''.}
+\end{figure}
+
+Este módulo sigue una estructura similar al anterior, con dos añadidos. Por un lado, la clasificación de una imagen no será una lista de valores, si no un árbol, por lo que es necesario crear una clase que represente un nodo del mismo. Por otro lado, tenemos que ser capaces de traducir los indices de respuesta del clasificador por palabras reales a las que encontrar significado, por ello introducimos la clase ``SynsetDictionary'', para encapsular estas funcionalidades.
 \subsection{Explicación de los tipos de datos y algoritmos fundamentales}
+
+\subsubsection{Búsqueda por descriptor}
+
+La búsqueda por descriptor sigue el siguiente algoritmo, siendo ``consulta'' el descriptor consultado:
+\begin{itemize}
+\item Para cada descriptor de la base de datos:
+\begin{itemize}
+\item Calcular la distancia euclídea entre el descriptor y la consulta.
+\item Añadir al array de salida el resultado y la dirección de la imagen asociada al descriptor.
+\end{itemize}
+\item Se ordena según la distancia, a más pequeña mejor.
+\end{itemize}
+
+Pero para poder comparar dos descriptores, tenemos que realizar algunas modificaciones en los mismos, pues dos formas pueden ser perfectamente iguales, pero tener descriptores distintos dependiendo del punto donde se empezaron a calcular. También pueden influir factores de escala, que cambien la escala del resultado. Por tanto, para evitar esta problemática, a cada descriptor se le aplica siempre los dos siguientes pasos:
+\begin{itemize}
+\item Normalizar el descriptor al intervalo [0,1].
+\item Colocar como primer elemento el mayor.
+\end{itemize}
+
+Así podemos ya comparar de manera directa mediante el uso de una distancia, en este caso la euclídea.
+
+\subsubsection{Tipo de dato de clasificación de una imagen}
+
+Los términos aprendidos, pertenecen a una estructura jerárquica. En la figura \ref{arbol} podemos ver un caso reducido de este suceso. Si sólo mantenemos los valores aprendidos (fila inferior), podremos buscar por tipos concretos de animales, pero no por conceptos más generales como ``perro'' o ``animal''.\\
+
+\begin{figure}
+\begin{center}
+
+\includegraphics[width=0.5\textwidth]{img/arbol.PNG}
+\end{center}
+
+\caption{Ejemplo reducido de la estructura de clasificación de una imagen.}
+\label{arbol}
+\end{figure}
+
+
+Por tanto, una clasificación de una imagen será un árbol. La valoración de un nodo padre será la del mejor de sus nodos hijos. Se hace necesario entonces, para poder conocer el valor de un concepto concreto dentro de esta estructura, el poder buscar dentro del árbol.
+
+\subsubsection{Búsqueda por concepto}
+
+Para buscar en el árbol un concepto, vamos a hacerlo en profundidad, el objetivo es tratar de encontrar las respuestas más genéricas posibles. Aún así, podríamos encontrarnos categorías con conceptos muy similares. Por tanto, seguiremos la búsqueda hasta que estemos seguros que no vamos a encontrar un concepto que lo represente mejor.\\
+
+El algoritmo sería así:
+\begin{itemize}
+\item Se inserta en la cola de búsqueda al nodo raíz.
+\item Para cada elemento de la cola:
+\begin{itemize}
+\item Obtener su concepto asociado.
+\item Si contiene el concepto a buscar, y supera al mejor encontrado, es el nuevo mejor concepto para la búsqueda.
+\item Si la búsqueda tiene más creencia que 0.5, hemos terminado la búsqueda.
+\item Si no se ha terminado la búsqueda, se incluyen sus hijos en la cola y se sigue buscando.
+\end{itemize}
+\item Se devuelve el mejor valor de creencia encontrado.
+\end{itemize}
