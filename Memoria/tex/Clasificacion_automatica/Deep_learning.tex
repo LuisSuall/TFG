@@ -107,9 +107,81 @@ Hemos visto que, sin importar el tipo de entrenamiento que elijamos, el proceso 
 
 Para salvar este obstáculo, se diseñó una nueva técnica para el cálculo del gradiente, conocido como ``backpropagation''. Destacar que esta palabra solo hace referencia al hecho de propagar los errores por la red hacia atrás, es decir del final de la red al principio, aunque es común utilizarla para hablar del proceso completo de cálculo del gradiente. Nos centraremos en calcular $\nabla E_n(w)$.\\
  
- \todo[inline,color=red]{Cuentas de la backpropagation}
  
-En el fondo, todo este proceso no es más que una simple aplicación de la regla de la cadena. Su potencial se encuentra principalmente en su eficiencia.\\
+En una red neuronal, cada neurona calcúla la suma ponderada de sus entradas de la forma
+
+\[
+\ a_j = \sum_i w_{ji}z_i
+\]donde $z_i$ es la neurona o entrada que tiene una conexión con la neurona $j$, y el peso $w_{ij}$ es el peso asociado a dicha conexión. El parámetro bías puede ser incluido en esta formulación fácilmente, añadiendo a cada capa una neurona que siempre devuelve +1. A esta suma se le aplica la función $h( \cdot )$ para obtener la activación de la neurona $z_j$,
+\[
+\ z_j = h(a_i).
+\]
+
+Suponemos que para cada neurona de todas las capas, tenemos la función de activación. A este proceso se le suele llamar propagación hacia delante o forward propagation porque se puede entender como el flujo hacia delante de la información por la red.\\
+
+Ahora consideramos el cálculo de la derivada de $E_n$ con respecto al peso $w_{ij}$. Aunque durante todo este proceso nos estemos refiriendo al error asociado a la muestra $n$, no vamos a utilizarlo como subíndice en todas las variables para no oscurecer la notación. Primero, debemos ver que $E_n$ depende del peso $W_{ij}$ únicamente por aparecer en uno de los sumandos en $a_j$, de la neurona $j$. Aplicando la regla de la cadena para derivadas parciales obtenemos:
+
+\[
+\ \frac{\partial E_n}{\partial w_{ij}} = \frac{\partial E_n}{\partial a_j} \frac{\partial a_j}{\partial w_{ij}}.
+\]
+
+Vamos a añadir una pequeña notación para simplificar los resultados,
+\[
+\ \delta_j \equiv \frac{\partial E_n}{\partial a_j}
+\]
+donde a los $\delta$ se les suele llamar errores. Es fácil derivar la segunda parte de la cadena, y se obtiene:
+\[
+\ \frac{\partial a_j}{\partial w_{ij}} = z_i.
+\]
+
+Sustituyendo las dos expresiones anteriores en la regla de la cadena obtenemos:
+\[
+\ \frac{\partial E_n}{\partial w_{ij}} = \delta_j z_i.
+\]
+
+Viendo esta ecuación, obtenemos dos lecturas. Por un lado que necesitamos conocer la salida de todas las neuronas de la red al ser evaluadas. Esto explica la necesidad de la etapa de forward propagation, donde las calculamos todas de una sola pasada. Por otro, que la derivada de los pesos depende de la derivada de su función de activación. Esto nos lleva a dos escenarios, o bien la neurona de la que participa el peso $w_{ij}$ es una de las salida, o bien, es una neurona de una capa oculta.\\
+
+En el caso de una neurona de salida, derivando obtenemos que:
+\[
+\ \delta_k = y_k - t_k.
+\]
+
+En el caso de una de una neurona de la capa oculta, utilizamos la regla de la cadena otra vez, obteniendo:
+\[
+\ \delta_j \equiv \frac{\partial E_n}{\partial a_j} = \sum_k \frac{\partial E_n}{\partial a_k} \frac{\partial a_k}{\partial a_j}
+\]
+donde la sumatoria sobre k recorre todas las neuronas con las que $j$ tiene conexión.\\
+
+Utilizando la notación $\delta$ obtenemos:
+
+\[
+\ \sum_k \frac{\partial E_n}{\partial a_k} \frac{\partial a_k}{\partial a_j} = \sum_k \delta_k \frac{\partial a_k}{\partial a_j}
+\]
+
+Pero $a_k$ vale:
+\[
+\ a_k = sum_i w_{ki}h(a_i)
+\]
+donde $i$ pasa por todas las neuronas que sirven de entrada a $k$. Por tanto, uno de esos valores es nuestra neurona $j$, luego la derivada de $a_k$ con respecto a $a_j$ es:
+\[
+\ \frac{\partial a_k}{\partial a_j} = w_{kj} h'(a_j).
+\]
+
+Sustituyendo en la expresión de $\delta_j$ obtenemos:
+\[
+\ \delta_j = h'(a_j) \sum_k w_{kj} \delta_k
+\]
+lo que nos dice que la $\delta$ de una neurona en particular se puede calcular fácilmente si se conocen las $\delta$ de la capa superior. Por eso, este segundo proceso donde se calculan las $\delta$ se conoce como backpropagation, pues la información va hacia atrás en la red.\\
+
+El algoritmo en resumen sería el siguiente:
+\begin{itemize}
+\item Se realiza la propagación hacia delante, almacenando el resultado de las funciones de activación de las neuronas.
+\item Se calculan los valores $\delta_k$ de la capa de entrada.
+\item Se propagan hacia atrás los valores $\delta$.
+\item Se calculan las derivadas $\frac{\partial E_n}{\partial w_{ij}}$.
+\end{itemize}
+ 
+Este procedimiento, como hemos visto de manera constructiva, permite calcular la derivada exacta para todos los pesos de la red. Además, lo hace de una manera muy eficiente. En el fondo, todo este proceso no es más que una simple aplicación de la regla de la cadena. Su potencial se encuentra principalmente en su eficiencia.\\
 
 Lo primero que tenemos que destacar es que simplemente evaluar una red ya es un proceso que no es muy eficiente. Para una red grande, lo normal es que el número de pesos $W$ sea muchas veces mayor que el número de neuronas. Por lo tanto, el mayor tiempo empleado durante la ejecución de la evaluación de la red es en las operaciones de productos y sumas entre los pesos y los valores de la capa anterior, permitiéndonos considerar el calculo de la función de activación como un overhead. Por tanto, el tiempo de ejecución dependerá linealmente de $W$, luego el coste computacional de la operación es $O(W)$.\\
 
