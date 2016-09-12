@@ -1,5 +1,5 @@
 /**
- * Main window of the app
+ * Main window of the application
  * 
  * @author Luis Suárez Lloréns
  */
@@ -23,11 +23,11 @@ import sri.feature.FeatureDBFactory;
 public class MainWindow extends javax.swing.JFrame {
     
     /**
-     * Mode used to inform that the app is ready for new inputs.
+     * Mode used to inform that the application is ready for new inputs.
      */
     private static final int READY_MODE = 0;
     /**
-     * Mode used to inform that the app is busy.
+     * Mode used to inform that the application is busy.
      */
     private static final int BUSY_MODE = 1;
     
